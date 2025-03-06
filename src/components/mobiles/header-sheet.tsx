@@ -8,10 +8,12 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 import LangToggle from "../common/lang-toggle";
 import ThemeToggle from "../common/theme-toggle";
+import { getHeaderDictionary } from "../layouts/i18n";
 
 export interface HeaderSheetProps extends LangProps {}
 
 function HeaderSheet({ lang }: HeaderSheetProps) {
+  const { feature, blog, about, organization } = getHeaderDictionary(lang);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   return (
@@ -46,22 +48,28 @@ function HeaderSheet({ lang }: HeaderSheetProps) {
 
           <nav className="flex flex-col gap-4">
             <Link
+              href={`/${lang}/feature`}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {feature}
+            </Link>
+            <Link
               href={`/${lang}/about`}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              About
+              {about}
             </Link>
             <Link
               href={`/${lang}/blog`}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Blog
+              {blog}
             </Link>
             <Link
               href={`/${lang}/our-organization`}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Our Organization
+              {organization}
             </Link>
           </nav>
         </div>

@@ -8,3 +8,8 @@ export interface ChildrenProps {
 export interface LangProps {
   readonly lang: LANG;
 }
+
+export interface ErrorProps {
+  error: Error & { digest?: string };
+  reset: () => void;
+}

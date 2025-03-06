@@ -44,7 +44,12 @@ export default function RootLayout({ children, lang }: RootLayoutProps) {
     <Root lang={lang}>
       <div className="flex flex-col min-h-screen">
         <AppHeader lang={lang} />
-        {children}
+        <main
+          id="main-content"
+          className="flex-1 py-12 px-4 relative overflow-hidden"
+        >
+          {children}
+        </main>
         <Footer lang={lang} />
       </div>
     </Root>

@@ -1,36 +1,41 @@
 "use client";
 
-import type { ComponentProps } from "react";
+import { memo, type ComponentProps } from "react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
 
 import { cn } from "@/libs/utils";
 
-function Sheet({ ...props }: ComponentProps<typeof SheetPrimitive.Root>) {
-  return <SheetPrimitive.Root data-slot="sheet" {...props} />;
-}
+const Sheet = memo(
+  ({ ...props }: ComponentProps<typeof SheetPrimitive.Root>) => (
+    <SheetPrimitive.Root data-slot="sheet" {...props} />
+  )
+);
+Sheet.displayName = SheetPrimitive.Root.displayName;
 
-function SheetTrigger({
-  ...props
-}: ComponentProps<typeof SheetPrimitive.Trigger>) {
-  return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />;
-}
+const SheetTrigger = memo(
+  ({ ...props }: ComponentProps<typeof SheetPrimitive.Trigger>) => (
+    <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />
+  )
+);
+SheetTrigger.displayName = SheetPrimitive.Trigger.displayName;
 
-function SheetClose({ ...props }: ComponentProps<typeof SheetPrimitive.Close>) {
-  return <SheetPrimitive.Close data-slot="sheet-close" {...props} />;
-}
+const SheetClose = memo(
+  ({ ...props }: ComponentProps<typeof SheetPrimitive.Close>) => (
+    <SheetPrimitive.Close data-slot="sheet-close" {...props} />
+  )
+);
+SheetClose.displayName = SheetPrimitive.Close.displayName;
 
-function SheetPortal({
-  ...props
-}: ComponentProps<typeof SheetPrimitive.Portal>) {
-  return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />;
-}
+const SheetPortal = memo(
+  ({ ...props }: ComponentProps<typeof SheetPrimitive.Portal>) => (
+    <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />
+  )
+);
+SheetPortal.displayName = SheetPrimitive.Portal.displayName;
 
-function SheetOverlay({
-  className,
-  ...props
-}: ComponentProps<typeof SheetPrimitive.Overlay>) {
-  return (
+const SheetOverlay = memo(
+  ({ className, ...props }: ComponentProps<typeof SheetPrimitive.Overlay>) => (
     <SheetPrimitive.Overlay
       data-slot="sheet-overlay"
       className={cn(
@@ -39,18 +44,19 @@ function SheetOverlay({
       )}
       {...props}
     />
-  );
-}
+  )
+);
+SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
-function SheetContent({
-  className,
-  children,
-  side = "right",
-  ...props
-}: ComponentProps<typeof SheetPrimitive.Content> & {
-  side?: "top" | "right" | "bottom" | "left";
-}) {
-  return (
+const SheetContent = memo(
+  ({
+    className,
+    children,
+    side = "right",
+    ...props
+  }: ComponentProps<typeof SheetPrimitive.Content> & {
+    side?: "top" | "right" | "bottom" | "left";
+  }) => (
     <SheetPortal>
       <SheetOverlay />
       <SheetPrimitive.Content
@@ -76,54 +82,54 @@ function SheetContent({
         </SheetPrimitive.Close>
       </SheetPrimitive.Content>
     </SheetPortal>
-  );
-}
+  )
+);
+SheetContent.displayName = SheetPrimitive.Content.displayName;
 
-function SheetHeader({ className, ...props }: ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="sheet-header"
-      className={cn("flex flex-col gap-1.5 p-4", className)}
-      {...props}
-    />
-  );
-}
+const SheetHeader = memo(({ className, ...props }: ComponentProps<"div">) => (
+  <div
+    data-slot="sheet-header"
+    className={cn("flex flex-col gap-1.5 p-4", className)}
+    {...props}
+  />
+));
 
-function SheetFooter({ className, ...props }: ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="sheet-footer"
-      className={cn("mt-auto flex flex-col gap-2 p-4", className)}
-      {...props}
-    />
-  );
-}
+SheetHeader.displayName = "SheetHeader";
 
-function SheetTitle({
-  className,
-  ...props
-}: ComponentProps<typeof SheetPrimitive.Title>) {
-  return (
+const SheetFooter = memo(({ className, ...props }: ComponentProps<"div">) => (
+  <div
+    data-slot="sheet-footer"
+    className={cn("mt-auto flex flex-col gap-2 p-4", className)}
+    {...props}
+  />
+));
+
+SheetFooter.displayName = "SheetFooter";
+
+const SheetTitle = memo(
+  ({ className, ...props }: ComponentProps<typeof SheetPrimitive.Title>) => (
     <SheetPrimitive.Title
       data-slot="sheet-title"
       className={cn("text-foreground font-semibold", className)}
       {...props}
     />
-  );
-}
+  )
+);
+SheetTitle.displayName = SheetPrimitive.Title.displayName;
 
-function SheetDescription({
-  className,
-  ...props
-}: ComponentProps<typeof SheetPrimitive.Description>) {
-  return (
+const SheetDescription = memo(
+  ({
+    className,
+    ...props
+  }: ComponentProps<typeof SheetPrimitive.Description>) => (
     <SheetPrimitive.Description
       data-slot="sheet-description"
       className={cn("text-muted-foreground text-sm", className)}
       {...props}
     />
-  );
-}
+  )
+);
+SheetDescription.displayName = SheetPrimitive.Description.displayName;
 
 export {
   Sheet,

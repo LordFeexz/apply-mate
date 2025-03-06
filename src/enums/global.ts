@@ -12,3 +12,11 @@ export enum THEME {
 }
 
 export const THEMES = Object.values(THEME);
+
+export enum FEATURE {
+  SCORING_CV = "scoring-cv",
+  GENERATE_OPTIMIZE_CV = "generate-optimize-cv",
+  GENERATE_COVER_LETTER = "generate-cover-letter",
+}
+
+export const FEATURES = Object.values(FEATURE);
