@@ -21,11 +21,12 @@ function HeaderSheet({ lang }: HeaderSheetProps) {
       <SheetTrigger asChild className="md:hidden">
         <Button variant="ghost" size="icon">
           <Menu className="h-5 w-5" />
+          <span className="sr-only">Mobile Menu Button</span>
         </Button>
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="w-[60%] min-w-[360px] z-50 h-[25%] border-b rounded-b-4xl mt-6 border-t rounded-t-2xl"
+        className="w-[60%] min-w-[360px] z-50 h-[30%] border-b rounded-b-4xl mt-6 border-t rounded-t-2xl"
       >
         <div className="container mx-auto px-4 py-4 flex flex-col items-start justify-between">
           <div className="flex items-center justify-between mb-6 z-[9999] gap-3">

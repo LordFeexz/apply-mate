@@ -20,3 +20,10 @@ export enum FEATURE {
 }
 
 export const FEATURES = Object.values(FEATURE);
+
+export enum LANG_GENERATE {
+  EN = "English",
+  ID = "Bahasa Indonesia",
+}
+
+export const LANG_GENERATES = Object.values(LANG_GENERATE);

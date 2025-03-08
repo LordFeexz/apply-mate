@@ -1,9 +1,12 @@
-import Root, { type RootLayoutProps } from "@/components/layouts/root";
+import Root from "@/components/layouts/root";
 import { LANG } from "@/enums/global";
 import type { PageProps } from "@/interfaces/global";
 import type { Metadata } from "next";
 import AppHeader from "@/components/layouts/header";
 import Footer from "@/components/layouts/footer";
+import type { ChildrenProps } from "@/interfaces/component";
+
+export interface RootLayoutProps extends ChildrenProps, PageProps {}
 
 export async function generateMetadata({
   params,
@@ -39,7 +42,11 @@ export async function generateMetadata({
   };
 }
 
-export default function RootLayout({ children, lang }: RootLayoutProps) {
+export default async function RootLayout({
+  children,
+  params,
+}: RootLayoutProps) {
+  const { lang } = await params;
   return (
     <Root lang={lang}>
       <div className="flex flex-col min-h-screen">

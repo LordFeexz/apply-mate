@@ -15,5 +15,5 @@ export const middleware: NextMiddleware = async (req) => {
 };
 
 export const config = {
-  matcher: "/((?!_next).*)",
+  matcher: "/((?!_next|api).*)",
 };

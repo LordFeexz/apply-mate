@@ -2,11 +2,16 @@ import { LANG, LANGS } from "@/enums/global";
 import type { PageProps } from "@/interfaces/global";
 import Feature from "@/modules/feature";
 import type { Metadata } from "next";
+import FeatureLayout from "@/components/layouts/feature";
 
 export default async function Page({ params }: PageProps) {
   const { lang } = await params;
 
-  return <Feature lang={lang} />;
+  return (
+    <FeatureLayout lang={lang} feature="">
+      <Feature lang={lang} />;
+    </FeatureLayout>
+  );
 }
 
 export async function generateMetadata({

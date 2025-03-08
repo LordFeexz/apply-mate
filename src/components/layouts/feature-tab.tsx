@@ -25,7 +25,7 @@ function FeatureTab({ children, lang, feature }: FeatureTabProps) {
   const onValueChangeHandler = useCallback(
     (url: string) => {
       setTab(FEATURE_TABS.find((tab) => tab.url === url) || FEATURE_TABS[0]);
-      router.push(`${lang}/feature/${url}`);
+      router.push(`/${lang}/feature/${url}`);
     },
     [router, lang]
   );
