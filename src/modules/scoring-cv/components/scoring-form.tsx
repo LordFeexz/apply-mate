@@ -2,11 +2,11 @@
 
 import type { LangProps } from "@/interfaces/component";
 import { memo, Suspense, useActionState, useRef } from "react";
-import { getScoringFormDictionary } from "../i18n";
-import CvForm from "./cv-form";
+import { getJobDescDictionary, getScoringFormDictionary } from "../i18n";
+import CvForm from "@/modules/shared/components/cv-form";
 import DefaultLoader from "@/components/common/default-loader";
-import CardInputContainer from "./card-input-container";
-import JobDescForm from "./job-desc-form";
+import CardInputContainer from "@/modules/shared/components/card-input-container";
+import JobDescForm from "@/modules/shared/components/job-desc-form";
 import SubmitBtn from "@/components/common/submit-btn";
 import dynamic from "next/dynamic";
 import InputLangBtn from "@/components/common/input-lang-btn";
@@ -31,6 +31,7 @@ const initialState: IScoringState & { parsed: boolean } = {
 
 function ScoringForm({ lang }: ScoringFormProps) {
   const { cvDesc, cvLabel } = getScoringFormDictionary(lang);
+  const { title, desc } = getJobDescDictionary(lang);
   const ref = useRef<HTMLFormElement>(null);
   const [
     {
@@ -52,16 +53,21 @@ function ScoringForm({ lang }: ScoringFormProps) {
     <>
       <form ref={ref} className="space-y-8" action={formAction}>
         <div className="grid gap-8 md:grid-cols-2">
-          <CardInputContainer title={cvLabel} desc={cvDesc}>
+          <CardInputContainer
+            className="col-span-2 md:col-span-1"
+            title={cvLabel}
+            desc={cvDesc}
+          >
             <Suspense fallback={<DefaultLoader />}>
               <CvForm defaultValue={cv} lang={lang} />
             </Suspense>
           </CardInputContainer>
           <CardInputContainer
-            title="Job Description"
-            desc="Paste the job description to score your CV"
+            className="col-span-2 md:col-span-1"
+            title={title}
+            desc={desc}
           >
-            <JobDescForm defaultValue={jobDesc} />
+            <JobDescForm defaultValue={jobDesc} lang={lang} />
           </CardInputContainer>
           <div className="col-span-2 flex justify-center items-center">
             <InputLangBtn

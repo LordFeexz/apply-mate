@@ -2,7 +2,7 @@
 
 import type { LangProps } from "@/interfaces/component";
 import { memo, useState } from "react";
-import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetTitle } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
 import Link from "next/link";
@@ -21,10 +21,13 @@ function HeaderSheet({ lang }: HeaderSheetProps) {
       <SheetTrigger asChild className="md:hidden">
         <Button variant="ghost" size="icon">
           <Menu className="h-5 w-5" />
-          <span className="sr-only">Mobile Menu Button</span>
+          <SheetTitle id="mobile-menu" className="sr-only">
+            Mobile Menu Button
+          </SheetTitle>
         </Button>
       </SheetTrigger>
       <SheetContent
+        aria-describedby="mobile-menu"
         side="right"
         className="w-[60%] min-w-[360px] z-50 h-[30%] border-b rounded-b-4xl mt-6 border-t rounded-t-2xl"
       >

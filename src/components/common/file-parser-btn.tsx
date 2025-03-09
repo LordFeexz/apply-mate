@@ -13,7 +13,7 @@ import {
 import { Button, type buttonVariants } from "../ui/button";
 import { cn } from "@/libs/utils";
 import { Input } from "../ui/input";
-import { Upload } from "lucide-react";
+import { Loader2, Upload } from "lucide-react";
 import { cvToString } from "@/modules/api/parse-cv";
 
 export type OnSuccessHandler = (parsed: string) => void;
@@ -86,15 +86,21 @@ function FileParserBtn({
         type="button"
         data-testid="parser-btn"
         className={cn(
-          "gap-2 cursor-pointer hover:scale-98 hover:opacity-95 duration-300 transition-all shadow hover:shadow-lg",
+          "gap-2 cursor-pointer min-w-24 hover:scale-98 hover:opacity-95 duration-300 transition-all shadow hover:shadow-lg",
           className
         )}
         onClick={clickHandler}
         disabled={pending}
         aria-disabled={pending}
       >
-        <Upload size={16} />
-        {text}
+        {pending ? (
+          <Loader2 className="w-4 h-4 animate-spin" />
+        ) : (
+          <>
+            <Upload size={16} />
+            {text}
+          </>
+        )}
       </Button>
       <Input
         {...inputProps}

@@ -1,7 +1,7 @@
 "use server";
 
 import { parseCV } from "@/libs/utils";
-import { SCHEMA_FILE } from "./schema";
+import { SCHEMA_FILE } from "../shared/schema";
 
 export async function cvToString(cv: File) {
   const { success, error, data: file } = await SCHEMA_FILE.safeParseAsync(cv);

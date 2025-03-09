@@ -9,7 +9,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <FeatureLayout lang={lang} feature="">
-      <Feature lang={lang} />;
+      <Feature lang={lang} />
     </FeatureLayout>
   );
 }

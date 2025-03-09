@@ -1,14 +1,5 @@
 import { LANG } from "@/enums/global";
-
-export interface ScoringFormDictionary {
-  cvLabel: string;
-  cvDesc: string;
-}
-
-export interface CvFormDictionary {
-  placeholder: string;
-  fileFormat: string;
-}
+import type { ScoringFormDictionary } from "../shared/i18n";
 
 export interface ScoreAlertDictionary {
   excellent: string;
@@ -21,7 +12,7 @@ export interface ScoreCardDictionary {
   desc: string;
 }
 
-const SCORING_FORM_DICTIONARY: Record<LANG, ScoringFormDictionary> = {
+const SCORING_CV_FORM_DICTIONARY: Record<LANG, ScoringFormDictionary> = {
   [LANG.EN]: {
     cvLabel: "Your Current CV",
     cvDesc: "Paste your current CV or upload a file",
@@ -32,14 +23,14 @@ const SCORING_FORM_DICTIONARY: Record<LANG, ScoringFormDictionary> = {
   },
 };
 
-const CV_FORM_DICTIONARY: Record<LANG, CvFormDictionary> = {
+const SCORING_JOB_DESC_DICTIONARY: Record<LANG, ScoreCardDictionary> = {
   [LANG.EN]: {
-    placeholder: "Paste your current CV here...",
-    fileFormat: "Supported formats: .txt, .doc, .docx",
+    title: "Job Description",
+    desc: "Paste job description here",
   },
   [LANG.ID]: {
-    placeholder: "Copas CV mu kesini...",
-    fileFormat: "Format file yang didukung: .txt, .doc, .docx",
+    title: "Deskripsi Pekerjaan",
+    desc: "Copas deskripsi pekerjaan disini",
   },
 };
 
@@ -90,10 +81,7 @@ const SCORE_ALERT_DICTIONARY: Record<LANG, ScoreAlertDictionary> = {
 };
 
 export const getScoringFormDictionary = (lang: LANG) =>
-  SCORING_FORM_DICTIONARY[lang] ?? SCORING_FORM_DICTIONARY[LANG.EN];
-
-export const getCvDictionary = (lang: LANG) =>
-  CV_FORM_DICTIONARY[lang] ?? CV_FORM_DICTIONARY[LANG.EN];
+  SCORING_CV_FORM_DICTIONARY[lang] ?? SCORING_CV_FORM_DICTIONARY[LANG.EN];
 
 export const getScoreAlertDictionary = (lang: LANG) =>
   SCORE_ALERT_DICTIONARY[lang] ?? SCORE_ALERT_DICTIONARY[LANG.EN];
@@ -107,3 +95,6 @@ export const getMatchKeywordCardDictionary = (lang: LANG) =>
 export const getMissingKeywordCardDictionary = (lang: LANG) =>
   MISSING_KEYWORD_CARD_DICTIONARY[lang] ??
   MISSING_KEYWORD_CARD_DICTIONARY[LANG.EN];
+
+export const getJobDescDictionary = (lang: LANG) =>
+  SCORING_JOB_DESC_DICTIONARY[lang] ?? SCORING_JOB_DESC_DICTIONARY[LANG.EN];

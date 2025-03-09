@@ -1,7 +1,7 @@
 "use server";
 
 import { CV_SCORING_MODEL } from "@/libs/gemini";
-import { SCHEMA_CV_SCORING } from "../api/schema";
+import { SCHEMA_CV_SCORING } from "../shared/schema";
 import type { IScoringState } from "./schema";
 import { scoringPrompt } from "@/libs/prompt";
 import type { CVScoringResult } from "@/interfaces/ai";

@@ -1,9 +1,9 @@
 "use server";
 
 import { NextResponse, type NextRequest } from "next/server";
-import { SCHEMA_CV_SCORING } from "../shared/schema";
-import { CV_SCORING_MODEL } from "@/libs/gemini";
-import { scoringPrompt } from "@/libs/prompt";
+import { SCHEMA_COVER_LETTER } from "../shared/schema";
+import { COVER_LETTER_MODEL } from "@/libs/gemini";
+import { coverLetterPrompt } from "@/libs/prompt";
 
 export async function POST(req: NextRequest) {
   if (!req.headers.get("content-type")?.includes("multipart/form-data"))
@@ -18,10 +18,12 @@ export async function POST(req: NextRequest) {
     );
 
   const formData = await req.formData();
-  const { success, data, error } = await SCHEMA_CV_SCORING.safeParseAsync({
+  const { success, data, error } = await SCHEMA_COVER_LETTER.safeParseAsync({
     cv: formData.get("cv") as string,
     jobDesc: formData.get("jobDesc") as string,
     lang: formData.get("lang"),
+    role: formData.get("role") as string,
+    company: formData.get("company") as string,
   });
 
   if (!success)
@@ -36,8 +38,8 @@ export async function POST(req: NextRequest) {
     );
 
   try {
-    const { stream } = await CV_SCORING_MODEL.generateContentStream(
-      scoringPrompt(data)
+    const { stream } = await COVER_LETTER_MODEL.generateContentStream(
+      coverLetterPrompt(data)
     );
 
     const encoder = new TextEncoder();
