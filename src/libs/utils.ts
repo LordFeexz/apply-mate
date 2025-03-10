@@ -134,3 +134,16 @@ export function sanitizeString(str: string) {
     ],
   });
 }
+
+export function markdownToText(md: string) {
+  return md
+    .replaceAll(/^#{1,6}\s+/gm, "")
+    .replaceAll(/(\*\*|__)(.*?)\1/g, "$2")
+    .replaceAll(/(\*|_)(.*?)\1/g, "$2")
+    .replaceAll(/`(.*?)`/g, "$1")
+    .replaceAll(/```[\s\S]*?```/g, "")
+    .replaceAll(/\[(.*?)\]\(.*?\)/g, "$1")
+    .replaceAll(/!\[(.*?)\]\(.*?\)/g, "$1")
+    .replaceAll(/^>\s+/gm, "")
+    .replaceAll(/^(\s*[-*+]\s+)/gm, "");
+}

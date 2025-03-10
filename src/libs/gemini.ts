@@ -115,22 +115,22 @@ export const COVER_LETTER_MODEL = model.getGenerativeModel(
           text: "Explain why you are interested in this particular position and the company.",
         },
         {
-          text: " Describe your work experience, skills, and achievements that qualify you for the position.",
+          text: "Describe your work experience, skills, and achievements that qualify you for the position.",
         },
         {
-          text: " Explain how your abilities and experiences can contribute positively to the company.",
+          text: "Explain how your abilities and experiences can contribute positively to the company.",
         },
         {
-          text: " Provide specific examples or accomplishments if possible.",
+          text: "Provide specific examples or accomplishments if possible.",
         },
         {
-          text: " Express your interest in discussing your qualifications further during an interview.",
+          text: "Express your interest in discussing your qualifications further during an interview.",
         },
         {
-          text: " Thank the reader for their time and consideration.",
+          text: "Thank the reader for their time and consideration.",
         },
         {
-          text: " Include contact information. (if provided)",
+          text: "Include contact information. (if provided)",
         },
         {
           text: "Ensure the language is formal, clear, and persuasive, with a well-organized structure and concise paragraphs.",

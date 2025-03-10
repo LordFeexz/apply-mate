@@ -94,7 +94,7 @@ function GenerateCoverLetterForm({ lang }: GenerateCoverLetterFormProps) {
         </div>
       </form>
       {!!responses.length && (
-        <ResponseCard responses={responses} loading={pending} />
+        <ResponseCard lang={lang} responses={responses} loading={pending} />
       )}
     </>
   );
