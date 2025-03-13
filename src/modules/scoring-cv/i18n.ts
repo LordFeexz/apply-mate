@@ -45,17 +45,6 @@ const MATCH_SCORE_CARD_DICTIONARY: Record<LANG, ScoreCardDictionary> = {
   },
 };
 
-const MATCH_KEYWORD_CARD_DICTIONARY: Record<LANG, ScoreCardDictionary> = {
-  [LANG.EN]: {
-    title: "Matching Keywords",
-    desc: "No matching keywords",
-  },
-  [LANG.ID]: {
-    title: "Kata Kunci yang Cocok",
-    desc: "Tidak ada kata kunci yang cocok",
-  },
-};
-
 const MISSING_KEYWORD_CARD_DICTIONARY: Record<LANG, ScoreCardDictionary> = {
   [LANG.EN]: {
     title: "Missing Keywords",
@@ -88,9 +77,6 @@ export const getScoreAlertDictionary = (lang: LANG) =>
 
 export const getMatchScoreCardDictionary = (lang: LANG) =>
   MATCH_SCORE_CARD_DICTIONARY[lang] ?? MATCH_SCORE_CARD_DICTIONARY[LANG.EN];
-
-export const getMatchKeywordCardDictionary = (lang: LANG) =>
-  MATCH_KEYWORD_CARD_DICTIONARY[lang] ?? MATCH_KEYWORD_CARD_DICTIONARY[LANG.EN];
 
 export const getMissingKeywordCardDictionary = (lang: LANG) =>
   MISSING_KEYWORD_CARD_DICTIONARY[lang] ??

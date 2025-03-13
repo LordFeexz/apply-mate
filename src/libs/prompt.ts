@@ -1,3 +1,5 @@
+import "server-only";
+
 export interface CVScoringPromptProps {
   jobDesc: string;
   cv: string;
@@ -44,4 +46,17 @@ export function coverLetterPrompt({
     ---------------------------
     cv: ${cv}
   `;
+}
+
+export function generateCvPrompt({ lang, jobDesc, cv }: CVScoringPromptProps) {
+  return `
+    Generate a CV that is suitable for the job description and CV provided.
+    Use the language specified by \`${lang}\` for the response.
+    ----------------------------------------------------------------------------
+    **Job Description:**
+    ${jobDesc}
+    ----------------------------------------------------------------------------
+    **CV:**
+    ${cv}
+    `;
 }

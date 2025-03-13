@@ -15,5 +15,6 @@ export const middleware: NextMiddleware = async (req) => {
 };
 
 export const config = {
-  matcher: "/((?!_next|api).*)",
+  matcher:
+    "/:nextData(_next/data/[^/]+)?/:path((?!_next|api|.*\\.(?:png|jpg|jpeg|svg|gif|ico|webp|avif)).*){\\.json}?",
 };

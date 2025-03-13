@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { memo, useEffect, useRef } from "react";
 import MatchScoreCard from "./match-score-card";
 import ExplanationCard from "./explanation-card";
-import MatchKeywordCard from "./match-keyword-card";
+import MatchKeywordCard from "../../shared/components/match-keyword-card";
 import MissingKeywordCard from "./missing-keyword-card";
 
 export interface ScoreResponseProps extends LangProps {

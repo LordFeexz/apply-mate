@@ -11,21 +11,39 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function cleanText(text: string): string {
+  return text
+    .replace(/\s*\n\s*/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 export async function extractTextFromPDF(buffer: Buffer<ArrayBufferLike>) {
   try {
-    const pdfDocument = await getDocument({ data: buffer }).promise;
-    const numPages = pdfDocument.numPages;
-    let extractedText = "";
+    const pdf = await getDocument({ data: buffer }).promise;
+    let text = "";
 
-    for (let pageNum = 1; pageNum <= numPages; pageNum++) {
-      const page = await pdfDocument.getPage(pageNum);
-      const textContent = await page.getTextContent();
-      extractedText += textContent.items
-        .map((item: any) => item.str)
-        .join(" \n");
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      const page = await pdf.getPage(pageNum);
+      const content = await page.getTextContent();
+
+      const lines: string[] = [];
+      let lastY: number | null = null;
+
+      content.items.forEach((item) => {
+        if ("transform" in item && "str" in item) {
+          const [x, y] = item.transform.slice(-2);
+          if (lastY !== null && Math.abs(y - lastY) > 5) {
+            lines.push("\n");
+          }
+          lines.push(item.str);
+          lastY = y;
+        }
+      });
+
+      text += lines.join(" ") + "\n\n";
     }
-
-    return extractedText;
+    return text;
   } catch (err) {
     return null;
   }
@@ -146,4 +164,45 @@ export function markdownToText(md: string) {
     .replaceAll(/!\[(.*?)\]\(.*?\)/g, "$1")
     .replaceAll(/^>\s+/gm, "")
     .replaceAll(/^(\s*[-*+]\s+)/gm, "");
+}
+
+export function getLineDiff(oldText: string, newText: string) {
+  const oldLines = oldText.split("\n");
+  const newLines = newText.split("\n");
+  const diff: { type: "added" | "removed" | "unchanged"; content: string }[] =
+    [];
+  let i = 0,
+    j = 0;
+
+  while (i < oldLines.length || j < newLines.length) {
+    if (
+      i < oldLines.length &&
+      j < newLines.length &&
+      oldLines[i] === newLines[j]
+    ) {
+      diff.push({ type: "unchanged", content: oldLines[i] });
+      i++;
+      j++;
+    } else if (
+      j < newLines.length &&
+      (i >= oldLines.length || oldLines[i] !== newLines[j])
+    ) {
+      diff.push({ type: "added", content: newLines[j] });
+      j++;
+    } else {
+      diff.push({ type: "removed", content: oldLines[i] });
+      i++;
+    }
+  }
+
+  return diff;
+}
+
+export function formatText(text: string) {
+  return text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line !== "")
+    .join("\n")
+    .replaceAll(/\s+/g, " ");
 }

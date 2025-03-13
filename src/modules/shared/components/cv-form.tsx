@@ -49,6 +49,8 @@ function CvForm({ lang, defaultValue = "" }: CvFormProps) {
           required
           aria-required
           rows={8}
+          aria-multiline
+          maxLength={5000}
         />
       </Suspense>
       <div className="flex items-center justify-between">

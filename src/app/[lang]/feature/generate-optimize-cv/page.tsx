@@ -1,15 +1,15 @@
 import type { PageProps } from "@/interfaces/global";
 import FeatureLayout from "@/components/layouts/feature";
 import { FEATURE, LANG, LANGS } from "@/enums/global";
-import GenerateCoverLetter from "@/modules/generate-cover-letter";
+import GenerateOptimizeCv from "@/modules/generate-optimize-cv";
 import type { Metadata } from "next";
 
 export default async function Page({ params }: PageProps) {
   const { lang } = await params;
 
   return (
-    <FeatureLayout lang={lang} feature={FEATURE.GENERATE_COVER_LETTER}>
-      <GenerateCoverLetter lang={lang} />
+    <FeatureLayout lang={lang} feature={FEATURE.GENERATE_OPTIMIZE_CV}>
+      <GenerateOptimizeCv lang={lang} />
     </FeatureLayout>
   );
 }
@@ -29,38 +29,33 @@ export async function generateMetadata({
   const { lang } = await params;
 
   const title =
-    lang === LANG.ID ? "Generate Cover Letter" : "Generate Cover Letter";
+    lang === LANG.ID ? "Buat CV yang teroptimalkan" : "Generate Optimize CV";
   const description =
     lang === LANG.ID
-      ? "Buat cover letter yang lebih baik dengan AI"
-      : "Generate better cover letters with AI";
+      ? "Buat CV yang di personalisasikan untuk lowongan pekerjaan yang spesifik"
+      : "Generate personalized CV for specific job applications";
 
   return {
     title,
     description,
     keywords: [
-      "cover letter",
-      "create cover letter",
-      "generate cover letter",
-      "buat cover letter",
-      "buat cover letter dengan AI",
-      "generate cover letter dengan AI",
-      "generate cover letter dengan AI gratis",
+      "cv",
+      "create cv",
+      "generate cv",
+      "buat cv",
+      "buat cv dengan AI",
+      "generate cv dengan AI",
+      "generate cv dengan AI gratis",
     ],
     openGraph: {
       title,
       description,
-      url: `${DOMAIN}/${lang}/feature/generate-cover-letter`,
+      url: `${DOMAIN}/${lang}/feature/generate-optimize-cv`,
       type: "website",
       siteName: "Apply Mate",
       locale: lang,
       alternateLocale: ["en-US", "id-ID"],
       countryName: "Indonesia",
-      images: {
-        url: `${DOMAIN}/og/generate-cover-letter-${lang}.png`,
-        type: "image/png",
-        alt: "Apply Mate Generate Cover Letter",
-      },
     },
   };
 }

@@ -41,9 +41,13 @@ function CardTitle({
   );
 }
 
-function CardDescription({ className, ...props }: ComponentProps<"div">) {
+function CardDescription({
+  className,
+  as: Tag = "div",
+  ...props
+}: ComponentProps<"div" | "p"> & { as?: "div" | "p" }) {
   return (
-    <div
+    <Tag
       data-slot="card-description"
       className={cn("text-muted-foreground text-sm", className)}
       {...props}

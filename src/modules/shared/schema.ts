@@ -12,6 +12,13 @@ export const SCHEMA_FILE = z
     { message: "file must be pdf, doc, or docx" }
   );
 
+export const CV_STRING = z
+  .string({
+    required_error: "CV is required",
+    invalid_type_error: "CV must be a string",
+  })
+  .min(50, { message: "CV must be at least 50 characters" });
+
 export const SCHEMA_CV_SCORING = z.object({
   cv: z
     .string({

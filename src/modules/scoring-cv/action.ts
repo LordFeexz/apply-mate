@@ -32,6 +32,7 @@ export async function generateCvScoringAction(
 
     return {
       ...prevState,
+      ...data,
       score: parsed.score,
       missingKeywords: parsed.missingKeywords,
       matchingKeywords: parsed.matchingKeywords,
@@ -39,7 +40,6 @@ export async function generateCvScoringAction(
       parsed: true,
     };
   } catch (err) {
-    console.log(err);
-    return { ...prevState, error: "unexpected error" };
+    return { ...prevState, ...data, error: "unexpected error" };
   }
 }

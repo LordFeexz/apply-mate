@@ -24,6 +24,9 @@ function JobDescForm({ defaultValue, lang, className }: JobDescFormProps) {
         aria-required
         required
         rows={8}
+        aria-multiline
+        minLength={50}
+        maxLength={5000}
         defaultValue={defaultValue}
       />
     </div>

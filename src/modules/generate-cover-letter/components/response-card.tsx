@@ -7,7 +7,7 @@ import { memo, useEffect, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
 import CopyBtn from "@/components/common/copy-btn";
 import type { LangProps } from "@/interfaces/component";
-import { LANG } from "@/enums/global";
+import { getResponseCardDictionary } from "../i18n";
 
 export interface ResponseCardProps extends LangProps {
   loading: boolean;
@@ -15,6 +15,7 @@ export interface ResponseCardProps extends LangProps {
 }
 
 function ResponseCard({ loading, responses, lang }: ResponseCardProps) {
+  const { load } = getResponseCardDictionary(lang);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (ref.current)
@@ -23,6 +24,7 @@ function ResponseCard({ loading, responses, lang }: ResponseCardProps) {
         behavior: "smooth",
       });
   }, [ref]);
+
   const response = useMemo(() => responses.join("\n"), [responses]);
 
   return (
@@ -41,11 +43,7 @@ function ResponseCard({ loading, responses, lang }: ResponseCardProps) {
         <div className="space-y-4">
           <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
             <Loader2 className="h-6 w-6 animate-spin" />
-            <span>
-              {lang === LANG.ID
-                ? "Memproses CV dan deskripsi pekerjaan..."
-                : "Analyzing your CV and job description..."}
-            </span>
+            <span>{load}</span>
           </div>
         </div>
       )}

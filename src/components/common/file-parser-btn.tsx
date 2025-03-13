@@ -11,7 +11,7 @@ import {
   type MouseEventHandler,
 } from "react";
 import { Button, type buttonVariants } from "../ui/button";
-import { cn } from "@/libs/utils";
+import { cn, formatText } from "@/libs/utils";
 import { Input } from "../ui/input";
 import { Loader2, Upload } from "lucide-react";
 import { cvToString } from "@/modules/api/parse-cv";
@@ -72,7 +72,7 @@ function FileParserBtn({
               message:
                 code === 400 && errors ? errors.file.join("\n") : message,
             })
-          : onSuccessHandler(data as string);
+          : onSuccessHandler(formatText(data as string));
       });
     },
     [onSuccessHandler, onFailedHandler]
