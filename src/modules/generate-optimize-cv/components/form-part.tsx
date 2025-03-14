@@ -3,19 +3,16 @@ import CardInputContainer from "@/modules/shared/components/card-input-container
 import DefaultLoader from "@/components/common/default-loader";
 import CvForm from "@/modules/shared/components/cv-form";
 import JobDescForm from "@/modules/shared/components/job-desc-form";
-import InputLangBtn from "@/components/common/input-lang-btn";
 import SubmitBtn from "@/components/common/submit-btn";
 import type { LangProps } from "@/interfaces/component";
 import { getJobDescDictionary, getScoringFormDictionary } from "../i18n";
 import type { IScoringSchema } from "@/modules/shared/schema";
-import type { LANG_GENERATE } from "@/enums/global";
 
 export interface FormPartProps extends LangProps, Omit<IScoringSchema, "lang"> {
-  selectedLang: LANG_GENERATE;
   loading: boolean;
 }
 
-function FormPart({ lang, cv, jobDesc, selectedLang, loading }: FormPartProps) {
+function FormPart({ lang, cv, jobDesc, loading }: FormPartProps) {
   const { cvDesc, cvLabel } = getScoringFormDictionary(lang);
   const { title, desc } = getJobDescDictionary(lang);
 
@@ -38,15 +35,6 @@ function FormPart({ lang, cv, jobDesc, selectedLang, loading }: FormPartProps) {
         >
           <JobDescForm defaultValue={jobDesc} lang={lang} />
         </CardInputContainer>
-        <div className="col-span-2 flex justify-center items-center">
-          <InputLangBtn
-            defaultValue={selectedLang}
-            name="lang"
-            id="lang"
-            required
-            aria-required
-          />
-        </div>
       </div>
       <div className="flex justify-center">
         <SubmitBtn

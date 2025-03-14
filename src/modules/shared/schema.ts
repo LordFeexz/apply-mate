@@ -69,6 +69,22 @@ export const SCHEMA_COVER_LETTER = z.object({
   }),
 });
 
+export const SCHEMA_CV_GENERATE = z.object({
+  cv: z
+    .string({
+      required_error: "CV is required",
+      invalid_type_error: "CV must be a string",
+    })
+    .min(50, { message: "CV must be at least 50 characters" }),
+  jobDesc: z
+    .string({
+      required_error: "Job Description is required",
+      invalid_type_error: "Job Description must be a string",
+    })
+    .min(50, { message: "Job Description must be at least 50 characters" }),
+});
+
 export type IFile = z.infer<typeof SCHEMA_FILE>;
 export type ICoverLetter = z.infer<typeof SCHEMA_COVER_LETTER>;
 export type IScoringSchema = z.infer<typeof SCHEMA_CV_SCORING>;
+export type IGeneratingSchema = z.infer<typeof SCHEMA_CV_GENERATE>;

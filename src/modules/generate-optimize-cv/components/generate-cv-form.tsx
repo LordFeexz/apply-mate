@@ -6,7 +6,6 @@ import type { IGenerateCvState } from "../schema";
 import type { LangProps } from "@/interfaces/component";
 import dynamic from "next/dynamic";
 import FormPart from "./form-part";
-import type { LANG_GENERATE } from "@/enums/global";
 import useGeneratedCV from "../state";
 const ResponseResult = dynamic(() => import("./response-result"));
 
@@ -15,7 +14,6 @@ export interface GenerateCvFormProps extends LangProps {}
 const initialState: IGenerateCvState = {
   cv: "",
   jobDesc: "",
-  lang: "English",
   errors: {},
   error: "",
   generatedCv: "",
@@ -31,7 +29,6 @@ function GenerateCvForm({ lang }: GenerateCvFormProps) {
     {
       cv,
       jobDesc,
-      lang: selectedLang,
       error,
       generatedCv,
       recomendationLinks,
@@ -61,13 +58,7 @@ function GenerateCvForm({ lang }: GenerateCvFormProps) {
           tips={tips}
         />
       ) : (
-        <FormPart
-          selectedLang={selectedLang as LANG_GENERATE}
-          loading={pending}
-          lang={lang}
-          cv={cv}
-          jobDesc={jobDesc}
-        />
+        <FormPart loading={pending} lang={lang} cv={cv} jobDesc={jobDesc} />
       )}
       {error && (
         <div className="flex justify-center items-center">

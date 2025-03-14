@@ -1,9 +1,9 @@
 import type { z } from "zod";
-import type { IScoringSchema } from "../shared/schema";
+import type { IGeneratingSchema } from "../shared/schema";
 import type { CVGeneratingResult } from "@/interfaces/ai";
 
-export type IGenerateCvState = IScoringSchema &
+export type IGenerateCvState = IGeneratingSchema &
   CVGeneratingResult & {
-    errors: z.ZodError<IScoringSchema>["formErrors"]["fieldErrors"];
+    errors: z.ZodError<IGeneratingSchema>["formErrors"]["fieldErrors"];
     error?: string;
   };

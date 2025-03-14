@@ -247,3 +247,378 @@ export const CV_GENERATING_MODEL = model.getGenerativeModel({
     ],
   },
 });
+
+export const CV_GENERATING_SPESIFIC_MODEL = model.getGenerativeModel(
+  {
+    model: GEMINI_FLASH_MODEL_NAME,
+    generationConfig: {
+      temperature: 0.3,
+      responseMimeType: "application/json",
+      maxOutputTokens: 2750,
+      responseSchema: {
+        type: SchemaType.OBJECT,
+        required: [
+          "tips",
+          "generatedCv",
+          "recomendationLinks",
+          "keywords",
+          "improvements",
+        ],
+        properties: {
+          tips: {
+            type: SchemaType.ARRAY,
+            nullable: false,
+            description: "Tips to improve CV",
+            items: {
+              type: SchemaType.STRING,
+              nullable: false,
+              description: "Resume Tips",
+            },
+          },
+          recomendationLinks: {
+            type: SchemaType.ARRAY,
+            nullable: false,
+            description: "Recomendation Link",
+            items: {
+              type: SchemaType.STRING,
+              nullable: false,
+              description:
+                "Recomendation for user what link they should add (example: LinkedIn Profile, Github Profile, Personal Website, etc)",
+            },
+          },
+          keywords: {
+            type: SchemaType.ARRAY,
+            nullable: false,
+            description: "Recomendation keywords",
+            items: {
+              type: SchemaType.STRING,
+              nullable: false,
+              description: "Keyword that relevant to job description",
+            },
+          },
+          improvements: {
+            type: SchemaType.ARRAY,
+            nullable: false,
+            description: "List of improvements have been made on cv",
+            items: {
+              type: SchemaType.STRING,
+              nullable: false,
+              description: "What have been improved from CV",
+            },
+          },
+          generatedCv: {
+            type: SchemaType.OBJECT,
+            nullable: false,
+            required: [
+              "title",
+              "contact",
+              "objective",
+              "experiences",
+              "educations",
+              "projects",
+              "portfolios",
+              "hardSkills",
+              "softSkills",
+              "certificates",
+              "languages",
+            ],
+            properties: {
+              title: {
+                type: SchemaType.STRING,
+                nullable: false,
+                description: "Title of CV",
+              },
+              contact: {
+                type: SchemaType.ARRAY,
+                nullable: false,
+                description:
+                  "Contact information of CV add contact information such as email, phone number, and LinkedIn profile URL if provided, but if not provided add [ADD YOUR CONTACT INFORMATION HERE]",
+                items: {
+                  type: SchemaType.OBJECT,
+                  nullable: false,
+                  properties: {
+                    title: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description: "Title of contact information",
+                    },
+                    url: {
+                      type: SchemaType.STRING,
+                      nullable: true,
+                      description: "URL of contact information, if provided",
+                    },
+                  },
+                },
+              },
+              objective: {
+                type: SchemaType.STRING,
+                nullable: false,
+                description:
+                  "Objective of CV, A brief paragraph (2–3 sentences) can be a summary or a description of your experience, skills, or other relevant information that sets you apart from others in the job market.",
+              },
+              experiences: {
+                type: SchemaType.ARRAY,
+                nullable: false,
+                description:
+                  "The most Relevant experiences of CV, if not provided, return []",
+                items: {
+                  type: SchemaType.OBJECT,
+                  nullable: false,
+                  required: [
+                    "company",
+                    "description",
+                    "role",
+                    "startDate",
+                    "endDate",
+                    "responsibilities",
+                  ],
+                  properties: {
+                    company: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description: "The name of the company",
+                    },
+                    description: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description: "Description of Experience",
+                    },
+                    role: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description:
+                        "Role of Experience, example: Fullstack Developer",
+                    },
+                    startDate: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description: "Start Date of Experience",
+                      format: "date-time",
+                    },
+                    endDate: {
+                      type: SchemaType.STRING,
+                      nullable: true,
+                      description: "End Date of Experience",
+                      format: "date-time",
+                    },
+                    responsibilities: {
+                      type: SchemaType.ARRAY,
+                      nullable: false,
+                      description: "Responsibilities of Experience",
+                      items: {
+                        type: SchemaType.STRING,
+                        nullable: false,
+                        description: "Responsibility of Experience",
+                      },
+                    },
+                  },
+                },
+              },
+              educations: {
+                type: SchemaType.ARRAY,
+                nullable: false,
+                description:
+                  "The most Relevant Educations of CV to job description, if not provided, return []",
+                items: {
+                  required: ["degree", "major", "school", "startDate"],
+                  type: SchemaType.OBJECT,
+                  nullable: false,
+                  properties: {
+                    degree: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description: "Degree of Education",
+                    },
+                    major: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description: "Major of Education",
+                    },
+                    school: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description: "School of Education",
+                    },
+                    startDate: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description: "Start Date of Education",
+                      format: "date-time",
+                    },
+                    endDate: {
+                      type: SchemaType.STRING,
+                      nullable: true,
+                      description: "End Date of Education",
+                      format: "date-time",
+                    },
+                  },
+                },
+              },
+              projects: {
+                type: SchemaType.OBJECT,
+                nullable: false,
+                description:
+                  "The most Relevant Projects of CV to job description",
+                required: ["title", "description", "startDate", "endDate"],
+                properties: {
+                  title: {
+                    type: SchemaType.STRING,
+                    nullable: false,
+                    description: "Title of Project",
+                  },
+                  description: {
+                    type: SchemaType.STRING,
+                    nullable: false,
+                    description: "Description of Project",
+                  },
+                  startDate: {
+                    type: SchemaType.STRING,
+                    nullable: false,
+                    description: "Start Date of Project",
+                    format: "date-time",
+                  },
+                  endDate: {
+                    type: SchemaType.STRING,
+                    nullable: true,
+                    description: "End Date of Project",
+                    format: "date-time",
+                  },
+                },
+              },
+              portfolios: {
+                type: SchemaType.ARRAY,
+                nullable: false,
+                description:
+                  "The most Relevant List Portfolios URL of CV to job description",
+                items: {
+                  type: SchemaType.OBJECT,
+                  nullable: false,
+                  description:
+                    "Relevant Portfolio URL of CV to job description",
+                  required: ["title", "url"],
+                  properties: {
+                    title: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description: "Title of Portfolio",
+                    },
+                    url: {
+                      type: SchemaType.STRING,
+                      nullable: true,
+                      description: "URL of Portfolio",
+                    },
+                  },
+                },
+              },
+              hardSkills: {
+                type: SchemaType.ARRAY,
+                nullable: false,
+                description:
+                  "The Most Relevant Hard Skills of CV to job description",
+                items: {
+                  type: SchemaType.STRING,
+                  nullable: false,
+                  description: "Relevant Hard Skill of CV",
+                },
+              },
+              softSkills: {
+                type: SchemaType.ARRAY,
+                nullable: false,
+                description:
+                  "The Most Relevant Soft Skills of CV to job description",
+                items: {
+                  type: SchemaType.STRING,
+                  nullable: false,
+                  description: "Relevant Soft Skill of CV",
+                },
+              },
+              certificates: {
+                type: SchemaType.ARRAY,
+                nullable: false,
+                description:
+                  "The Most Relevant Certificate of CV to job description",
+                items: {
+                  type: SchemaType.OBJECT,
+                  nullable: false,
+                  description: "Certificate of CV",
+                  required: ["name", "date"],
+                  properties: {
+                    name: {
+                      type: SchemaType.STRING,
+                      nullable: false,
+                      description: "Name of Certificate",
+                    },
+                    date: {
+                      type: SchemaType.STRING,
+                      nullable: true,
+                      description: "Date of Certificate",
+                      format: "date-time",
+                    },
+                  },
+                },
+              },
+              languages: {
+                type: SchemaType.ARRAY,
+                nullable: false,
+                description: "Languages Section of CV",
+                items: {
+                  type: SchemaType.STRING,
+                  nullable: false,
+                  description: "Language of CV",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    systemInstruction: {
+      role: "system",
+      parts: [
+        {
+          text: "Act as a professional resume writer or senior HR recruiter with 10 years of experience",
+        },
+        {
+          text: "Your task is to personalized resume in MDX format (markdown formatted for PDF) based on the job description",
+        },
+        {
+          text: "You can use current resume for context, but not include it in the result as possible",
+        },
+        {
+          text: "Make sure the resume is not too long and fit in one page (about 6000-7000 characters)",
+        },
+        {
+          text: "Include the most relevant part of sections from the CV to the job description.",
+        },
+        {
+          text: `
+          **Guidelines:**
+          - **Analyze** the job description to extract relevant keywords, skills, and industry-specific language.
+          - **Transform** the provided CV by aligning its content with the job description. Replace or enhance keywords to match those in the job description (format these keywords as ***bold and italic***).
+          - **Incorporate** action verbs and quantifiable results where needed. If the CV lacks these, directly modify the text to include them—do not provide suggestions.
+          - **Match** the language of the job description (if the job description is in English, use English).
+          - **Ensure** the resume is concise, professional, and fits into a one-page PDF. compress the resume as much as possible, including removing unnecessary sections and paragraphs.
+          - **Format** the resume using markdown with clear, bullet-pointed sections and **bold section titles**.
+          `,
+        },
+        {
+          text: `
+          **Resume Format:**
+          - **Title**
+          - **Contact** (email, phone number, LinkedIn if provided)
+          - **Objective:** A brief paragraph (2–3 sentences).
+          - **Experience:** List relevant work experience with enhanced action verbs and quantifiable results (include only if applicable).
+          - **Education:** Include relevant education details (for fresh graduates, place this section before Experience).
+          - **Project:** List relevant projects enhanced with action verbs and measurable outcomes (if provided).
+          - **Portfolio:** Include if available and relevant.
+          - **Hard Skills:** List technical skills with brief explanations, using action verbs (if provided and relevant).
+          - **Soft Skills:** Group related skills (e.g., teamwork, leadership, communication) (if provided and relevant).
+          - **Certificate:** List relevant certifications (if provided).
+          - **Languages:** Include language proficiencies (if provided).
+          `,
+        },
+      ],
+    },
+  },
+  { timeout: 60000 }
+);

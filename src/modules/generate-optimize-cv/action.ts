@@ -1,7 +1,7 @@
 "use server";
 
 import { CV_GENERATING_MODEL } from "@/libs/gemini";
-import { SCHEMA_CV_SCORING } from "../shared/schema";
+import { SCHEMA_CV_GENERATE } from "../shared/schema";
 import type { IGenerateCvState } from "./schema";
 import { generateCvPrompt } from "@/libs/prompt";
 import type { CVGeneratingResult } from "@/interfaces/ai";
@@ -10,10 +10,9 @@ export async function generateOptimizeCvAction(
   prevState: IGenerateCvState,
   formData: FormData
 ) {
-  const { success, data, error } = await SCHEMA_CV_SCORING.safeParseAsync({
+  const { success, data, error } = await SCHEMA_CV_GENERATE.safeParseAsync({
     cv: formData.get("cv") as string,
     jobDesc: formData.get("jobDesc") as string,
-    lang: formData.get("lang"),
   });
 
   if (!success)

@@ -48,10 +48,14 @@ export function coverLetterPrompt({
   `;
 }
 
-export function generateCvPrompt({ lang, jobDesc, cv }: CVScoringPromptProps) {
+export function generateCvPrompt({
+  jobDesc,
+  cv,
+}: Omit<CVScoringPromptProps, "lang">) {
   return `
     Generate a CV that is suitable for the job description and CV provided.
-    Use the language specified by \`${lang}\` for the response.
+    Only include a relevant part of the cv to the job description.
+    Use the language specified by job description for the response.
     ----------------------------------------------------------------------------
     **Job Description:**
     ${jobDesc}
