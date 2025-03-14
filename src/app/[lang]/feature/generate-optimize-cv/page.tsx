@@ -56,6 +56,11 @@ export async function generateMetadata({
       locale: lang,
       alternateLocale: ["en-US", "id-ID"],
       countryName: "Indonesia",
+      images: {
+        url: `${DOMAIN}/og/generate-optimize-cv-${lang}.png`,
+        type: "image/png",
+        alt: "Apply Mate Generate Optimize CV",
+      },
     },
   };
 }
