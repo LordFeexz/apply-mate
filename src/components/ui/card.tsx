@@ -2,9 +2,15 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@/libs/utils";
 
-function Card({ className, ...props }: ComponentProps<"div">) {
+function Card({
+  className,
+  as: Tag = "div",
+  ...props
+}: ComponentProps<"div"> & {
+  as?: "div" | "section" | "article" | "main";
+}) {
   return (
-    <div
+    <Tag
       data-slot="card"
       className={cn(
         "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",

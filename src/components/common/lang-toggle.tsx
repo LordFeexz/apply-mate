@@ -31,7 +31,7 @@ function LangToggle({ itemClassName, className, ...rest }: LangToggleProps) {
       () => {
         const paths = pathname.split("/");
         paths[1] = lang;
-        router.push(paths.join("/"));
+        router.push(paths.join("/"), { scroll: false });
       },
     [pathname, router]
   );

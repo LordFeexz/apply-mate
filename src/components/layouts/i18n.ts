@@ -10,6 +10,10 @@ export interface HeaderDictionary {
 export interface FooterDictionary {
   privacy: string;
   term: string;
+  desc: string;
+  feature: string;
+  organization: string;
+  account: string;
 }
 
 export interface FeatureDictionary {
@@ -35,10 +39,18 @@ const FOOTER_DICTIONARY: Record<LANG, FooterDictionary> = {
   [LANG.EN]: {
     privacy: "Privacy Policy",
     term: "Term of Service",
+    desc: "Create professional CVs and cover letters tailored to specific job descriptions.",
+    feature: "Feature",
+    organization: "Organization",
+    account: "Account",
   },
   [LANG.ID]: {
     privacy: "Kebijakan Privasi",
     term: "Syarat dan Ketentuan",
+    desc: "Buat CV profesional dan surat lamaran yang sesuai dengan deskripsi pekerjaan tertentu.",
+    feature: "Fitur",
+    organization: "Organisasi",
+    account: "Akun",
   },
 };
 
