@@ -64,3 +64,5 @@ export async function generateMetadata({
     },
   };
 }
+
+export const dynamicParams = false;
