@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "2mb",
     },
   },
+  env: {
+    GOOGLE_OAUTH_CLIENTID: process.env.GOOGLE_OAUTH_CLIENTID,
+  },
+  serverExternalPackages: ["sequelize", "sequelize-typescript"],
 };
 
 export default nextConfig;

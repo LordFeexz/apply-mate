@@ -3,6 +3,10 @@ export declare global {
     interface ProcessEnv {
       DOMAIN: string;
       GEMINI_API_KEY: string;
+      JWT_SECRET: string;
+      NEXTAUTH_SECRET: string;
+      GOOGLE_OAUTH_CLIENTID: string;
+      GOOGLE_OAUTH_CLIENT_SECRET: string;
     }
   }
 }

@@ -12,7 +12,9 @@ import dynamic from "next/dynamic";
 import InputLangBtn from "@/components/common/input-lang-btn";
 import type { IScoringState } from "../schema";
 import { generateCvScoringAction } from "../action";
-const ScoringResponse = dynamic(() => import("./score-response"));
+const ScoringResponse = dynamic(() => import("./score-response"), {
+  ssr: false,
+});
 
 export interface ScoringFormProps extends LangProps {}
 

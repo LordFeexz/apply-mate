@@ -69,10 +69,6 @@ export const ACCOUNT_NAVIGATION_EN: Navigation[] = [
     href: "/en/sign-in",
   },
   {
-    label: "Sign Up",
-    href: "/en/sign-up",
-  },
-  {
     label: "Credits",
     href: "/en/topup",
   },
@@ -82,10 +78,6 @@ export const ACCOUNT_NAVIGATION_ID: Navigation[] = [
   {
     label: "Masuk",
     href: "/id/sign-in",
-  },
-  {
-    label: "Daftar",
-    href: "/id/sign-up",
   },
   {
     label: "Kredit",

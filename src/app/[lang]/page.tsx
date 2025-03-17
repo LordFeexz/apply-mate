@@ -11,7 +11,7 @@ export default async function Home({ params }: PageProps) {
 
 export const dynamic = "force-static";
 
-export const revalidate = 0;
+export const revalidate = false;
 
 export async function generateStaticParams() {
   return LANGS.map((lang) => ({ lang }));

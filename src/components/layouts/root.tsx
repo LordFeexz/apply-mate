@@ -5,6 +5,7 @@ import Loader from "nextjs-toploader";
 import AppThemeProvider from "../providers/theme";
 import "@/styles/globals.css";
 import { Toaster } from "../ui/sonner";
+import { SessionProvider } from "../providers/session";
 
 export interface RootLayoutProps extends ChildrenProps, LangProps {
   className?: string;
@@ -40,7 +41,7 @@ export default function RootLayout({
           shadow="0 0 10px #05b6d3,0 0 5px #45c6c0"
         />
         <AppThemeProvider>
-          {children}
+          <SessionProvider>{children}</SessionProvider>
           <Toaster />
         </AppThemeProvider>
       </body>

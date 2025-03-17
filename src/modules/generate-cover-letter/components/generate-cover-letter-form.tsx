@@ -21,7 +21,7 @@ import InputLangBtn from "@/components/common/input-lang-btn";
 import SubmitBtn from "@/components/common/submit-btn";
 import { sanitizeString } from "@/libs/utils";
 import dynamic from "next/dynamic";
-const ResponseCard = dynamic(() => import("./response-card"));
+const ResponseCard = dynamic(() => import("./response-card"), { ssr: false });
 
 export interface GenerateCoverLetterFormProps extends LangProps {}
 

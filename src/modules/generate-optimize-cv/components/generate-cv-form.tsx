@@ -7,7 +7,9 @@ import type { LangProps } from "@/interfaces/component";
 import dynamic from "next/dynamic";
 import FormPart from "./form-part";
 import useGeneratedCV from "../state";
-const ResponseResult = dynamic(() => import("./response-result"));
+const ResponseResult = dynamic(() => import("./response-result"), {
+  ssr: false,
+});
 
 export interface GenerateCvFormProps extends LangProps {}
 
