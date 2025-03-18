@@ -17,3 +17,5 @@ export const dynamic = "force-static";
 export async function generateStaticParams() {
   return LANGS.map((lang) => ({ lang }));
 }
+
+//todo add metadata

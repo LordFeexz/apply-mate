@@ -11,6 +11,15 @@ import { motion } from "framer-motion";
 import { memo, useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/libs/utils";
+import PointSectionLoader from "@/modules/shared/point-section-loader";
+import importDynamic from "next/dynamic";
+const PointSection = importDynamic(
+  () => import("@/modules/shared/point-section"),
+  {
+    loading: () => <PointSectionLoader />,
+    ssr: false,
+  }
+);
 
 export interface FeatureTabProps extends ChildrenProps, LangProps {
   feature: FEATURE | "";
@@ -63,7 +72,10 @@ function FeatureTab({ children, lang, feature }: FeatureTabProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <TabsContent value={feature}>{children}</TabsContent>
+        <TabsContent value={feature} className="space-y-8">
+          {feature && <PointSection lang={lang} />}
+          {children}
+        </TabsContent>
       </motion.div>
     </Tabs>
   );

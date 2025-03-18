@@ -4,6 +4,7 @@ import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import mammoth from "mammoth";
 import sanitize from "sanitize-html";
 import "pdfjs-dist/build/pdf.worker.min.mjs";
+import { LANG, LANGS } from "@/enums/global";
 
 GlobalWorkerOptions.workerSrc = "pdfjs-dist/build/pdf.worker.min.mjs";
 
@@ -205,4 +206,8 @@ export function formatText(text: string) {
     .filter((line) => line !== "")
     .join("\n")
     .replaceAll(/\s+/g, " ");
+}
+
+export function getValidLang(raw: string) {
+  return LANGS.includes(raw as LANG) ? (raw as LANG) : LANG.EN;
 }

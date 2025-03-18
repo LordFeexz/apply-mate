@@ -4,11 +4,13 @@ const model = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export const GEMINI_FLASH_MODEL_NAME = "gemini-1.5-flash";
 
+export const GEMINI_2_FLASH_MODEL_NAME = "gemini-2.0-flash";
+
 export const GEMINI_PRO_MODEL_NAME = "gemini-1.5-pro";
 
 export const CV_SCORING_MODEL = model.getGenerativeModel(
   {
-    model: GEMINI_FLASH_MODEL_NAME,
+    model: GEMINI_2_FLASH_MODEL_NAME,
     generationConfig: {
       temperature: 0.3,
       responseMimeType: "application/json",
@@ -91,7 +93,7 @@ export const CV_SCORING_MODEL = model.getGenerativeModel(
 
 export const COVER_LETTER_MODEL = model.getGenerativeModel(
   {
-    model: GEMINI_FLASH_MODEL_NAME,
+    model: GEMINI_2_FLASH_MODEL_NAME,
     generationConfig: {
       temperature: 0.4,
       maxOutputTokens: 600,
@@ -135,7 +137,7 @@ export const COVER_LETTER_MODEL = model.getGenerativeModel(
 );
 
 export const CV_GENERATING_MODEL = model.getGenerativeModel({
-  model: GEMINI_FLASH_MODEL_NAME,
+  model: GEMINI_2_FLASH_MODEL_NAME,
   generationConfig: {
     temperature: 0.3,
     responseMimeType: "application/json",
@@ -250,7 +252,7 @@ export const CV_GENERATING_MODEL = model.getGenerativeModel({
 
 export const CV_GENERATING_SPESIFIC_MODEL = model.getGenerativeModel(
   {
-    model: GEMINI_FLASH_MODEL_NAME,
+    model: GEMINI_2_FLASH_MODEL_NAME,
     generationConfig: {
       temperature: 0.3,
       responseMimeType: "application/json",

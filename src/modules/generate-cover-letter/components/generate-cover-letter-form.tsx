@@ -83,7 +83,7 @@ function GenerateCoverLetterForm({ lang }: GenerateCoverLetterFormProps) {
           <CardInputContainer title={title} desc={desc}>
             <JobDescForm lang={lang} className="h-[520px]" />
           </CardInputContainer>
-          <div className="col-span-2 flex justify-center items-center">
+          <div className="md:col-span-2 flex justify-center items-center">
             <InputLangBtn name="lang" id="lang" required aria-required />
           </div>
         </div>
