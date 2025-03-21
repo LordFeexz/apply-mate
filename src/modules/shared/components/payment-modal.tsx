@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CreditCard, QrCode } from "lucide-react";
 import dynamic from "next/dynamic";
 const VaForm = dynamic(() => import("./va-form"), { ssr: false });
+const EWalletForm = dynamic(() => import("./ewallet-form"), { ssr: false });
 import type { LangProps } from "@/interfaces/component";
 import type { PAYG_PAYMENT } from "@/enums/global";
 
@@ -14,7 +15,7 @@ export interface PaymentModalProps extends LangProps {
 
 function PaymentModal({ feature, lang }: PaymentModalProps) {
   return (
-    <Tabs value="va" className="w-full">
+    <Tabs defaultValue="va" className="w-full">
       <TabsList className="grid grid-cols-2 mb-4 w-full">
         <TabsTrigger value="va" className="flex items-center gap-1">
           <CreditCard className="h-4 w-4" />
@@ -27,6 +28,9 @@ function PaymentModal({ feature, lang }: PaymentModalProps) {
       </TabsList>
       <TabsContent value="va" className="mt-0 w-full">
         <VaForm lang={lang} feature={feature} />
+      </TabsContent>
+      <TabsContent value="e-wallet" className="mt-0 w-full">
+        <EWalletForm lang={lang} feature={feature} />
       </TabsContent>
     </Tabs>
   );

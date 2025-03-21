@@ -8,13 +8,18 @@ import {
   SUBSCRIBE_BY_BANK_SCHEMA,
   SUBSCRIBE_BY_EWALLET_SCHEMA,
   type ISubscribeByBankSchema,
+  type ISubscribeByEwalletSchema,
   type ISubscribeState,
 } from "./schema";
 import { Transaction } from "@/models";
 import { v4 } from "uuid";
 import { PRICING } from "@/enums/plan";
 import { BANK_PAYMENT_METHOD } from "@/constants/payment";
-import { chargeTopupViaBankTransfer, generateSignature } from "@/libs/midtrans";
+import {
+  chargeTopupViaBankTransfer,
+  chargeTopupViaEWallet,
+  generateSignature,
+} from "@/libs/midtrans";
 
 export async function getCurrentProfile() {
   const session = await getServerSideSession();
@@ -64,12 +69,20 @@ export async function subscribedAction(
   });
   if (existing) redirect(`/${lang}/transaction/${existing.id}`);
 
-  const charge = await chargeTopupViaBankTransfer({
-    email: user.email,
-    name: user.name,
-    amount: PRICING.SUBSCRIPTION,
-    bank: (data as ISubscribeByBankSchema)?.bank,
-  });
+  const charge = await (data.type === "e-wallet"
+    ? chargeTopupViaEWallet({
+        amount: PRICING.SUBSCRIPTION,
+        provider: "Gopay",
+        name: user.name,
+        email: user.email,
+      })
+    : chargeTopupViaBankTransfer({
+        email: user.email,
+        name: user.name,
+        amount: PRICING.SUBSCRIPTION,
+        bank: (data as ISubscribeByBankSchema)?.bank,
+      }));
+
   if (!charge || +charge.status_code > 204)
     return {
       ...prevState,
@@ -87,13 +100,16 @@ export async function subscribedAction(
     description: "Purchasing Subscription",
     detail: {
       feature: data.feature,
-      provider: (data as ISubscribeByBankSchema)?.bank,
+      provider:
+        data.type === "e-wallet"
+          ? (data as ISubscribeByEwalletSchema)?.ewallet
+          : (data as ISubscribeByBankSchema)?.bank,
       va_number:
         (data as ISubscribeByBankSchema)?.bank === "PERMATA"
           ? charge.permata_va_number ?? []
           : charge?.va_numbers ?? [],
       actions: charge?.actions ?? [],
-      item: "",
+      item: "SUBSCRIPTION",
     },
     signature: generateSignature(
       charge.order_id,
@@ -101,9 +117,11 @@ export async function subscribedAction(
       charge.gross_amount
     ),
     fee:
-      BANK_PAYMENT_METHOD.find(
-        (el) => el.name === (data as ISubscribeByBankSchema)?.bank
-      )?.fee || 0,
+      data.type === "e-wallet"
+        ? PRICING.SUBSCRIPTION * (0.7 / 100)
+        : BANK_PAYMENT_METHOD.find(
+            (el) => el.name === (data as ISubscribeByBankSchema)?.bank
+          )?.fee || 0,
     tax: 0,
     created_at: new Date(),
     updated_at: new Date(),
@@ -111,9 +129,18 @@ export async function subscribedAction(
 
   return {
     ...prevState,
-    va:
-      (data as ISubscribeByBankSchema)?.bank === "PERMATA"
-        ? charge.permata_va_number
-        : charge?.va_numbers?.[0]?.va_number,
+    ...data,
+    ...(data.type === "e-wallet"
+      ? {
+          qr: charge.actions?.find((el) => el.name === "generate-qr-code")?.url,
+          va: "",
+        }
+      : {
+          va:
+            (data as ISubscribeByBankSchema)?.bank === "PERMATA"
+              ? charge.permata_va_number
+              : charge?.va_numbers?.[0]?.va_number,
+          qr: "",
+        }),
   };
 }

@@ -13,6 +13,11 @@ export interface VaFormDictionary {
   note: string;
 }
 
+export interface EWalletFormDictionary {
+  title: string;
+  note: string;
+}
+
 export interface ScoringFormDictionary {
   cvLabel: string;
   cvDesc: string;
@@ -85,6 +90,17 @@ const VA_FORM_DICTIONARY: Record<LANG, VaFormDictionary> = {
   },
 };
 
+const EWALLET_FORM_DICTIONARY: Record<LANG, EWalletFormDictionary> = {
+  [LANG.EN]: {
+    title: "Scan QR Code",
+    note: "Note: QR code transactions incur an additional fee of 0.7% of the transaction value",
+  },
+  [LANG.ID]: {
+    title: "Scan QR Code",
+    note: "Catatan: Transaksi dengan E-Wallet akan dikenakan fee sebesar 0.7% dari total transaksi",
+  },
+};
+
 export const getCvDictionary = (lang: LANG) =>
   CV_FORM_DICTIONARY[lang] ?? CV_FORM_DICTIONARY[LANG.EN];
 
@@ -96,3 +112,6 @@ export const getMatchKeywordCardDictionary = (lang: LANG) =>
 
 export const getVaDictionary = (lang: LANG) =>
   VA_FORM_DICTIONARY[lang] ?? VA_FORM_DICTIONARY[LANG.EN];
+
+export const getEwalletDictionary = (lang: LANG) =>
+  EWALLET_FORM_DICTIONARY[lang] ?? EWALLET_FORM_DICTIONARY[LANG.EN];

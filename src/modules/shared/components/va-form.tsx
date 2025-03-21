@@ -30,7 +30,11 @@ function VaForm({ lang, feature }: VaFormProps) {
   });
 
   return (
-    <form action={formAction} className="grid gap-4 py-4 max-w-sm" id="va-form">
+    <form
+      action={formAction}
+      className="grid gap-4 py-4 max-w-sm h-125"
+      id="va-form"
+    >
       <input
         type="hidden"
         name="type"
@@ -70,7 +74,7 @@ function VaForm({ lang, feature }: VaFormProps) {
         </div>
 
         <div className="space-y-4">
-          {state.va && (
+          {!!state.va && (
             <div className="bg-muted/50 p-3 rounded-md max-w-sm">
               <div className="text-sm text-muted-foreground mb-1 flex justify-between items-center">
                 {accountNo}
@@ -108,7 +112,9 @@ function VaForm({ lang, feature }: VaFormProps) {
           </div>
         </div>
       </div>
-      <SubmitBtn>Submit</SubmitBtn>
+      <SubmitBtn className="mt-auto" disabled={pending || !!state.va}>
+        Submit
+      </SubmitBtn>
     </form>
   );
 }

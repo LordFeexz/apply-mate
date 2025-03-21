@@ -114,7 +114,7 @@ export const SUBSCRIBE_BY_EWALLET_SCHEMA = z.object({
       invalid_type_error: "feature must be a string",
     }
   ),
-  ewallet: z.enum(["gopay"], {
+  ewallet: z.enum(["Gopay"], {
     required_error: "bank is required",
     invalid_type_error: "bank must be a string",
   }),
@@ -137,4 +137,5 @@ export type ISubscribeState = (
   >["formErrors"]["fieldErrors"];
   error?: string;
   va?: string;
+  qr?: string;
 };
