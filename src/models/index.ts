@@ -5,6 +5,7 @@ import "pg";
 import "pg-hstore";
 import { User } from "./user";
 import { GenerateProfile } from "./generate_profile";
+import { Transaction } from "./transaction";
 
 let sequelize: Sequelize;
 
@@ -41,11 +42,13 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
-let models = [User, GenerateProfile];
+let models = [User, GenerateProfile, Transaction];
 
 models.forEach((model) => model.initialize(sequelize));
 
 User.hasOne(GenerateProfile, { foreignKey: "user_id" });
+User.hasMany(Transaction, { foreignKey: "user_id" });
 GenerateProfile.belongsTo(User, { foreignKey: "user_id" });
+Transaction.belongsTo(User, { foreignKey: "user_id" });
 
-export { sequelize as DB, User, GenerateProfile };
+export { sequelize as DB, User, GenerateProfile, Transaction };

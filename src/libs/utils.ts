@@ -211,3 +211,8 @@ export function formatText(text: string) {
 export function getValidLang(raw: string) {
   return LANGS.includes(raw as LANG) ? (raw as LANG) : LANG.EN;
 }
+
+export function sendPaymentEvent(userId: string, data: string) {
+  if (!globalThis.paymentEvents) globalThis.paymentEvents = {};
+  globalThis.paymentEvents[userId]?.write(data);
+}

@@ -57,11 +57,13 @@ export async function googleLoginAction(rawToken: string) {
     if (created)
       await GenerateProfile.create(
         {
-          free_points: 3,
-          paid_points: 0,
+          points: 0,
           user_id: user.id,
           created_at: new Date(),
           updated_at: new Date(),
+          pay_as_you_go_payments: [],
+          premium_end_date: null,
+          premium_start_date: null,
         },
         { transaction }
       );

@@ -1,3 +1,4 @@
+import "server-only";
 import { Model, Sequelize, DataTypes } from "sequelize";
 
 export interface UserAttributes {

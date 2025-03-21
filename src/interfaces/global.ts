@@ -16,6 +16,5 @@ export interface CustomSession extends Session {
   user: {
     id: string;
     name: string;
-    access_token: string;
   };
 }

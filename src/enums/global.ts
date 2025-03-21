@@ -27,3 +27,9 @@ export enum LANG_GENERATE {
 }
 
 export const LANG_GENERATES = Object.values(LANG_GENERATE);
+
+export enum PAYG_PAYMENT {
+  CV_SCORING = "scoring-cv",
+  CV_GENERATE = "generate-optimize-cv",
+  COVER_LETTER_GENERATE = "generate-cover-letter",
+}

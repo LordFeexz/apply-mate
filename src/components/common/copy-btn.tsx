@@ -59,9 +59,7 @@ function CopyBtn({
       {copied ? (
         <>
           <CopyCheck className="w-4 h-4" />
-          <span>
-            {lang === LANG.ID ? "Tersalin ke clipboard" : "Copied to clipboard"}
-          </span>
+          <span>{lang === LANG.ID ? "Tersalin" : "Copied"}</span>
         </>
       ) : (
         <>

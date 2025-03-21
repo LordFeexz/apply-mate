@@ -1,12 +1,16 @@
+import "server-only";
+import type { PAYG_PAYMENT } from "@/enums/global";
 import { DataTypes, Model, Sequelize } from "sequelize";
 
 export interface GenerateProfileAttributes {
   id: number;
-  free_points: number;
-  paid_points: number;
+  points: number;
   user_id: string;
   created_at: Date;
   updated_at: Date;
+  premium_start_date: Date | null;
+  premium_end_date: Date | null;
+  pay_as_you_go_payments: PAYG_PAYMENT[];
 }
 
 export class GenerateProfile
@@ -14,11 +18,13 @@ export class GenerateProfile
   implements GenerateProfileAttributes
 {
   declare id: number;
-  declare free_points: number;
-  declare paid_points: number;
+  declare points: number;
   declare user_id: string;
   declare created_at: Date;
   declare updated_at: Date;
+  declare premium_start_date: Date | null;
+  declare premium_end_date: Date | null;
+  declare pay_as_you_go_payments: PAYG_PAYMENT[];
 
   public static initialize(sequelize: Sequelize) {
     this.init(
@@ -29,15 +35,10 @@ export class GenerateProfile
           primaryKey: true,
           type: DataTypes.INTEGER,
         },
-        free_points: {
+        points: {
           type: DataTypes.DECIMAL(10, 2),
           allowNull: false,
           defaultValue: 3,
-        },
-        paid_points: {
-          type: DataTypes.DECIMAL(10, 2),
-          allowNull: false,
-          defaultValue: 0.0,
         },
         user_id: {
           type: DataTypes.UUID,
@@ -65,6 +66,28 @@ export class GenerateProfile
         updated_at: {
           allowNull: false,
           type: DataTypes.DATE,
+        },
+        premium_start_date: {
+          type: DataTypes.DATE,
+          allowNull: true,
+          defaultValue: null,
+        },
+        premium_end_date: {
+          type: DataTypes.DATE,
+          allowNull: true,
+          defaultValue: null,
+          validate: {
+            isAfter: {
+              args: "premium_start_date",
+              msg: "premium_end_date must be after premium_start_date",
+            },
+          },
+        },
+        pay_as_you_go_payments: {
+          // kalau feature nya ada di dalam array nya maka valid
+          type: DataTypes.ARRAY(DataTypes.STRING),
+          allowNull: true,
+          defaultValue: [],
         },
       },
       {

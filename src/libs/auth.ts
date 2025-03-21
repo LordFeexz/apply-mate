@@ -25,7 +25,6 @@ export const authOptions: NextAuthOptions = {
           return {
             id,
             name: "user",
-            access_token: credentials?.access_token,
           };
         } catch (err) {
           return null;
@@ -53,7 +52,7 @@ export const authOptions: NextAuthOptions = {
       token: TokenSet;
     }) {
       session.user.id = token.id;
-      session.user.access_token = token.access_token;
+      // session.user.access_token = token.access_token;
 
       return session;
     },
@@ -69,9 +68,9 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
       }
-      if (account) {
-        token.access_token = user?.access_token;
-      }
+      // if (account) {
+      //   token.access_token = user?.access_token;
+      // }
       return token;
     },
   },

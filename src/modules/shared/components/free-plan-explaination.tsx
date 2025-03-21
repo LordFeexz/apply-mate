@@ -4,6 +4,7 @@ import RefreshCountdown from "./refresh-countdown";
 import { LANG } from "@/enums/global";
 import { memo } from "react";
 import SubscribeBtn from "./subscribe-btn";
+import { PAYG_PAYMENT } from "@/enums/global";
 
 export interface FreePlanExplainationProps extends LangProps {
   credit?: number;
@@ -20,7 +21,7 @@ function FreePlanExplaination({ lang, credit = 0 }: FreePlanExplainationProps) {
           </span>
           <span className="font-semibold">{credit}</span>
         </div>
-        <SubscribeBtn />
+        <SubscribeBtn lang={lang} feature={PAYG_PAYMENT.CV_SCORING} />
       </div>
       <RefreshCountdown lang={lang} />
     </div>

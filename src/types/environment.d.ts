@@ -7,6 +7,8 @@ export declare global {
       NEXTAUTH_SECRET: string;
       GOOGLE_OAUTH_CLIENTID: string;
       GOOGLE_OAUTH_CLIENT_SECRET: string;
+      MIDTRANS_SERVER_KEY: string;
+      MIDTRANS_CLIENT_KEY: string;
     }
   }
 }

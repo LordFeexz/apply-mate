@@ -4,6 +4,7 @@ import type { LangProps } from "@/interfaces/component";
 import { cn } from "@/libs/utils";
 import { memo } from "react";
 import dynamic from "next/dynamic";
+import { Crown } from "lucide-react";
 const FreePlanExplaination = dynamic(() => import("./free-plan-explaination"), {
   ssr: false,
 });
@@ -17,17 +18,20 @@ const PaygExplaination = dynamic(() => import("./payg-explaination"), {
 
 export interface CurrentPlanProps extends LangProps {
   plan: PRICING_PLAN;
+  point?: number;
+  endDate?: Date | null;
 }
 
-function CurrentPlan({ lang, plan }: CurrentPlanProps) {
+function CurrentPlan({ lang, plan, point = 0, endDate }: CurrentPlanProps) {
   return (
     <div className="bg-muted/30 p-4 rounded-lg">
-      <div className="flex justify-between items-center mb-2">
+      <hgroup className="flex justify-between items-center mb-2">
         <h3 className="font-medium">Current Plan</h3>
         <Badge
           className={cn(
             "capitalize",
-            plan === PRICING_PLAN.SUBSCRIPTION && "bg-green-500"
+            plan === PRICING_PLAN.SUBSCRIPTION &&
+              "bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white px-2 py-0"
           )}
           variant={
             plan === PRICING_PLAN.PAY_AS_YOU_GO
@@ -37,15 +41,32 @@ function CurrentPlan({ lang, plan }: CurrentPlanProps) {
               : "default"
           }
         >
-          {plan === PRICING_PLAN.SUBSCRIPTION ? "Subscribed" : plan}
+          {plan === PRICING_PLAN.SUBSCRIPTION ? (
+            <>
+              <Crown className="w-3 h-3" />
+              Subscribed
+            </>
+          ) : (
+            plan
+          )}
         </Badge>
-      </div>
+      </hgroup>
       {plan === PRICING_PLAN.FREE && (
-        <FreePlanExplaination lang={lang} credit={0} />
+        <FreePlanExplaination lang={lang} credit={point} />
       )}
 
       {plan === PRICING_PLAN.SUBSCRIPTION && (
-        <SubscriptionPlanExplanation lang={lang} daysLeft={1} />
+        <SubscriptionPlanExplanation
+          lang={lang}
+          daysLeft={
+            endDate
+              ? Math.ceil(
+                  (new Date(endDate).getTime() - Date.now()) /
+                    (1000 * 60 * 60 * 24)
+                )
+              : 0
+          }
+        />
       )}
 
       {plan === PRICING_PLAN.PAY_AS_YOU_GO && <PaygExplaination lang={lang} />}

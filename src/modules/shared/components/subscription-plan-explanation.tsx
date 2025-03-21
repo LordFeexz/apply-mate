@@ -1,6 +1,6 @@
 import { LANG } from "@/enums/global";
 import type { LangProps } from "@/interfaces/component";
-import { Zap } from "lucide-react";
+import { Crown } from "lucide-react";
 import { memo } from "react";
 
 export interface SubscriptionPlanExplanationProps extends LangProps {
@@ -15,9 +15,9 @@ function SubscriptionPlanExplanation({
     <div className="space-y-2">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <Zap className="h-4 w-4 text-green-600" />
+          <Crown className="h-4 w-4" />
           <span className="text-sm">
-            {lang === LANG.ID ? "Pakai tanpa batas" : "Unlimited Generations"}
+            {lang === LANG.ID ? "Berlangganan" : "Subscribed"}
           </span>
         </div>
       </div>
