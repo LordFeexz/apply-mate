@@ -1,9 +1,22 @@
-import { FEATURE } from "@/enums/global";
-import { BarChart, FileText, Mail, Zap } from "lucide-react";
+import { ACCOUNT_TAB, FEATURE } from "@/enums/global";
+import {
+  BarChart,
+  FileText,
+  Mail,
+  Zap,
+  Receipt,
+  CreditCard,
+} from "lucide-react";
 import type { ReactNode } from "react";
 
 export interface FeatureTab {
   url: FEATURE | "";
+  label: string;
+  icon: ReactNode;
+}
+
+export interface AccountTab {
+  url: ACCOUNT_TAB;
   label: string;
   icon: ReactNode;
 }
@@ -34,6 +47,32 @@ export const FEATURE_TABS: FeatureTab[] = [
     url: FEATURE.GENERATE_COVER_LETTER,
     label: "Cover Letter",
     icon: <Mail className="w-4 h-4" />,
+  },
+];
+
+export const ACCOUNT_TABS_EN: AccountTab[] = [
+  {
+    url: ACCOUNT_TAB.TRANSACTION,
+    label: "Transaction",
+    icon: <Receipt className="w-4 h-4" />,
+  },
+  {
+    url: ACCOUNT_TAB.SUBSCRIPTION,
+    label: "Subscription",
+    icon: <CreditCard className="w-4 h-4" />,
+  },
+];
+
+export const ACCOUNT_TABS_ID: AccountTab[] = [
+  {
+    url: ACCOUNT_TAB.TRANSACTION,
+    label: "Transaksi",
+    icon: <Receipt className="w-4 h-4" />,
+  },
+  {
+    url: ACCOUNT_TAB.SUBSCRIPTION,
+    label: "Berlangganan",
+    icon: <CreditCard className="w-4 h-4" />,
   },
 ];
 

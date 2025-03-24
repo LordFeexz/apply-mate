@@ -28,6 +28,17 @@ export interface ContainerInputDictionary {
   desc: string;
 }
 
+export interface SubscribeBtnDictionary {
+  btnText: string;
+  dialogDesc: string;
+  quickPayment: string;
+}
+
+export interface CurrentPlanDictionary {
+  title: string;
+  subsBadge: string;
+}
+
 const CV_FORM_DICTIONARY: Record<LANG, CvFormDictionary> = {
   [LANG.EN]: {
     placeholder: "Paste your current CV here...",
@@ -36,6 +47,17 @@ const CV_FORM_DICTIONARY: Record<LANG, CvFormDictionary> = {
   [LANG.ID]: {
     placeholder: "Copas CV mu kesini...",
     fileFormat: "Format file yang didukung: .pdf, .doc, .docx",
+  },
+};
+
+const CURRENT_PLAN_DICTIONARY: Record<LANG, CurrentPlanDictionary> = {
+  [LANG.EN]: {
+    title: "Current Plan",
+    subsBadge: "Subscribed",
+  },
+  [LANG.ID]: {
+    title: "Paket Saat Ini",
+    subsBadge: "Berlangganan",
   },
 };
 
@@ -101,6 +123,19 @@ const EWALLET_FORM_DICTIONARY: Record<LANG, EWalletFormDictionary> = {
   },
 };
 
+const SUBSCRIBE_BTN_DICTIONARY: Record<LANG, SubscribeBtnDictionary> = {
+  [LANG.EN]: {
+    btnText: "Subscribe Now",
+    dialogDesc: "Subscribe to get unlimited access",
+    quickPayment: "Quick Payment",
+  },
+  [LANG.ID]: {
+    btnText: "Berlangganan Sekarang",
+    dialogDesc: "Berlangganan untuk mendapatkan akses tak terbatas",
+    quickPayment: "Pembayaran Cepat",
+  },
+};
+
 export const getCvDictionary = (lang: LANG) =>
   CV_FORM_DICTIONARY[lang] ?? CV_FORM_DICTIONARY[LANG.EN];
 
@@ -115,3 +150,9 @@ export const getVaDictionary = (lang: LANG) =>
 
 export const getEwalletDictionary = (lang: LANG) =>
   EWALLET_FORM_DICTIONARY[lang] ?? EWALLET_FORM_DICTIONARY[LANG.EN];
+
+export const getSubscribeBtnDictionary = (lang: LANG) =>
+  SUBSCRIBE_BTN_DICTIONARY[lang] ?? SUBSCRIBE_BTN_DICTIONARY[LANG.EN];
+
+export const getCurrentPlanDictionary = (lang: LANG) =>
+  CURRENT_PLAN_DICTIONARY[lang] ?? CURRENT_PLAN_DICTIONARY[LANG.EN];

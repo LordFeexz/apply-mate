@@ -120,6 +120,11 @@ export const SUBSCRIBE_BY_EWALLET_SCHEMA = z.object({
   }),
 });
 
+export const BASE_PAGINATION_SCHEMA = z.object({
+  page: z.coerce.number().min(0).default(0),
+  limit: z.coerce.number().min(0).max(100).default(10),
+});
+
 export type IFile = z.infer<typeof SCHEMA_FILE>;
 export type ICoverLetter = z.infer<typeof SCHEMA_COVER_LETTER>;
 export type IScoringSchema = z.infer<typeof SCHEMA_CV_SCORING>;

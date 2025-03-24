@@ -13,7 +13,7 @@ import {
 } from "./schema";
 import { Transaction } from "@/models";
 import { v4 } from "uuid";
-import { PRICING } from "@/enums/plan";
+import { ITEM, PRICING } from "@/enums/plan";
 import { BANK_PAYMENT_METHOD } from "@/constants/payment";
 import {
   chargeTopupViaBankTransfer,
@@ -109,7 +109,7 @@ export async function subscribedAction(
           ? charge.permata_va_number ?? []
           : charge?.va_numbers ?? [],
       actions: charge?.actions ?? [],
-      item: "SUBSCRIPTION",
+      item: ITEM.SUBSCRIPTION,
     },
     signature: generateSignature(
       charge.order_id,

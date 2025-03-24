@@ -115,7 +115,7 @@ export const STEP_CARD_ID: StepCardProps[] = [
 export const PRICING_CARD_EN: PricingCardProps[] = [
   {
     title: "Free Trial",
-    price: "$0",
+    price: "RP 0",
     description: "Perfect for trying out our tools",
     features: [
       "3 CV generations",
@@ -129,7 +129,7 @@ export const PRICING_CARD_EN: PricingCardProps[] = [
   },
   {
     title: "Pro",
-    price: "$19.99",
+    price: "Rp 50.000",
     period: "per month",
     description: "Most popular for active job seekers",
     features: [
@@ -145,7 +145,7 @@ export const PRICING_CARD_EN: PricingCardProps[] = [
   },
   {
     title: "Pay As You Go",
-    price: "$1.99",
+    price: "Flexible",
     period: "per generation",
     description: "Perfect for occasional use",
     features: [
@@ -178,7 +178,7 @@ export const PRICING_CARD_ID: PricingCardProps[] = [
   },
   {
     title: "Pro",
-    price: "Rp 19.999",
+    price: "Rp 50.000",
     period: "per bulan",
     description: "Paling populer untuk pencari pekerja aktif",
     features: [
@@ -194,7 +194,7 @@ export const PRICING_CARD_ID: PricingCardProps[] = [
   },
   {
     title: "Pay As You Go",
-    price: "Rp 1.999",
+    price: "Fleksibel",
     period: "per pembuatan",
     description: "Ideal untuk penggunaan sementara",
     features: [

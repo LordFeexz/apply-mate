@@ -20,6 +20,11 @@ export interface FeatureDictionary {
   desc: string;
 }
 
+export interface AccountDictionary {
+  title: string;
+  desc: string;
+}
+
 const HEADER_DICTIONARY: Record<LANG, HeaderDictionary> = {
   [LANG.EN]: {
     about: "About",
@@ -63,6 +68,17 @@ const FEATURE_DICTIONARY: Record<LANG, FeatureDictionary> = {
   },
 };
 
+const ACCOUNT_DICTIONARY: Record<LANG, AccountDictionary> = {
+  [LANG.EN]: {
+    title: "Account",
+    desc: "Manage your account settings and preferences",
+  },
+  [LANG.ID]: {
+    title: "Akun",
+    desc: "Kelola pengaturan akun dan preferensi Anda",
+  },
+};
+
 export const getHeaderDictionary = (lang: LANG) =>
   HEADER_DICTIONARY[lang] ?? HEADER_DICTIONARY[LANG.EN];
 
@@ -71,3 +87,6 @@ export const getFooterDictionary = (lang: LANG) =>
 
 export const getFeatureDictionary = (lang: LANG) =>
   FEATURE_DICTIONARY[lang] ?? FEATURE_DICTIONARY[LANG.EN];
+
+export const getAccountDictionary = (lang: LANG) =>
+  ACCOUNT_DICTIONARY[lang] ?? ACCOUNT_DICTIONARY[LANG.EN];

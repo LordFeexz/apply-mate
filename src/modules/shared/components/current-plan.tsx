@@ -5,6 +5,7 @@ import { cn } from "@/libs/utils";
 import { memo } from "react";
 import dynamic from "next/dynamic";
 import { Crown } from "lucide-react";
+import { getCurrentPlanDictionary } from "../i18n";
 const FreePlanExplaination = dynamic(() => import("./free-plan-explaination"), {
   ssr: false,
 });
@@ -23,10 +24,11 @@ export interface CurrentPlanProps extends LangProps {
 }
 
 function CurrentPlan({ lang, plan, point = 0, endDate }: CurrentPlanProps) {
+  const { subsBadge, title } = getCurrentPlanDictionary(lang);
   return (
     <div className="bg-muted/30 p-4 rounded-lg">
       <hgroup className="flex justify-between items-center mb-2">
-        <h3 className="font-medium">Current Plan</h3>
+        <h3 className="font-medium">{title}</h3>
         <Badge
           className={cn(
             "capitalize",
@@ -44,7 +46,7 @@ function CurrentPlan({ lang, plan, point = 0, endDate }: CurrentPlanProps) {
           {plan === PRICING_PLAN.SUBSCRIPTION ? (
             <>
               <Crown className="w-3 h-3" />
-              Subscribed
+              {subsBadge}
             </>
           ) : (
             plan

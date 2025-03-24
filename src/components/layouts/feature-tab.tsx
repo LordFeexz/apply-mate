@@ -30,7 +30,6 @@ function FeatureTab({ children, lang, feature }: FeatureTabProps) {
     FEATURE_TABS.find((tab) => tab.url === feature) || FEATURE_TABS[0]
   );
   const router = useRouter();
-
   const onValueChangeHandler = useCallback(
     (url: string) => {
       setTab(FEATURE_TABS.find((tab) => tab.url === url) || FEATURE_TABS[0]);

@@ -10,3 +10,7 @@ export enum PRICING {
   COVER_LETTER = 500,
   SCORING_CV = 500,
 }
+
+export enum ITEM {
+  SUBSCRIPTION = "SUBSCRIPTION",
+}
