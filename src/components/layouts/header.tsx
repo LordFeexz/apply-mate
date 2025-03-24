@@ -10,7 +10,8 @@ import { getHeaderDictionary } from "./i18n";
 export interface AppHeaderProps extends LangProps {}
 
 function AppHeader({ lang }: AppHeaderProps) {
-  const { about, blog, organization, feature } = getHeaderDictionary(lang);
+  const { about, blog, organization, feature, account } =
+    getHeaderDictionary(lang);
   return (
     <TransparentOnScroll
       as="header"
@@ -55,6 +56,12 @@ function AppHeader({ lang }: AppHeaderProps) {
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
             {organization}
+          </Link>
+          <Link
+            href={`/${lang}/account`}
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {account}
           </Link>
           <LangToggle />
           <ThemeToggle />

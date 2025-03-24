@@ -13,7 +13,8 @@ import { getHeaderDictionary } from "../layouts/i18n";
 export interface HeaderSheetProps extends LangProps {}
 
 function HeaderSheet({ lang }: HeaderSheetProps) {
-  const { feature, blog, about, organization } = getHeaderDictionary(lang);
+  const { feature, blog, about, organization, account } =
+    getHeaderDictionary(lang);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   return (
@@ -74,6 +75,12 @@ function HeaderSheet({ lang }: HeaderSheetProps) {
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               {organization}
+            </Link>
+            <Link
+              href={`/${lang}/account`}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {account}
             </Link>
           </nav>
         </div>

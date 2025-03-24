@@ -5,6 +5,7 @@ export interface HeaderDictionary {
   blog: string;
   organization: string;
   feature: string;
+  account: string;
 }
 
 export interface FooterDictionary {
@@ -31,12 +32,14 @@ const HEADER_DICTIONARY: Record<LANG, HeaderDictionary> = {
     blog: "Blog",
     organization: "Our Organization",
     feature: "Feature",
+    account: "Account",
   },
   [LANG.ID]: {
     about: "Tentang",
     blog: "Blog",
     organization: "Organisasi Kami",
     feature: "Fitur",
+    account: "Akun",
   },
 };
 

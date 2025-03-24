@@ -11,10 +11,12 @@ export interface AccountLayoutProps extends LangProps, ChildrenProps {
 function AccountLayout({ tab, children, lang }: AccountLayoutProps) {
   const { title, desc } = getAccountDictionary(lang);
   return (
-    <section className="space-y-8">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+    <section className="space-y-8 p-6">
+      <div className="flex flex-col justify-center items-center gap-4 mb-8">
         <hgroup className="antialiased">
-          <h2 className="text-3xl font-bold">{title}</h2>
+          <h2 className="text-3xl font-bold flex justify-center items-center">
+            {title}
+          </h2>
           <p className="text-muted-foreground">{desc}</p>
         </hgroup>
       </div>

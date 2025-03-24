@@ -4,6 +4,8 @@ import { Transaction } from "@/models";
 import { BASE_PAGINATION_SCHEMA } from "@/modules/shared/schema";
 import { redirect } from "next/navigation";
 import TransactionPage from "@/modules/transaction";
+import Account from "@/components/layouts/account";
+import { ACCOUNT_TAB } from "@/enums/global";
 
 export default async function Page({
   params,
@@ -36,14 +38,36 @@ export default async function Page({
   });
 
   return (
-    <TransactionPage
-      lang={lang}
-      transactions={rows}
-      totalData={count}
-      totalPage={Math.ceil(count / data.limit)}
-      {...data}
-    />
+    <Account lang={lang} tab={ACCOUNT_TAB.TRANSACTION}>
+      <TransactionPage
+        lang={lang}
+        transactions={rows}
+        totalData={count}
+        totalPage={Math.ceil(count / data.limit)}
+        {...data}
+      />
+    </Account>
   );
 }
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: PageProps) {
+  const { lang } = await params;
+  const { DOMAIN } = process.env;
+
+  return {
+    title: "Transaction",
+    description: "Transaction List",
+    openGraph: {
+      title: "Transaction",
+      description: "Transaction List",
+      url: `${DOMAIN}/${lang}/transaction`,
+      type: "website",
+      siteName: "Apply Mate",
+      locale: lang,
+      alternateLocale: ["en-US", "id-ID"],
+      countryName: "Indonesia",
+    },
+  };
+}
