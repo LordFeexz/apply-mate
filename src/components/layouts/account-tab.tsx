@@ -31,7 +31,7 @@ function AccountTab({ tab, lang, children }: AccountTabProps) {
           (tab) => tab.url === url
         ) || (lang === LANG.ID ? ACCOUNT_TABS_ID : ACCOUNT_TABS_EN)[0]
       );
-      router.push(`/${lang}/${url}`);
+      router.push(`/${lang}/account/${url}`);
     },
     [router, lang]
   );
@@ -43,7 +43,7 @@ function AccountTab({ tab, lang, children }: AccountTabProps) {
       onValueChange={onValueChangeHandler}
     >
       <div className="flex justify-center mb-8">
-        <TabsList className="grid grid-cols-2 w-full max-w-2xl">
+        <TabsList className="grid grid-cols-3 w-full max-w-2xl">
           {(lang === LANG.ID ? ACCOUNT_TABS_ID : ACCOUNT_TABS_EN).map(
             ({ url, label, icon }) => (
               <TabsTrigger

@@ -10,10 +10,10 @@ import type { TransactionAttributes } from "@/models/transaction";
 import { memo, Suspense } from "react";
 import TransactionCard from "./components/transaction-card";
 import SsrPagination from "@/components/common/ssr-pagination";
+import { getTransactionDictionary } from "./i18n";
 
 export interface TransactionPageProps extends LangProps {
   transactions: TransactionAttributes[];
-  totalData: number;
   totalPage: number;
   page: number;
   limit: number;
@@ -21,27 +21,31 @@ export interface TransactionPageProps extends LangProps {
 
 function TransactionPage({
   transactions = [],
-  totalData,
   totalPage,
   page,
   lang,
   limit,
 }: TransactionPageProps) {
+  const { title, notFoundStage } = getTransactionDictionary(lang);
   return (
     <Card>
       <CardHeader>
         <CardTitle as="h2" className="text-xl font-semibold mb-6">
-          Transaction History
+          {title}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-6 min-h-[50svh]">
+      <CardContent className="p-6 min-h-[50svh] overflow-x-scroll">
         {transactions.length ? (
           transactions.map((transaction) => (
-            <TransactionCard transaction={transaction} key={transaction.id} />
+            <TransactionCard
+              lang={lang}
+              transaction={transaction}
+              key={transaction.id}
+            />
           ))
         ) : (
           <div className="flex justify-center items-center">
-            <p className="text-sm">No Transaction Found</p>
+            <p className="text-sm">{notFoundStage}</p>
           </div>
         )}
       </CardContent>

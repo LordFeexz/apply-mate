@@ -8,6 +8,7 @@ import { subscribedAction } from "../action";
 import SubmitBtn from "@/components/common/submit-btn";
 import dynamic from "next/dynamic";
 import { getEwalletDictionary } from "../i18n";
+import EwalletInstruction from "./ewallet-instruction";
 const PriorityImg = dynamic(() => import("@/components/common/priority-img"), {
   ssr: false,
 });
@@ -17,7 +18,7 @@ export interface EwalletFormProps extends LangProps {
 }
 
 function EwalletForm({ feature, lang }: EwalletFormProps) {
-  const { title, note } = getEwalletDictionary(lang);
+  const { title } = getEwalletDictionary(lang);
   const [state, formAction, pending] = useActionState(subscribedAction, {
     errors: {},
     error: "",
@@ -80,9 +81,7 @@ function EwalletForm({ feature, lang }: EwalletFormProps) {
             />
           )}
         </div>
-        <div className="mt-auto p-2 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-md text-amber-700 dark:text-amber-400 w-full max-w-[250px]">
-          <p className="text-xs font-medium text-center">{note}</p>
-        </div>
+        <EwalletInstruction lang={lang} />
       </div>
       <SubmitBtn className="mt-auto" disabled={pending || !!state.qr}>
         Generate

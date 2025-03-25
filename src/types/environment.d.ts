@@ -9,6 +9,7 @@ export declare global {
       GOOGLE_OAUTH_CLIENT_SECRET: string;
       MIDTRANS_SERVER_KEY: string;
       MIDTRANS_CLIENT_KEY: string;
+      MIDTRANS_CORE_API: string;
     }
   }
 }

@@ -6,6 +6,23 @@ import { redirect } from "next/navigation";
 import TransactionPage from "@/modules/transaction";
 import Account from "@/components/layouts/account";
 import { ACCOUNT_TAB } from "@/enums/global";
+import { cache } from "react";
+
+const fetcher = cache(
+  async (user_id: string, data: { page: number; limit: number }) => {
+    const { rows, count } = await Transaction.findAndCountAll({
+      where: { user_id },
+      offset: (data.page - 1) * data.limit,
+      limit: data.limit,
+      order: [
+        ["created_at", "DESC"],
+        ["amount", "DESC"],
+      ],
+      raw: true,
+    });
+    return { rows, count };
+  }
+);
 
 export default async function Page({
   params,
@@ -17,7 +34,7 @@ export default async function Page({
   );
   if (!success || !data.page || !data.limit)
     redirect(
-      `/${lang}/transaction?${new URLSearchParams({
+      `/${lang}/account/transaction?${new URLSearchParams({
         page: "1",
         limit: "10",
       }).toString()}`
@@ -26,23 +43,13 @@ export default async function Page({
   const session = await getServerSideSession();
   if (!session || !session?.user?.id) redirect(`/${lang}/sign-in`);
 
-  const { rows, count } = await Transaction.findAndCountAll({
-    where: { user_id: session.user.id },
-    offset: (data.page - 1) * data.limit,
-    limit: data.limit,
-    order: [
-      ["created_at", "DESC"],
-      ["amount", "DESC"],
-    ],
-    raw: true,
-  });
+  const { rows, count } = await fetcher(session.user.id, data);
 
   return (
     <Account lang={lang} tab={ACCOUNT_TAB.TRANSACTION}>
       <TransactionPage
         lang={lang}
         transactions={rows}
-        totalData={count}
         totalPage={Math.ceil(count / data.limit)}
         {...data}
       />

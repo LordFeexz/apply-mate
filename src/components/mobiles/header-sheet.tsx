@@ -27,7 +27,7 @@ function HeaderSheet({ lang }: HeaderSheetProps) {
       <SheetContent
         aria-describedby="mobile-menu"
         side="right"
-        className="w-[60%] min-w-[360px] z-50 h-[30%] border-b rounded-b-4xl mt-6 border-t rounded-t-2xl"
+        className="w-[60%] min-w-[360px] z-50 h-[35%] border-b rounded-b-4xl mt-6 border-t rounded-t-2xl"
       >
         <SheetTitle id="mobile-menu" className="sr-only">
           Mobile Menu Button

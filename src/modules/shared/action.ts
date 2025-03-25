@@ -20,6 +20,7 @@ import {
   chargeTopupViaEWallet,
   generateSignature,
 } from "@/libs/midtrans";
+import { getCsrfToken } from "@/libs/csrf";
 
 export async function getCurrentProfile() {
   const session = await getServerSideSession();
@@ -67,7 +68,7 @@ export async function subscribedAction(
     raw: true,
     benchmark: true,
   });
-  if (existing) redirect(`/${lang}/transaction/${existing.id}`);
+  if (existing) redirect(`/${lang}/account/transaction/${existing.id}`);
 
   const charge = await (data.type === "e-wallet"
     ? chargeTopupViaEWallet({
@@ -99,6 +100,7 @@ export async function subscribedAction(
     status: "pending",
     description: "Purchasing Subscription",
     detail: {
+      type: data.type,
       feature: data.feature,
       provider:
         data.type === "e-wallet"
@@ -107,9 +109,10 @@ export async function subscribedAction(
       va_number:
         (data as ISubscribeByBankSchema)?.bank === "PERMATA"
           ? charge.permata_va_number ?? []
-          : charge?.va_numbers ?? [],
+          : (charge?.va_numbers ?? []).map((el) => el.va_number),
       actions: charge?.actions ?? [],
       item: ITEM.SUBSCRIPTION,
+      order_id: charge.order_id,
     },
     signature: generateSignature(
       charge.order_id,
@@ -143,4 +146,8 @@ export async function subscribedAction(
           qr: "",
         }),
   };
+}
+
+export async function getCSRF() {
+  return getCsrfToken();
 }

@@ -6,6 +6,7 @@ import {
   Zap,
   Receipt,
   CreditCard,
+  User2,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -52,6 +53,11 @@ export const FEATURE_TABS: FeatureTab[] = [
 
 export const ACCOUNT_TABS_EN: AccountTab[] = [
   {
+    url: ACCOUNT_TAB.ACCOUNT,
+    label: "Account",
+    icon: <User2 className="w-4 h-4" />,
+  },
+  {
     url: ACCOUNT_TAB.TRANSACTION,
     label: "Transaction",
     icon: <Receipt className="w-4 h-4" />,
@@ -64,6 +70,11 @@ export const ACCOUNT_TABS_EN: AccountTab[] = [
 ];
 
 export const ACCOUNT_TABS_ID: AccountTab[] = [
+  {
+    url: ACCOUNT_TAB.ACCOUNT,
+    label: "Akun",
+    icon: <User2 className="w-4 h-4" />,
+  },
   {
     url: ACCOUNT_TAB.TRANSACTION,
     label: "Transaksi",

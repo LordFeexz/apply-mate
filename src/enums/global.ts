@@ -35,6 +35,7 @@ export enum PAYG_PAYMENT {
 }
 
 export enum ACCOUNT_TAB {
+  ACCOUNT = "",
   TRANSACTION = "transaction",
   SUBSCRIPTION = "subscription",
 }

@@ -7,20 +7,21 @@ import { memo } from "react";
 import { format } from "date-fns";
 import StatusBadge from "./status-badge";
 import { currencyFormatterID } from "@/constants/formatter";
+import type { LangProps } from "@/interfaces/component";
 
-export interface TransactionCardProps {
+export interface TransactionCardProps extends LangProps {
   transaction: TransactionAttributes;
 }
 
-function TransactionCard({ transaction }: TransactionCardProps) {
+function TransactionCard({ transaction, lang }: TransactionCardProps) {
   return (
     <Link
-      href={`/transaction/${transaction.id}`}
+      href={`/${lang}/account/transaction/${transaction.id}`}
       passHref
       prefetch
       className="w-full"
     >
-      <article className="flex items-center justify-between p-4 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
+      <article className="flex items-center overflow-x-scroll overflow-y-hidden justify-between p-4 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
         <div className="flex items-center gap-4">
           <div
             className={cn(

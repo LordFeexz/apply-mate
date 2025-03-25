@@ -5,9 +5,15 @@ export interface CvFormDictionary {
   fileFormat: string;
 }
 
+export interface VaViewerDictionary {
+  accountNo: string;
+}
+
 export interface VaFormDictionary {
   title: string;
-  accountNo: string;
+}
+
+export interface VaInstructionDictionary {
   instruction: string;
   instructions: string[];
   note: string;
@@ -15,6 +21,9 @@ export interface VaFormDictionary {
 
 export interface EWalletFormDictionary {
   title: string;
+}
+
+export interface EWalletInstructionDictionary {
   note: string;
 }
 
@@ -86,7 +95,14 @@ const MATCH_KEYWORD_CARD_DICTIONARY: Record<LANG, ContainerInputDictionary> = {
 const VA_FORM_DICTIONARY: Record<LANG, VaFormDictionary> = {
   [LANG.EN]: {
     title: "Virtual Account",
-    accountNo: "Virtual Account Number:",
+  },
+  [LANG.ID]: {
+    title: "Virtual Account",
+  },
+};
+
+const VA_INSTRUCTION_DICTIONARY: Record<LANG, VaInstructionDictionary> = {
+  [LANG.EN]: {
     instruction: "Instruction",
     instructions: [
       "Log in to your banking app",
@@ -98,8 +114,6 @@ const VA_FORM_DICTIONARY: Record<LANG, VaFormDictionary> = {
     note: "Note: Virtual Account transactions incur an additional fee of",
   },
   [LANG.ID]: {
-    title: "Virtual Account",
-    accountNo: "Nomor Virtual Account:",
     instruction: "Instruksi",
     instructions: [
       "Masuk ke aplikasi bank Anda",
@@ -115,10 +129,20 @@ const VA_FORM_DICTIONARY: Record<LANG, VaFormDictionary> = {
 const EWALLET_FORM_DICTIONARY: Record<LANG, EWalletFormDictionary> = {
   [LANG.EN]: {
     title: "Scan QR Code",
-    note: "Note: QR code transactions incur an additional fee of 0.7% of the transaction value",
   },
   [LANG.ID]: {
     title: "Scan QR Code",
+  },
+};
+
+const EWALLET_INSTRUCTION_DICTIONARY: Record<
+  LANG,
+  EWalletInstructionDictionary
+> = {
+  [LANG.EN]: {
+    note: "Note: QR code transactions incur an additional fee of 0.7% of the transaction value",
+  },
+  [LANG.ID]: {
     note: "Catatan: Transaksi dengan E-Wallet akan dikenakan fee sebesar 0.7% dari total transaksi",
   },
 };
@@ -133,6 +157,15 @@ const SUBSCRIBE_BTN_DICTIONARY: Record<LANG, SubscribeBtnDictionary> = {
     btnText: "Berlangganan Sekarang",
     dialogDesc: "Berlangganan untuk mendapatkan akses tak terbatas",
     quickPayment: "Pembayaran Cepat",
+  },
+};
+
+const VA_VIEWER_DICTIONARY: Record<LANG, VaViewerDictionary> = {
+  [LANG.EN]: {
+    accountNo: "Virtual Account Number:",
+  },
+  [LANG.ID]: {
+    accountNo: "Nomor Virtual Account:",
   },
 };
 
@@ -156,3 +189,13 @@ export const getSubscribeBtnDictionary = (lang: LANG) =>
 
 export const getCurrentPlanDictionary = (lang: LANG) =>
   CURRENT_PLAN_DICTIONARY[lang] ?? CURRENT_PLAN_DICTIONARY[LANG.EN];
+
+export const getVaViewerDictionary = (lang: LANG) =>
+  VA_VIEWER_DICTIONARY[lang] ?? VA_VIEWER_DICTIONARY[LANG.EN];
+
+export const getVaInstructionDictionary = (lang: LANG) =>
+  VA_INSTRUCTION_DICTIONARY[lang] ?? VA_INSTRUCTION_DICTIONARY[LANG.EN];
+
+export const getEwalletInstructionDictionary = (lang: LANG) =>
+  EWALLET_INSTRUCTION_DICTIONARY[lang] ??
+  EWALLET_INSTRUCTION_DICTIONARY[LANG.EN];
