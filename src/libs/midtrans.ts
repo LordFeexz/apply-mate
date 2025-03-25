@@ -7,7 +7,6 @@ import {
   BANK_PAYMENT_METHOD,
   EWALLET_PAYMENT_METHOD,
   FEE_ITEM_ID,
-  PRICE_PER_COIN,
   TOPUP_ITEM_ID,
 } from "@/constants/payment";
 import type {
@@ -16,6 +15,7 @@ import type {
   ChargeTopupViaEWalletProps,
 } from "@/interfaces/payment";
 import { MIDTRANS_ORDER_ID_START_CHAR } from "@/constants/payment";
+import { PRICING } from "@/enums/plan";
 
 const coreApi = new midtrans.CoreApi({
   isProduction: process.env.NODE_ENV === "production",
@@ -54,11 +54,14 @@ export function generateSignature(
   );
 }
 
-export function generatetopupViaEWalletItems(amount: number, provider: string) {
+export function generateSubscriptionViaEWalletItems(
+  amount: number,
+  provider: string
+) {
   const result: ItemDetail[] = [
     {
       id: TOPUP_ITEM_ID,
-      price: amount * PRICE_PER_COIN,
+      price: PRICING.SUBSCRIPTION,
       quantity: 1,
       name: "Top up",
     },
@@ -78,7 +81,7 @@ export function generatetopupViaEWalletItems(amount: number, provider: string) {
   if (data.percentageFee > 0)
     result.push({
       id: FEE_ITEM_ID,
-      price: (data.percentageFee / 100) * amount * PRICE_PER_COIN,
+      price: (data.percentageFee / 100) * PRICING.SUBSCRIPTION,
       quantity: 1,
       name: "Percentage Fee",
     });
@@ -86,14 +89,14 @@ export function generatetopupViaEWalletItems(amount: number, provider: string) {
   return result;
 }
 
-export function generateTopupViaBankTransferItems(
+export function generateSubscriptionViaBankTransferItems(
   amount: number,
   name: BankName
 ): ItemDetail[] {
   const result: ItemDetail[] = [
     {
       id: TOPUP_ITEM_ID,
-      price: amount * PRICE_PER_COIN,
+      price: PRICING.SUBSCRIPTION,
       quantity: 1,
       name: "Top up",
     },
@@ -112,7 +115,7 @@ export function generateTopupViaBankTransferItems(
   if (data.percentageFee > 0)
     result.push({
       id: FEE_ITEM_ID,
-      price: (data.percentageFee / 100) * amount * PRICE_PER_COIN,
+      price: (data.percentageFee / 100) * PRICING.SUBSCRIPTION,
       quantity: 1,
       name: "Percentage Fee",
     });
@@ -123,10 +126,9 @@ export function generateTopupViaBankTransferItems(
 export async function chargeTopupViaBankTransfer({
   email,
   name,
-  amount,
   bank,
 }: ChargeTopupViaBankProps) {
-  const item_details = generateTopupViaBankTransferItems(amount, bank);
+  const item_details = generateSubscriptionViaBankTransferItems(1, bank);
   return coreApi.charge({
     payment_type: "bank_transfer",
     transaction_details: {
@@ -144,12 +146,11 @@ export async function chargeTopupViaBankTransfer({
   });
 }
 
-export async function chargeTopupViaGopay({
-  amount,
+export async function chargeSubscriptionViaGopay({
   name,
   email,
 }: Omit<ChargeTopupViaEWalletProps, "provider">) {
-  const item_details = generatetopupViaEWalletItems(amount, "Gopay");
+  const item_details = generateSubscriptionViaEWalletItems(1, "Gopay");
   return coreApi.charge({
     payment_type: "gopay",
     transaction_details: {
@@ -170,12 +171,11 @@ export async function chargeTopupViaGopay({
   });
 }
 
-export async function chargeTopupViaShopeePay({
-  amount,
+export async function chargeSubscriptionViaShopeePay({
   name,
   email,
 }: Omit<ChargeTopupViaEWalletProps, "provider">) {
-  const item_details = generatetopupViaEWalletItems(amount, "ShopeePay");
+  const item_details = generateSubscriptionViaEWalletItems(1, "ShopeePay");
   return coreApi.charge({
     payment_type: "shopeepay",
     transaction_details: {
@@ -195,17 +195,16 @@ export async function chargeTopupViaShopeePay({
   });
 }
 
-export async function chargeTopupViaEWallet({
-  amount,
+export async function chargeSubscriptionViaEWallet({
   provider,
   name,
   email,
 }: ChargeTopupViaEWalletProps) {
   switch (provider) {
     case "Gopay":
-      return chargeTopupViaGopay({ amount, name, email });
+      return chargeSubscriptionViaGopay({ name, email });
     case "ShopeePay":
-      return chargeTopupViaShopeePay({ amount, name, email });
+      return chargeSubscriptionViaShopeePay({ name, email });
     default:
       break;
   }

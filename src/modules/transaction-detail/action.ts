@@ -32,9 +32,10 @@ export async function cancelTransaction(id: string, csrf: string) {
       errors: null,
     };
 
-  const { status, data, ...rest } = await midtransClient.cancelOrder(
-    transaction.id
+  const { status } = await midtransClient.cancelOrder(
+    transaction.detail?.order_id
   );
+
   if (status <= 204)
     await Transaction.update({ status: "cancel" }, { where: { id } });
 

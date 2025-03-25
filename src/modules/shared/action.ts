@@ -16,8 +16,8 @@ import { v4 } from "uuid";
 import { ITEM, PRICING } from "@/enums/plan";
 import { BANK_PAYMENT_METHOD } from "@/constants/payment";
 import {
+  chargeSubscriptionViaEWallet,
   chargeTopupViaBankTransfer,
-  chargeTopupViaEWallet,
   generateSignature,
 } from "@/libs/midtrans";
 import { getCsrfToken } from "@/libs/csrf";
@@ -71,8 +71,7 @@ export async function subscribedAction(
   if (existing) redirect(`/${lang}/account/transaction/${existing.id}`);
 
   const charge = await (data.type === "e-wallet"
-    ? chargeTopupViaEWallet({
-        amount: PRICING.SUBSCRIPTION,
+    ? chargeSubscriptionViaEWallet({
         provider: "Gopay",
         name: user.name,
         email: user.email,
@@ -80,7 +79,6 @@ export async function subscribedAction(
     : chargeTopupViaBankTransfer({
         email: user.email,
         name: user.name,
-        amount: PRICING.SUBSCRIPTION,
         bank: (data as ISubscribeByBankSchema)?.bank,
       }));
 

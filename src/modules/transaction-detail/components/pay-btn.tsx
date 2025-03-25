@@ -1,8 +1,5 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { memo } from "react";
-import useCSRF from "@/hooks/use-csrf";
 import { cn } from "@/libs/utils";
 import type { LangProps } from "@/interfaces/component";
 import {
@@ -23,13 +20,11 @@ const VaInstruction = dynamic(
 const EWalletInstruction = dynamic(
   () => import("@/modules/shared/components/ewallet-instruction")
 );
-const VaViewer = dynamic(
-  () => import("@/modules/shared/components/va-viewer"),
-  { ssr: false }
+const VaViewer = dynamic(() => import("@/modules/shared/components/va-viewer"));
+const PriorityImg = dynamic(
+  () => import("@/components/common/priority-img"),
+  {}
 );
-const PriorityImg = dynamic(() => import("@/components/common/priority-img"), {
-  ssr: false,
-});
 
 export interface PayBtnProps extends LangProps {
   transaction: TransactionAttributes;
@@ -37,8 +32,6 @@ export interface PayBtnProps extends LangProps {
 
 function PayBtn({ transaction, lang }: PayBtnProps) {
   const { title, btnText } = getPayBtnDictionary(lang);
-  const csrf = useCSRF();
-
   return (
     <Dialog>
       <DialogTrigger asChild>

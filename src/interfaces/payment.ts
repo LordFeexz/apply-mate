@@ -10,7 +10,6 @@ export interface PaymentMethod {
 export interface ChargeTopupProps {
   name: string;
   email: string;
-  amount: number;
 }
 
 export type BankName = "BNI" | "BRI" | "BCA" | "MANDIRI" | "PERMATA";
