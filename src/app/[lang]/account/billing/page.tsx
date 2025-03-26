@@ -1,7 +1,7 @@
 import type { PageProps } from "@/interfaces/global";
 import Billing from "@/modules/billing";
 import Account from "@/components/layouts/account";
-import { ACCOUNT_TAB, LANG } from "@/enums/global";
+import { ACCOUNT_TAB, LANG, LANGS } from "@/enums/global";
 import type { Metadata } from "next";
 
 export default async function Page({ params }: PageProps) {
@@ -18,7 +18,9 @@ export const dynamic = "force-static";
 
 export const revalidate = false;
 
-export const dynamicParams = false;
+export async function generateStaticParams() {
+  return LANGS.map((lang) => ({ lang }));
+}
 
 export async function generateMetadata({
   params,
