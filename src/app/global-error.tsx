@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 import type { ErrorProps } from "@/interfaces/component";
-import RootLayout from "@/components/layouts/root";
-import { LANG } from "@/enums/global";
 
 export default function GlobalError({ reset }: ErrorProps) {
   return (

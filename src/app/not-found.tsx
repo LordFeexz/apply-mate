@@ -1,6 +1,4 @@
 import BackBtn from "@/components/common/back-btn";
-import RootLayout from "@/components/layouts/root";
-import { LANG } from "@/enums/global";
 import { FileQuestion } from "lucide-react";
 
 export default function NotFound() {

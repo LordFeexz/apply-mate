@@ -40,3 +40,5 @@ export enum ACCOUNT_TAB {
   TRANSACTION = "transaction",
   BILLING = "billing",
 }
+
+export const ACCOUNT_TABS = Object.values(ACCOUNT_TAB);
