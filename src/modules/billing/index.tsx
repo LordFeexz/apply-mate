@@ -5,14 +5,16 @@ import PointSection from "../shared/point-section";
 import { LANG } from "@/enums/global";
 import { PRICING_CARD_EN, PRICING_CARD_ID } from "../landing/constant";
 import PricingCard from "../landing/components/pricing-card";
+import { getBillingPageDictionary } from "./i18n";
 
 export interface BillingPageProps extends LangProps {}
 
 function BillingPage({ lang }: BillingPageProps) {
+  const { title } = getBillingPageDictionary(lang);
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Subscription & Billing</CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-16">
         <PointSection lang={lang} />

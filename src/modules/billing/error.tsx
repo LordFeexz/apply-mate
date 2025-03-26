@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import type { ErrorProps } from "@/interfaces/component";
 
-export default function FeatureError({ reset }: ErrorProps) {
+export default function BillingError({ reset }: ErrorProps) {
   return (
     <Card className="container mx-auto max-w-7xl text-center">
       <CardHeader>
