@@ -90,7 +90,7 @@ export const SUBSCRIBE_BY_BANK_SCHEMA = z.object({
     invalid_type_error: "type must be a string",
   }),
   feature: z.enum(
-    ["scoring-cv", "generate-optimize-cv", "generate-cover-letter"],
+    ["scoring-cv", "generate-optimize-cv", "generate-cover-letter", "none"],
     {
       required_error: "feature is required",
       invalid_type_error: "feature must be a string",
@@ -108,7 +108,7 @@ export const SUBSCRIBE_BY_EWALLET_SCHEMA = z.object({
     invalid_type_error: "type must be a string",
   }),
   feature: z.enum(
-    ["scoring-cv", "generate-optimize-cv", "generate-cover-letter"],
+    ["scoring-cv", "generate-optimize-cv", "generate-cover-letter", "none"],
     {
       required_error: "feature is required",
       invalid_type_error: "feature must be a string",

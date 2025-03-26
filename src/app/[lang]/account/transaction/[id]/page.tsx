@@ -5,8 +5,9 @@ import { notFound, redirect } from "next/navigation";
 import TransactionDetail from "@/modules/transaction-detail";
 import { cache } from "react";
 import Account from "@/components/layouts/account";
-import { ACCOUNT_TAB } from "@/enums/global";
+import { ACCOUNT_TAB, LANG } from "@/enums/global";
 import { validate } from "uuid";
+import type { Metadata } from "next";
 
 const fetcher = cache(async (id: string) => {
   const transaction = await Transaction.findByPk(id, { raw: true });
@@ -35,8 +36,31 @@ export default async function Page({ params }: PageProps) {
 
 export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  return [];
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { lang, id } = await params;
+  const transaction = await Transaction.findByPk(id, { raw: true });
+  if (!transaction) return {};
+  const title =
+    lang === LANG.ID
+      ? `Detail Transaksi ${transaction.id}`
+      : `Transaction ${transaction.id} Detail`;
+
+  return {
+    title,
+    description: transaction.description,
+    openGraph: {
+      title,
+      description: transaction.description,
+      locale: lang,
+      type: "website",
+      siteName: "Apply Mate",
+      alternateLocale: ["en-US", "id-ID"],
+      countryName: "Indonesia",
+      url: `${process.env.DOMAIN}/${lang}/account/transaction/${id}`,
+    },
+  };
 }
 
-//todo generate metadata
+export const dynamic = "force-dynamic";

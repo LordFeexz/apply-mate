@@ -18,10 +18,15 @@ import useRunOnce from "@/hooks/use-run-once";
 import { getCurrentProfile } from "./action";
 import useSharedStore from "./store";
 import { isValidPremium } from "@/libs/model-helper";
+import { cn } from "@/libs/utils";
+import { getPointSectionDictionary } from "./i18n";
 
-export interface PointSectionProps extends LangProps {}
+export interface PointSectionProps extends LangProps {
+  className?: string;
+}
 
-function PointSection({ lang }: PointSectionProps) {
+function PointSection({ lang, className }: PointSectionProps) {
+  const { title, desc } = getPointSectionDictionary(lang);
   const { setData, data } = useSharedStore();
 
   useRunOnce(async () => {
@@ -31,15 +36,18 @@ function PointSection({ lang }: PointSectionProps) {
   return (
     <Suspense fallback={<PointSectionLoader />}>
       <BackOnUnauthenticated />
-      <Card className="container border-none mx-auto max-w-7xl px-4 mt-8">
+      <Card
+        className={cn(
+          "container border-none mx-auto max-w-7xl px-4 mt-8",
+          className
+        )}
+      >
         <CardHeader className="pb-2">
           <CardTitle className="text-xl flex items-center gap-2">
             <Coins className="h-5 w-5" />
-            Credit Options
+            {title}
           </CardTitle>
-          <CardDescription>
-            Choose the plan that works best for you
-          </CardDescription>
+          <CardDescription>{desc}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <CurrentPlan

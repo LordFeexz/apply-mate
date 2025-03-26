@@ -163,7 +163,7 @@ function LandingPage({ lang }: LandingPageProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {(lang === LANG.ID ? PRICING_CARD_ID : PRICING_CARD_EN).map(
               (el) => (
-                <PricingCard key={el.title} {...el} />
+                <PricingCard key={el.title} {...el} lang={lang} />
               )
             )}
           </div>

@@ -3,6 +3,7 @@ import type { FeatureCardProps } from "./components/feature-card";
 import type { StepCardProps } from "./components/step-card";
 import type { PricingCardProps } from "./components/pricing-card";
 import type { TestimonialCardProps } from "./components/testimonial-card";
+import { PRICING_PLAN } from "@/enums/plan";
 
 export const FEATURE_CARD_EN: FeatureCardProps[] = [
   {
@@ -126,6 +127,7 @@ export const PRICING_CARD_EN: PricingCardProps[] = [
     buttonText: "Get Started",
     buttonVariant: "outline",
     popular: false,
+    plan: PRICING_PLAN.FREE,
   },
   {
     title: "Pro",
@@ -142,6 +144,7 @@ export const PRICING_CARD_EN: PricingCardProps[] = [
     buttonText: "Get Pro",
     buttonVariant: "default",
     popular: true,
+    plan: PRICING_PLAN.SUBSCRIPTION,
   },
   {
     title: "Pay As You Go",
@@ -158,6 +161,7 @@ export const PRICING_CARD_EN: PricingCardProps[] = [
     buttonText: "Choose Plan",
     buttonVariant: "outline",
     popular: false,
+    plan: PRICING_PLAN.PAY_AS_YOU_GO,
   },
 ];
 
@@ -175,6 +179,7 @@ export const PRICING_CARD_ID: PricingCardProps[] = [
     buttonText: "Mulai",
     buttonVariant: "outline",
     popular: false,
+    plan: PRICING_PLAN.FREE,
   },
   {
     title: "Pro",
@@ -191,6 +196,7 @@ export const PRICING_CARD_ID: PricingCardProps[] = [
     buttonText: "Pilih Pro",
     buttonVariant: "default",
     popular: true,
+    plan: PRICING_PLAN.SUBSCRIPTION,
   },
   {
     title: "Pay As You Go",
@@ -207,6 +213,7 @@ export const PRICING_CARD_ID: PricingCardProps[] = [
     buttonText: "Pilih Plan",
     buttonVariant: "outline",
     popular: false,
+    plan: PRICING_PLAN.PAY_AS_YOU_GO,
   },
 ];
 

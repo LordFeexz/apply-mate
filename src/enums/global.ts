@@ -32,10 +32,11 @@ export enum PAYG_PAYMENT {
   CV_SCORING = "scoring-cv",
   CV_GENERATE = "generate-optimize-cv",
   COVER_LETTER_GENERATE = "generate-cover-letter",
+  NONE = "none",
 }
 
 export enum ACCOUNT_TAB {
   ACCOUNT = "",
   TRANSACTION = "transaction",
-  SUBSCRIPTION = "subscription",
+  BILLING = "billing",
 }

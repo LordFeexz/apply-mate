@@ -169,6 +169,17 @@ const VA_VIEWER_DICTIONARY: Record<LANG, VaViewerDictionary> = {
   },
 };
 
+const POINT_SECTION_DICTIONARY: Record<LANG, ContainerInputDictionary> = {
+  [LANG.EN]: {
+    title: "Credit Options",
+    desc: "Choose the plan that works best for you",
+  },
+  [LANG.ID]: {
+    title: "Pilihan Kredit",
+    desc: "Pilih paket yang cocok untuk Anda",
+  },
+};
+
 export const getCvDictionary = (lang: LANG) =>
   CV_FORM_DICTIONARY[lang] ?? CV_FORM_DICTIONARY[LANG.EN];
 
@@ -199,3 +210,6 @@ export const getVaInstructionDictionary = (lang: LANG) =>
 export const getEwalletInstructionDictionary = (lang: LANG) =>
   EWALLET_INSTRUCTION_DICTIONARY[lang] ??
   EWALLET_INSTRUCTION_DICTIONARY[LANG.EN];
+
+export const getPointSectionDictionary = (lang: LANG) =>
+  POINT_SECTION_DICTIONARY[lang] ?? POINT_SECTION_DICTIONARY[LANG.EN];

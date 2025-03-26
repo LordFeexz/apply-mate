@@ -63,8 +63,8 @@ export const ACCOUNT_TABS_EN: AccountTab[] = [
     icon: <Receipt className="w-4 h-4" />,
   },
   {
-    url: ACCOUNT_TAB.SUBSCRIPTION,
-    label: "Subscription",
+    url: ACCOUNT_TAB.BILLING,
+    label: "Billing",
     icon: <CreditCard className="w-4 h-4" />,
   },
 ];
@@ -81,8 +81,8 @@ export const ACCOUNT_TABS_ID: AccountTab[] = [
     icon: <Receipt className="w-4 h-4" />,
   },
   {
-    url: ACCOUNT_TAB.SUBSCRIPTION,
-    label: "Berlangganan",
+    url: ACCOUNT_TAB.BILLING,
+    label: "Pembayaran",
     icon: <CreditCard className="w-4 h-4" />,
   },
 ];

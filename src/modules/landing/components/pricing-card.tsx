@@ -7,7 +7,11 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import { PAYG_PAYMENT } from "@/enums/global";
+import { PRICING_PLAN } from "@/enums/plan";
+import type { LangProps } from "@/interfaces/component";
 import { cn } from "@/libs/utils";
+import SubscribeBtn from "@/modules/shared/components/subscribe-btn";
 import { CheckCircle } from "lucide-react";
 import { memo } from "react";
 
@@ -20,6 +24,23 @@ export interface PricingCardProps {
   buttonText: string;
   buttonVariant?: "default" | "outline" | "secondary";
   popular?: boolean;
+  plan: PRICING_PLAN;
+}
+
+function PricingBtn({
+  buttonText,
+  buttonVariant,
+}: Pick<PricingCardProps, "buttonVariant"> & {
+  buttonText: string;
+}) {
+  return (
+    <Button
+      variant={buttonVariant}
+      className="w-full cursor-pointer hover:scale-99 shadow-lg hover:shadow transition-all duration-300 mt-auto"
+    >
+      {buttonText}
+    </Button>
+  );
 }
 
 function PricingCard({
@@ -31,7 +52,9 @@ function PricingCard({
   buttonText,
   buttonVariant = "default",
   popular = false,
-}: PricingCardProps) {
+  plan,
+  lang,
+}: PricingCardProps & LangProps) {
   return (
     <Card
       className={cn(
@@ -65,12 +88,20 @@ function PricingCard({
             </li>
           ))}
         </ul>
-        <Button
-          variant={buttonVariant}
-          className="w-full cursor-pointer hover:scale-99 shadow-lg hover:shadow transition-all duration-300 mt-auto"
-        >
-          {buttonText}
-        </Button>
+        {plan === PRICING_PLAN.SUBSCRIPTION ? (
+          <SubscribeBtn
+            feature={PAYG_PAYMENT.NONE}
+            lang={lang}
+            customBtnElement={
+              <PricingBtn
+                buttonText={buttonText}
+                buttonVariant={buttonVariant}
+              />
+            }
+          />
+        ) : (
+          <PricingBtn buttonText={buttonText} buttonVariant={buttonVariant} />
+        )}
       </CardContent>
     </Card>
   );

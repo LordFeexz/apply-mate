@@ -7,6 +7,7 @@ import TransactionPage from "@/modules/transaction";
 import Account from "@/components/layouts/account";
 import { ACCOUNT_TAB } from "@/enums/global";
 import { cache } from "react";
+import type { Metadata } from "next";
 
 const fetcher = cache(
   async (user_id: string, data: { page: number; limit: number }) => {
@@ -59,7 +60,9 @@ export default async function Page({
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { lang } = await params;
   const { DOMAIN } = process.env;
 
@@ -69,12 +72,14 @@ export async function generateMetadata({ params }: PageProps) {
     openGraph: {
       title: "Transaction",
       description: "Transaction List",
-      url: `${DOMAIN}/${lang}/transaction`,
+      url: `${DOMAIN}/${lang}/account/transaction`,
       type: "website",
       siteName: "Apply Mate",
       locale: lang,
       alternateLocale: ["en-US", "id-ID"],
       countryName: "Indonesia",
     },
+    keywords: ["transaction", "apply mate transaction", "transaction list"],
+    applicationName: "Apply Mate",
   };
 }
