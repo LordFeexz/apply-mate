@@ -69,8 +69,8 @@ export const ACCOUNT_NAVIGATION_EN: Navigation[] = [
     href: "/en/sign-in",
   },
   {
-    label: "Credits",
-    href: "/en/topup",
+    label: "Account",
+    href: "/en/account",
   },
 ];
 
@@ -80,7 +80,7 @@ export const ACCOUNT_NAVIGATION_ID: Navigation[] = [
     href: "/id/sign-in",
   },
   {
-    label: "Kredit",
-    href: "/id/topup",
+    label: "Akun",
+    href: "/id/account",
   },
 ];

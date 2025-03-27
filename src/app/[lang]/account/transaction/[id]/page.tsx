@@ -41,7 +41,10 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { lang, id } = await params;
   const transaction = await Transaction.findByPk(id, { raw: true });
-  if (!transaction) return {};
+  if (!transaction)
+    return {
+      title: "Not Found",
+    };
   const title =
     lang === LANG.ID
       ? `Detail Transaksi ${transaction.id}`

@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === "production") {
         idle: 10000,
         acquire: 30000,
       },
-      logging: true,
+      logging: false,
     }
   );
 }

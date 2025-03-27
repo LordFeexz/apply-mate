@@ -49,16 +49,16 @@ export async function subscribedAction(
 
   const user = (await User.findByPk(session.user.id, {
     raw: true,
-    benchmark: true,
+    nest: true,
     include: [
-      { model: GenerateProfile, as: "generate_profiles", required: true },
+      { model: GenerateProfile, as: "generate_profile", required: true },
     ],
   })) as
-    | (UserAttributes & { generate_profiles: GenerateProfileAttributes })
+    | (UserAttributes & { generate_profile: GenerateProfileAttributes | null })
     | null;
-  if (!user) redirect(`/${lang}/sign-in`);
+  if (!user || !user.generate_profile) redirect(`/${lang}/sign-in`);
 
-  if (user.generate_profiles.premium_start_date)
+  if (user?.generate_profile?.premium_start_date)
     return {
       ...prevState,
       errors: {},

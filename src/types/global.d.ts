@@ -1,6 +1,8 @@
 export declare global {
-  var paymentEvents: ?Record<
-    string,
-    { write: (data: string) => void; end: () => void }
-  >;
+  var subscribePaymentEvents: ?Record<string, globalEvents>;
+
+  export type globalEvents = {
+    write: (data: string) => void;
+    end: () => void;
+  };
 }

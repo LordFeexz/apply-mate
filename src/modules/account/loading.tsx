@@ -18,9 +18,9 @@ function AccountLoading() {
               <Skeleton className="w-full h-4" />
             </h3>
             <div className="flex justify-between items-center gap-2">
-              <p className="flex justify-start items-center">
+              <div className="flex justify-start items-center">
                 <Skeleton className="w-full h-4" />
-              </p>
+              </div>
             </div>
           </hgroup>
 

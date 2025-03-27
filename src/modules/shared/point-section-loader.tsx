@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, Coins, CreditCard, RefreshCw } from "lucide-react";
+import { Coins, RefreshCw } from "lucide-react";
 import { memo } from "react";
 
 function PointSectionLoader() {
