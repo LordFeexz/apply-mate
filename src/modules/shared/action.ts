@@ -21,6 +21,9 @@ import {
   generateSignature,
 } from "@/libs/midtrans";
 import { getCsrfToken } from "@/libs/csrf";
+import type { SubscriptionTransactionDetail } from "@/models/transaction";
+import type { UserAttributes } from "@/models/user";
+import type { GenerateProfileAttributes } from "@/models/generate_profile";
 
 export async function getCurrentProfile() {
   const session = await getServerSideSession();
@@ -44,8 +47,23 @@ export async function subscribedAction(
   const session = await getServerSideSession();
   if (!session || !session?.user?.id) redirect(`/${lang}/sign-in`);
 
-  const user = await User.findByPk(session.user.id);
+  const user = (await User.findByPk(session.user.id, {
+    raw: true,
+    benchmark: true,
+    include: [
+      { model: GenerateProfile, as: "generate_profiles", required: true },
+    ],
+  })) as
+    | (UserAttributes & { generate_profiles: GenerateProfileAttributes })
+    | null;
   if (!user) redirect(`/${lang}/sign-in`);
+
+  if (user.generate_profiles.premium_start_date)
+    return {
+      ...prevState,
+      errors: {},
+      error: "You are already subscribed",
+    };
 
   const type = formData.get("type") ?? "e-wallet";
   const { data, error, success } = await (type === "va"
@@ -106,12 +124,12 @@ export async function subscribedAction(
           : (data as ISubscribeByBankSchema)?.bank,
       va_number:
         (data as ISubscribeByBankSchema)?.bank === "PERMATA"
-          ? charge.permata_va_number ?? []
+          ? [charge.permata_va_number ?? ""]
           : (charge?.va_numbers ?? []).map((el) => el.va_number),
       actions: charge?.actions ?? [],
       item: ITEM.SUBSCRIPTION,
       order_id: charge.order_id,
-    },
+    } as SubscriptionTransactionDetail,
     signature: generateSignature(
       charge.order_id,
       charge.status_code,

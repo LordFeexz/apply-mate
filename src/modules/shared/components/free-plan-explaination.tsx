@@ -12,11 +12,11 @@ export interface FreePlanExplainationProps extends LangProps {
 
 function FreePlanExplaination({ lang, credit = 0 }: FreePlanExplainationProps) {
   return (
-    <div className="space-y-2">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
+    <div className="space-y-2 p-2 container mr-12 sm:mr-0">
+      <div className="flex flex-col sm:flex-row sm:justify-between items-center flex-wrap sm:flex-nowrap space-y-4 sm:space-y-0">
+        <div className="flex flex-col sm:flex-row items-center justify-between flex-wrap sm:flex-nowrap gap-1 sm:gap-2">
           <RefreshCw className="h-4 w-4 text-green-600" />
-          <span className="text-sm">
+          <span className="text-xs sm:text-sm">
             {lang === LANG.ID ? "Kredit Gratis" : "Free Credits"}
           </span>
           <span className="font-semibold">{credit}</span>

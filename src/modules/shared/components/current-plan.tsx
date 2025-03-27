@@ -26,7 +26,7 @@ export interface CurrentPlanProps extends LangProps {
 function CurrentPlan({ lang, plan, point = 0, endDate }: CurrentPlanProps) {
   const { subsBadge, title } = getCurrentPlanDictionary(lang);
   return (
-    <div className="bg-muted/30 p-4 rounded-lg">
+    <div className="bg-muted/30 p-0.5 sm:p-4 rounded-lg">
       <hgroup className="flex justify-between items-center mb-2">
         <h3 className="font-medium">{title}</h3>
         <Badge

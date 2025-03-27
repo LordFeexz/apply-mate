@@ -1,5 +1,7 @@
 import "server-only";
 import { DataTypes, Model, Sequelize } from "sequelize";
+import type { EWalletActionResp } from "midtrans-client";
+import type { ITEM } from "@/enums/plan";
 
 export type TransactionType = "topup" | "payment" | "refund" | "settlement";
 
@@ -37,6 +39,23 @@ export const TRANSACTION_TYPE: TransactionType[] = [
   "payment",
   "refund",
 ];
+
+export interface SubscriptionTransactionDetail {
+  type: "va" | "e-wallet";
+  feature:
+    | "scoring-cv"
+    | "generate-optimize-cv"
+    | "generate-cover-letter"
+    | "none";
+  provider: "BNI" | "BRI" | "MANDIRI" | "BCA" | "PERMATA" | "Gopay";
+  va_number: string[];
+  actions: EWalletActionResp[];
+  item: ITEM.SUBSCRIPTION;
+  order_id: string;
+}
+
+export type TransactionDetail = Record<string, any> &
+  SubscriptionTransactionDetail;
 
 export const TRANSACTION_CURRENCY: Currency[] = ["IDR", "USD"];
 

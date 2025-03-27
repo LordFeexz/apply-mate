@@ -30,7 +30,7 @@ function SubscribeBtn({ lang, feature, customBtnElement }: SubscribeBtnProps) {
         {customBtnElement || (
           <Button
             variant="outline"
-            className="gap-2 cursor-pointer rounded-lg hover:scale-99 hover:opacity-90 hover:shadow transition-all duration-300 bg-gradient-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 border-indigo-200 text-indigo-700 dark:from-indigo-950/40 dark:to-purple-950/40 dark:hover:from-indigo-950/60 dark:hover:to-purple-950/60 dark:border-indigo-800 dark:text-indigo-300 px-2 py-0"
+            className="gap-2 text-xs sm:text-sm cursor-pointer rounded-lg hover:scale-99 hover:opacity-90 hover:shadow transition-all duration-300 bg-gradient-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 border-indigo-200 text-indigo-700 dark:from-indigo-950/40 dark:to-purple-950/40 dark:hover:from-indigo-950/60 dark:hover:to-purple-950/60 dark:border-indigo-800 dark:text-indigo-300 px-2 py-0"
           >
             <Crown className="h-4 w-4" />
             {btnText}
