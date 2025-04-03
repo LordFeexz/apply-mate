@@ -1,1 +1,1 @@
-export { GET } from "@/modules/api/subscribe-payment";
+export { GET } from "@/modules/api/payment-listener";
