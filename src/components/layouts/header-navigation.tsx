@@ -14,6 +14,8 @@ import { getHeaderDictionary } from "./i18n";
 import { memo } from "react";
 import { LANG } from "@/enums/global";
 import {
+  ACCOUNT_HEADER_NAVIGATION_EN,
+  ACCOUNT_HEADER_NAVIGATION_ID,
   FEATURE_NAVIGATION_EN,
   FEATURE_NAVIGATION_ID,
 } from "@/constants/navigation";
@@ -31,8 +33,8 @@ function HeaderNavigation({ lang }: HeaderNavigationProps) {
       <NavigationMenuList className="flex gap-2 flex-col md:flex-row md:w-full h-full md:h-fit justify-start md:justify-center items-start md:items-center">
         <NavigationMenuItem>
           <NavigationMenuTrigger>{feature}</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+          <NavigationMenuContent className="overflow-hidden">
+            <ul className="grid grid-cols-2 h-full overflow-y-scroll gap-3 p-6 w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-4">
                 <NavigationMenuLink asChild>
                   <Link
@@ -67,7 +69,16 @@ function HeaderNavigation({ lang }: HeaderNavigationProps) {
         <NavigationMenuItem>
           <NavigationMenuTrigger>{account}</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div>OK</div>
+            <ul className="h-full overflow-y-scroll gap-3 p-6 w-[400px] lg:w-[500px]">
+              {(lang === LANG.ID
+                ? ACCOUNT_HEADER_NAVIGATION_ID
+                : ACCOUNT_HEADER_NAVIGATION_EN
+              ).map(({ href, label, desc }) => (
+                <NavigationMenuListItem href={href} key={label} title={label}>
+                  {desc}
+                </NavigationMenuListItem>
+              ))}
+            </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>

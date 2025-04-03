@@ -8,7 +8,8 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 import LangToggle from "../common/lang-toggle";
 import ThemeToggle from "../common/theme-toggle";
-import HeaderNavigation from "../layouts/header-navigation";
+import dynamic from "next/dynamic";
+const HeaderNavigation = dynamic(() => import("../layouts/header-navigation"));
 
 export interface HeaderSheetProps extends LangProps {}
 
@@ -18,12 +19,12 @@ function HeaderSheet({ lang }: HeaderSheetProps) {
   return (
     <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
       <SheetTrigger asChild className="md:hidden">
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" aria-label="Mobile Menu Button">
           <Menu className="h-5 w-5" />
         </Button>
       </SheetTrigger>
       <SheetContent
-        aria-describedby="mobile-menu"
+        aria-labelledby="mobile-menu"
         side="right"
         className="w-[95%] min-w-[95%] z-50 h-fit border-b rounded-b-4xl mt-6 border-t rounded-t-2xl"
       >

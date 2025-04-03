@@ -90,3 +90,39 @@ export const ACCOUNT_NAVIGATION_ID: Navigation[] = [
     href: "/id/account",
   },
 ];
+
+export const ACCOUNT_HEADER_NAVIGATION_EN: (Navigation & { desc: string })[] = [
+  {
+    label: "Account",
+    href: "/en/account",
+    desc: "Manage your account and preferences",
+  },
+  {
+    label: "Billing",
+    href: "/en/account/billing",
+    desc: "Manage your billing information",
+  },
+  {
+    label: "Transaction",
+    href: "/en/account/transaction",
+    desc: "View your transaction history",
+  },
+];
+
+export const ACCOUNT_HEADER_NAVIGATION_ID: (Navigation & { desc: string })[] = [
+  {
+    label: "Akun",
+    href: "/id/account",
+    desc: "Kelola akun dan preferensi Anda",
+  },
+  {
+    label: "Pembayaran",
+    href: "/id/account/billing",
+    desc: "Kelola informasi pembayaran Anda",
+  },
+  {
+    label: "Transaksi",
+    href: "/id/account/transaction",
+    desc: "Lihat transaksi lalu Anda",
+  },
+];

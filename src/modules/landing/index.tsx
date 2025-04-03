@@ -66,7 +66,7 @@ function LandingPage({ lang }: LandingPageProps) {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Button asChild size="lg" className="rounded-full">
-                  <Link href={`/${lang}/sign-up`}>{getStarted}</Link>
+                  <Link href={`/${lang}/sign-in`}>{getStarted}</Link>
                 </Button>
                 <Button
                   asChild
