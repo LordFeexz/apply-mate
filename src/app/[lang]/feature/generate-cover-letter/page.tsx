@@ -29,23 +29,35 @@ export async function generateMetadata({
   const { lang } = await params;
 
   const title =
-    lang === LANG.ID ? "Generate Cover Letter" : "Generate Cover Letter";
+    lang === LANG.ID
+      ? "Buat Cover Letter Profesional"
+      : "Generate a Professional Cover Letter";
   const description =
     lang === LANG.ID
-      ? "Buat cover letter yang lebih baik dengan AI"
-      : "Generate better cover letters with AI";
+      ? "Buat cover letter profesional dengan AI. Sesuaikan cover letter Anda untuk lamaran pekerjaan dan meningkatkan peluang untuk dikenal"
+      : "Create professional cover letters effortlessly with AI. Tailor your cover letter for job applications and increase your chances of getting noticed";
 
   return {
     title,
     description,
     keywords: [
-      "cover letter",
-      "create cover letter",
-      "generate cover letter",
-      "buat cover letter",
-      "buat cover letter dengan AI",
-      "generate cover letter dengan AI",
-      "generate cover letter dengan AI gratis",
+      "Generate Cover Letter",
+      "Buat Surat Lamaran Kerja",
+      "Surat Lamaran Kerja Profesional",
+      "AI Surat Lamaran Kerja",
+      "Surat Lamaran Kerja Otomatis",
+      "Surat Lamaran Kerja Online",
+      "Buat Surat Lamaran dengan AI",
+      "Cover Letter Generator",
+      "AI Powered Cover Letter",
+      "Tailored Cover Letter",
+      "Surat Lamaran Kerja Terbaik",
+      "Buat Surat Lamaran Kerja Mudah",
+      "Cover Letter Builder",
+      "Create Professional Cover Letter",
+      "Job Application Cover Letter",
+      "AI Cover Letter Generator",
+      "Personalized Cover Letter",
     ],
     openGraph: {
       title,
@@ -60,6 +72,23 @@ export async function generateMetadata({
         url: `${DOMAIN}/og/generate-cover-letter-${lang}.png`,
         type: "image/png",
         alt: "Apply Mate Generate Cover Letter",
+      },
+    },
+    applicationName: "Apply Mate",
+    alternates: {
+      canonical: `${DOMAIN}/${lang}/feature/generate-cover-letter`,
+      languages: {
+        "en-US": `${DOMAIN}/en/feature/generate-cover-letter`,
+        "id-ID": `${DOMAIN}/id/feature/generate-cover-letter`,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: true,
+      googleBot: {
+        index: true,
+        follow: true,
       },
     },
   };

@@ -25,7 +25,7 @@ function AppFooter({ lang }: AppFooterProps) {
     >
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 container mx-auto">
         <hgroup className="antialiased">
-          <h3 className="font-semibold mb-4">Apply Mate</h3>
+          <h2 className="font-semibold mb-4">Apply Mate</h2>
           <p className="text-sm text-muted-foreground">{desc}</p>
         </hgroup>
         <hgroup id="features-footer" className="antialiased">

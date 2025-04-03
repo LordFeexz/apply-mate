@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -7,26 +9,21 @@ import {
 } from "@/components/ui/card";
 import type { LangProps } from "@/interfaces/component";
 import type { TransactionAttributes } from "@/models/transaction";
-import { memo, Suspense } from "react";
+import { memo, Suspense, use } from "react";
 import TransactionCard from "./components/transaction-card";
 import SsrPagination from "@/components/common/ssr-pagination";
 import { getTransactionDictionary } from "./i18n";
 
 export interface TransactionPageProps extends LangProps {
-  transactions: TransactionAttributes[];
-  totalPage: number;
+  data: Promise<{ transactions: TransactionAttributes[]; totalPage: number }>;
   page: number;
   limit: number;
 }
 
-function TransactionPage({
-  transactions = [],
-  totalPage,
-  page,
-  lang,
-  limit,
-}: TransactionPageProps) {
+function TransactionPage({ data, page, lang, limit }: TransactionPageProps) {
   const { title, notFoundStage } = getTransactionDictionary(lang);
+  const { transactions = [], totalPage } = use(data);
+
   return (
     <Card>
       <CardHeader>

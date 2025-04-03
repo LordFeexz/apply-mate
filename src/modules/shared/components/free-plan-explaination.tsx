@@ -21,7 +21,7 @@ function FreePlanExplaination({ lang, credit = 0 }: FreePlanExplainationProps) {
           </span>
           <span className="font-semibold">{credit}</span>
         </div>
-        <SubscribeBtn lang={lang} feature={PAYG_PAYMENT.CV_SCORING} />
+        <SubscribeBtn lang={lang} feature={PAYG_PAYMENT.NONE} />
       </div>
       <RefreshCountdown lang={lang} />
     </div>

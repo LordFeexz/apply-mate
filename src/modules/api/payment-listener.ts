@@ -8,8 +8,7 @@ export async function GET(req: NextRequest) {
 
   if (!userId) return new NextResponse(null, { status: 204 });
 
-  if (!globalThis.subscribePaymentEvents)
-    globalThis.subscribePaymentEvents = {};
+  if (!globalThis.paymentEvents) globalThis.paymentEvents = {};
 
   let interval: Timer | null = null;
   const stream = new ReadableStream({
@@ -21,14 +20,14 @@ export async function GET(req: NextRequest) {
         end: () => controller.close(),
       };
 
-      globalThis.subscribePaymentEvents![userId] = res;
+      globalThis.paymentEvents![userId] = res;
       interval = setInterval(() => {
         res.write(JSON.stringify({ message: "ping" }));
       }, 5000);
     },
     cancel() {
       interval && clearInterval(interval);
-      delete globalThis.subscribePaymentEvents![userId];
+      delete globalThis.paymentEvents![userId];
     },
   });
 

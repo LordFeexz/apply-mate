@@ -2,10 +2,10 @@
 
 import SelectBank from "@/components/common/select-bank";
 import type { LangProps } from "@/interfaces/component";
-import type { PAYG_PAYMENT } from "@/enums/global";
+import { PAYG_PAYMENT } from "@/enums/global";
 import { Building } from "lucide-react";
 import { memo, useActionState } from "react";
-import { subscribedAction } from "../action";
+import { paygAction, subscribedAction } from "../action";
 import { getVaDictionary } from "../i18n";
 import type { ISubscribeByBankSchema } from "../schema";
 import SubmitBtn from "@/components/common/submit-btn";
@@ -19,14 +19,17 @@ export interface VaFormProps extends LangProps {
 
 function VaForm({ lang, feature }: VaFormProps) {
   const { title } = getVaDictionary(lang);
-  const [state, formAction, pending] = useActionState(subscribedAction, {
-    errors: {},
-    error: "",
-    bank: "BNI",
-    type: "va",
-    feature,
-    va: "",
-  });
+  const [state, formAction, pending] = useActionState(
+    feature === PAYG_PAYMENT.NONE ? subscribedAction : paygAction,
+    {
+      errors: {},
+      error: "",
+      bank: "BNI",
+      type: "va",
+      feature,
+      va: "",
+    }
+  );
 
   return (
     <form

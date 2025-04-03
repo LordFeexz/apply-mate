@@ -1,3 +1,4 @@
+import { PAYG_PAYMENT } from "@/enums/global";
 import { z } from "zod";
 
 export const SCHEMA_FILE = z
@@ -90,7 +91,12 @@ export const SUBSCRIBE_BY_BANK_SCHEMA = z.object({
     invalid_type_error: "type must be a string",
   }),
   feature: z.enum(
-    ["scoring-cv", "generate-optimize-cv", "generate-cover-letter", "none"],
+    [
+      PAYG_PAYMENT.COVER_LETTER_GENERATE,
+      PAYG_PAYMENT.CV_GENERATE,
+      PAYG_PAYMENT.CV_SCORING,
+      PAYG_PAYMENT.NONE,
+    ],
     {
       required_error: "feature is required",
       invalid_type_error: "feature must be a string",
@@ -108,7 +114,12 @@ export const SUBSCRIBE_BY_EWALLET_SCHEMA = z.object({
     invalid_type_error: "type must be a string",
   }),
   feature: z.enum(
-    ["scoring-cv", "generate-optimize-cv", "generate-cover-letter", "none"],
+    [
+      PAYG_PAYMENT.COVER_LETTER_GENERATE,
+      PAYG_PAYMENT.CV_GENERATE,
+      PAYG_PAYMENT.CV_SCORING,
+      PAYG_PAYMENT.NONE,
+    ],
     {
       required_error: "feature is required",
       invalid_type_error: "feature must be a string",

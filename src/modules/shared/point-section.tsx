@@ -20,7 +20,7 @@ import useSharedStore from "./store";
 import { isValidPremium } from "@/libs/model-helper";
 import { cn } from "@/libs/utils";
 import { getPointSectionDictionary } from "./i18n";
-import useSubscribePayment from "./hooks/use-subscribe-payment";
+import usePayment from "./hooks/use-payment";
 
 export interface PointSectionProps extends LangProps {
   className?: string;
@@ -34,7 +34,7 @@ function PointSection({ lang, className }: PointSectionProps) {
     if (!data) setData(await getCurrentProfile());
   });
 
-  useSubscribePayment();
+  usePayment();
 
   return (
     <Suspense fallback={<PointSectionLoader />}>

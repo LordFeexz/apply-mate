@@ -28,11 +28,14 @@ export async function generateMetadata({
   const { DOMAIN } = process.env;
   const { lang } = await params;
 
-  const title = lang === LANG.ID ? "Cek Skor CV mu" : "Check Your CV Score";
+  const title =
+    lang === LANG.ID
+      ? "Cek Skor CV mu secara instan"
+      : "Check Your CV Score Instantly";
   const description =
     lang === LANG.ID
-      ? "Cek kecocokan CV mu dengan pekerjaan yang dilamar"
-      : "Check the compatibility of your CV with the job applications";
+      ? "Analisa CV Anda dengan mudah dan cepat. Dapatkan gambaran untuk memperbaiki CV Anda untuk kesempatan pekerjaan yang lebih baik dengan Apply Mate!"
+      : "Analyze your CV's compatibility with job applications instantly. Get insights to optimize your resume for better job opportunities with Apply Mate!";
 
   return {
     title,
@@ -54,15 +57,40 @@ export async function generateMetadata({
     },
     keywords: [
       "Apply Mate",
-      "Apply Mate Scoring CV",
       "Apply Mate CV Scoring",
-      "Apply Mate CV Scoring Indonesia",
-      "Apply Mate CV Scoring English",
-      "CV Scoring",
-      "Cek Skor CV",
-      "Cek Skor CV Indonesia",
+      "Cek Skor CV Apply Mate",
+      "Skor CV Online",
+      "Analisis CV Online",
+      "Cek Kesesuaian CV",
+      "Cek Skor CV Gratis",
+      "Penilaian CV Otomatis",
+      "Cara Menilai CV",
+      "Optimasi CV untuk Lamaran Kerja",
       "Check CV Score",
+      "Free CV Score Check",
+      "Online CV Scoring",
+      "CV Optimization Tool",
+      "Resume Compatibility Check",
+      "Job Application CV Score",
+      "Improve Your Resume Score",
     ],
+    applicationName: "Apply Mate",
+    alternates: {
+      canonical: `${DOMAIN}/${lang}/feature/scoring-cv`,
+      languages: {
+        "en-US": `${DOMAIN}/en/feature/scoring-cv`,
+        "id-ID": `${DOMAIN}/id/feature/scoring-cv`,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
   };
 }
 

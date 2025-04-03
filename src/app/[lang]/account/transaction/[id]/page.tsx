@@ -45,6 +45,7 @@ export async function generateMetadata({
     return {
       title: "Not Found",
     };
+
   const title =
     lang === LANG.ID
       ? `Detail Transaksi ${transaction.id}`

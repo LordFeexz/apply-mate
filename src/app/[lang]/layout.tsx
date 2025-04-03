@@ -16,7 +16,10 @@ export async function generateMetadata({
   return {
     title: {
       default: "Apply Mate",
-      template: `%s | Apply Mate`,
+      template:
+        lang === LANG.ID
+          ? `%s | Optimalkan Pencarian Pekerjaan mu dengan Apply Mate`
+          : `%s | Optimize Your Job Search with Apply Mate`,
     },
     description:
       lang === LANG.ID
@@ -39,6 +42,7 @@ export async function generateMetadata({
     robots: {
       index: true,
     },
+    publisher: "Apply Mate",
   };
 }
 

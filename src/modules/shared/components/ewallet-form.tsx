@@ -1,10 +1,10 @@
 "use client";
 
-import type { PAYG_PAYMENT } from "@/enums/global";
+import { PAYG_PAYMENT } from "@/enums/global";
 import type { LangProps } from "@/interfaces/component";
 import { QrCode } from "lucide-react";
 import { memo, useActionState } from "react";
-import { subscribedAction } from "../action";
+import { paygAction, subscribedAction } from "../action";
 import SubmitBtn from "@/components/common/submit-btn";
 import dynamic from "next/dynamic";
 import { getEwalletDictionary } from "../i18n";
@@ -19,14 +19,17 @@ export interface EwalletFormProps extends LangProps {
 
 function EwalletForm({ feature, lang }: EwalletFormProps) {
   const { title } = getEwalletDictionary(lang);
-  const [state, formAction, pending] = useActionState(subscribedAction, {
-    errors: {},
-    error: "",
-    bank: "BNI",
-    type: "va",
-    feature,
-    qr: "",
-  });
+  const [state, formAction, pending] = useActionState(
+    feature === PAYG_PAYMENT.NONE ? subscribedAction : paygAction,
+    {
+      errors: {},
+      error: "",
+      bank: "BNI",
+      type: "va",
+      feature,
+      qr: "",
+    }
+  );
   return (
     <form
       action={formAction}

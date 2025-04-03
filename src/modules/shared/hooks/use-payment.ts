@@ -3,34 +3,40 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import useSharedStore from "../store";
 import { isValid } from "date-fns";
-import { SSE_SUBSCRIBE_PAYMENT_TYPE } from "../constant";
+import { SSE_PAYG_PAYMENT_TYPE, SSE_SUBSCRIBE_PAYMENT_TYPE } from "../constant";
 
-export default function useSubscribePayment() {
+export default function usePayment() {
   const { status, data: session } = useSession();
   const { data, setData } = useSharedStore();
 
   useEffect(() => {
     if (status === "authenticated") {
       const eventSource = new EventSource(
-        `/api/subscribe-payment?user_id=${(session as CustomSession)?.user?.id}`
+        `/api/payment-listener?user_id=${(session as CustomSession)?.user?.id}`
       );
 
       eventSource.onmessage = (e) => {
         e.preventDefault();
         if (data) {
           try {
-            const { premium_start_date, premium_end_date, type } = JSON.parse(
-              e.data
-            );
-            if (type !== SSE_SUBSCRIBE_PAYMENT_TYPE) return;
-
+            const {
+              premium_start_date,
+              premium_end_date,
+              type,
+              pay_as_you_go_payments = [],
+            } = JSON.parse(e.data);
             let current = { ...data };
 
-            if (isValid(new Date(premium_start_date)))
-              current.premium_start_date = premium_start_date;
+            if (type === SSE_SUBSCRIBE_PAYMENT_TYPE) {
+              if (isValid(new Date(premium_start_date)))
+                current.premium_start_date = premium_start_date;
 
-            if (isValid(new Date(premium_end_date)))
-              current.premium_end_date = premium_end_date;
+              if (isValid(new Date(premium_end_date)))
+                current.premium_end_date = premium_end_date;
+            }
+
+            if (type === SSE_PAYG_PAYMENT_TYPE)
+              current.pay_as_you_go_payments = pay_as_you_go_payments;
 
             setData(current);
           } catch (err) {

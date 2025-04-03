@@ -18,9 +18,11 @@ import {
 } from "react";
 import CompanyDetailForm from "./company-detail-form";
 import InputLangBtn from "@/components/common/input-lang-btn";
-import SubmitBtn from "@/components/common/submit-btn";
 import { sanitizeString } from "@/libs/utils";
 import dynamic from "next/dynamic";
+import GenerateBtn from "@/modules/shared/components/generate-btn";
+import { PAYG_PAYMENT } from "@/enums/global";
+import CsrfInput from "@/components/common/csrf-input";
 const ResponseCard = dynamic(() => import("./response-card"), { ssr: false });
 
 export interface GenerateCoverLetterFormProps extends LangProps {}
@@ -71,6 +73,7 @@ function GenerateCoverLetterForm({ lang }: GenerateCoverLetterFormProps) {
         id="generate-cover-letter-form"
         onSubmit={onSubmitHandler}
       >
+        <CsrfInput />
         <div className="grid gap-8 md:grid-cols-2">
           <div className="space-y-8">
             <CardInputContainer title={cvLabel} desc={cvDesc}>
@@ -88,9 +91,15 @@ function GenerateCoverLetterForm({ lang }: GenerateCoverLetterFormProps) {
           </div>
         </div>
         <div className="flex justify-center mt-4">
-          <SubmitBtn size="lg" className="rounded-full px-8 gap-2 w-1/2">
+          <GenerateBtn
+            disabled={pending}
+            size="lg"
+            lang={lang}
+            feature={PAYG_PAYMENT.COVER_LETTER_GENERATE}
+            className="rounded-full px-8 gap-2 w-1/2"
+          >
             Submit
-          </SubmitBtn>
+          </GenerateBtn>
         </div>
       </form>
       {!!responses.length && (

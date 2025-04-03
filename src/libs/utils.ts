@@ -4,7 +4,8 @@ import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import mammoth from "mammoth";
 import sanitize from "sanitize-html";
 import "pdfjs-dist/build/pdf.worker.min.mjs";
-import { LANG, LANGS } from "@/enums/global";
+import { LANG, LANGS, PAYG_PAYMENT } from "@/enums/global";
+import { PRICING } from "@/enums/plan";
 
 GlobalWorkerOptions.workerSrc = "pdfjs-dist/build/pdf.worker.min.mjs";
 
@@ -212,7 +213,17 @@ export function getValidLang(raw: string) {
   return LANGS.includes(raw as LANG) ? (raw as LANG) : LANG.EN;
 }
 
-export function sendPaymentEvent(userId: string, data: string) {
-  if (!globalThis.paymentEvents) globalThis.paymentEvents = {};
-  globalThis.paymentEvents[userId]?.write(data);
+export function getPAYGPrice(feature: PAYG_PAYMENT) {
+  switch (feature) {
+    case PAYG_PAYMENT.COVER_LETTER_GENERATE:
+      return PRICING.COVER_LETTER;
+    case PAYG_PAYMENT.CV_GENERATE:
+      return PRICING.GENERATE_CV;
+    case PAYG_PAYMENT.CV_SCORING:
+      return PRICING.SCORING_CV;
+    case PAYG_PAYMENT.NONE:
+      return PRICING.SUBSCRIPTION;
+    default:
+      return 0;
+  }
 }

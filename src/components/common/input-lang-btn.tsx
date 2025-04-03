@@ -53,7 +53,7 @@ function InputLangBtn({
             className={cn(
               "text-xs rounded-full px-3 py-1",
               lang === el && "bg-background shadow",
-              "cursor-pointer hover:scale-99 hover:opacity-98 transition-opacity duration-300",
+              "cursor-pointer hover:scale-99 hover:opacity-98 transition-all duration-300",
               btnClassName
             )}
             key={el}

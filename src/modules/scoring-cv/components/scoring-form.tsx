@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 import InputLangBtn from "@/components/common/input-lang-btn";
 import type { IScoringState } from "../schema";
 import { generateCvScoringAction } from "../action";
+import CsrfInput from "@/components/common/csrf-input";
 const ScoringResponse = dynamic(() => import("./score-response"), {
   ssr: false,
 });
@@ -54,6 +55,7 @@ function ScoringForm({ lang }: ScoringFormProps) {
   return (
     <>
       <form ref={ref} className="space-y-8" action={formAction}>
+        <CsrfInput />
         <div className="grid gap-8 md:grid-cols-2">
           <CardInputContainer
             className="col-span-2 md:col-span-1"

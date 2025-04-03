@@ -6,6 +6,7 @@ import { User } from "@/models";
 import { redirect } from "next/navigation";
 import { getServerSideSession } from "@/libs/session";
 import AccountPage from "@/modules/account";
+import type { Metadata } from "next";
 
 const fetcher = cache(async (userId: string, lang: LANG) => {
   const data = await User.findByPk(userId, {
@@ -36,3 +37,30 @@ export default async function Page({ params }: PageProps) {
 export const revalidate = 0;
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { lang } = await params;
+  const title = lang === LANG.ID ? "Akun" : "Account";
+  const description =
+    lang === LANG.ID
+      ? "Kelola akun Anda di Apply Mate"
+      : "Manage your account on Apply Mate";
+
+  return {
+    title,
+    description,
+    robots: "noindex",
+    openGraph: {
+      title,
+      description,
+      url: `${process.env.DOMAIN}/${lang}/account`,
+      type: "website",
+      siteName: "Apply Mate",
+      locale: lang,
+      alternateLocale: ["en-US", "id-ID"],
+      countryName: "Indonesia",
+    },
+  };
+}

@@ -25,18 +25,22 @@ export async function generateMetadata({
   const { lang } = await params;
   const { DOMAIN } = process.env;
 
+  const title =
+    lang === LANG.ID
+      ? "Apply Mate - Tool Pencarian Pekerjaan"
+      : "Apply Mate - Job Application Tool";
+
+  const description =
+    lang === LANG.ID
+      ? "Optimalkan pencarian pekerjaan Anda dengan AI untuk memudahkan Anda"
+      : "Optimize your job applications with our AI-powered tool to make your job search easier";
+
   return {
-    title: "Apply Mate",
-    description:
-      lang === LANG.ID
-        ? "Optimalkan pencarian pekerjaan Anda dengan AI"
-        : "Optimize your job applications with our AI-powered tool",
+    title,
+    description,
     openGraph: {
-      title: "Apply Mate",
-      description:
-        lang === LANG.ID
-          ? "Optimalkan pencarian pekerjaan Anda dengan AI"
-          : "Optimize your job applications with our AI-powered tool",
+      title,
+      description,
       url: `${DOMAIN}/${lang}`,
       type: "website",
       siteName: "Apply Mate",
@@ -72,5 +76,14 @@ export async function generateMetadata({
       "Job Application Tool Optimization Feature",
       "Job Application Tool Optimization Tool",
     ],
+    robots: {
+      index: true,
+      follow: true,
+      nocache: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
   };
 }

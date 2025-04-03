@@ -8,13 +8,11 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 import LangToggle from "../common/lang-toggle";
 import ThemeToggle from "../common/theme-toggle";
-import { getHeaderDictionary } from "../layouts/i18n";
+import HeaderNavigation from "../layouts/header-navigation";
 
 export interface HeaderSheetProps extends LangProps {}
 
 function HeaderSheet({ lang }: HeaderSheetProps) {
-  const { feature, blog, about, organization, account } =
-    getHeaderDictionary(lang);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   return (
@@ -27,7 +25,7 @@ function HeaderSheet({ lang }: HeaderSheetProps) {
       <SheetContent
         aria-describedby="mobile-menu"
         side="right"
-        className="w-[60%] min-w-[360px] z-50 h-[35%] border-b rounded-b-4xl mt-6 border-t rounded-t-2xl"
+        className="w-[95%] min-w-[95%] z-50 h-fit border-b rounded-b-4xl mt-6 border-t rounded-t-2xl"
       >
         <SheetTitle id="mobile-menu" className="sr-only">
           Mobile Menu Button
@@ -51,38 +49,7 @@ function HeaderSheet({ lang }: HeaderSheetProps) {
             <ThemeToggle />
           </div>
 
-          <nav className="flex flex-col gap-4">
-            <Link
-              href={`/${lang}/feature`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {feature}
-            </Link>
-            <Link
-              href={`/${lang}/about`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {about}
-            </Link>
-            <Link
-              href={`/${lang}/blog`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {blog}
-            </Link>
-            <Link
-              href={`/${lang}/our-organization`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {organization}
-            </Link>
-            <Link
-              href={`/${lang}/account`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {account}
-            </Link>
-          </nav>
+          <HeaderNavigation lang={lang} />
         </div>
       </SheetContent>
     </Sheet>

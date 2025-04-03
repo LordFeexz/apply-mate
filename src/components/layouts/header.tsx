@@ -6,6 +6,7 @@ import ThemeToggle from "../common/theme-toggle";
 import LangToggle from "../common/lang-toggle";
 import HeaderSheet from "../mobiles/header-sheet";
 import { getHeaderDictionary } from "./i18n";
+import HeaderNavigation from "./header-navigation";
 
 export interface AppHeaderProps extends LangProps {}
 
@@ -24,6 +25,7 @@ function AppHeader({ lang }: AppHeaderProps) {
           prefetch
           className="flex items-center gap-2 border border-accent-foreground p-2 rounded-md hover:scale-99 hover:cursor-pointer duration-300 transition-transform"
         >
+          <h1 className="sr-only">Apply Mate</h1>
           <div className="rounded-xl h-8 w-14 bg-primary flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-sm">
               Apply
@@ -32,40 +34,11 @@ function AppHeader({ lang }: AppHeaderProps) {
           <span className="text-xl font-bold hidden sm:inline">Mate</span>
           <span className="text-xl font-bold sm:hidden">Apply Mate</span>
         </Link>
-        <nav className="hidden md:flex items-center gap-6">
-          <Link
-            href={`/${lang}/feature`}
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            {feature}
-          </Link>
-          <Link
-            href={`/${lang}/about`}
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            {about}
-          </Link>
-          <Link
-            href={`/${lang}/blog`}
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            {blog}
-          </Link>
-          <Link
-            href={`/${lang}/our-organization`}
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            {organization}
-          </Link>
-          <Link
-            href={`/${lang}/account`}
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            {account}
-          </Link>
+        <div className="hidden md:flex items-center gap-6">
+          <HeaderNavigation lang={lang} />
           <LangToggle />
           <ThemeToggle />
-        </nav>
+        </div>
         <HeaderSheet lang={lang} />
       </div>
     </TransparentOnScroll>

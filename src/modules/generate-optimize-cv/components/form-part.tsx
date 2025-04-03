@@ -3,10 +3,12 @@ import CardInputContainer from "@/modules/shared/components/card-input-container
 import DefaultLoader from "@/components/common/default-loader";
 import CvForm from "@/modules/shared/components/cv-form";
 import JobDescForm from "@/modules/shared/components/job-desc-form";
-import SubmitBtn from "@/components/common/submit-btn";
 import type { LangProps } from "@/interfaces/component";
 import { getJobDescDictionary, getScoringFormDictionary } from "../i18n";
 import type { IScoringSchema } from "@/modules/shared/schema";
+import GenerateBtn from "@/modules/shared/components/generate-btn";
+import { PAYG_PAYMENT } from "@/enums/global";
+import CsrfInput from "@/components/common/csrf-input";
 
 export interface FormPartProps extends LangProps, Omit<IScoringSchema, "lang"> {
   loading: boolean;
@@ -18,6 +20,15 @@ function FormPart({ lang, cv, jobDesc, loading }: FormPartProps) {
 
   return (
     <>
+      <input
+        type="hidden"
+        className="sr-only"
+        name="lang"
+        value={lang}
+        readOnly
+        aria-readonly
+      />
+      <CsrfInput />
       <div className="grid gap-8 md:grid-cols-2">
         <CardInputContainer
           className="col-span-2 md:col-span-1"
@@ -37,13 +48,15 @@ function FormPart({ lang, cv, jobDesc, loading }: FormPartProps) {
         </CardInputContainer>
       </div>
       <div className="flex justify-center">
-        <SubmitBtn
+        <GenerateBtn
           disabled={loading}
           size="lg"
+          lang={lang}
+          feature={PAYG_PAYMENT.CV_GENERATE}
           className="rounded-full px-8 gap-2 w-1/2"
         >
           Submit
-        </SubmitBtn>
+        </GenerateBtn>
       </div>
     </>
   );

@@ -11,7 +11,7 @@ import type { Metadata } from "next";
 
 const fetcher = cache(
   async (user_id: string, data: { page: number; limit: number }) => {
-    const { rows, count } = await Transaction.findAndCountAll({
+    const { rows = [], count = 0 } = await Transaction.findAndCountAll({
       where: { user_id },
       offset: (data.page - 1) * data.limit,
       limit: data.limit,
@@ -21,7 +21,7 @@ const fetcher = cache(
       ],
       raw: true,
     });
-    return { rows, count };
+    return { transactions: rows, totalPage: Math.ceil(count / data.limit) };
   }
 );
 
@@ -44,16 +44,11 @@ export default async function Page({
   const session = await getServerSideSession();
   if (!session || !session?.user?.id) redirect(`/${lang}/sign-in`);
 
-  const { rows, count } = await fetcher(session.user.id, data);
+  const transaction = fetcher(session.user.id, data);
 
   return (
     <Account lang={lang} tab={ACCOUNT_TAB.TRANSACTION}>
-      <TransactionPage
-        lang={lang}
-        transactions={rows}
-        totalPage={Math.ceil(count / data.limit)}
-        {...data}
-      />
+      <TransactionPage lang={lang} data={transaction} {...data} />
     </Account>
   );
 }

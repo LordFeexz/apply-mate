@@ -5,11 +5,20 @@ import { SCHEMA_CV_SCORING } from "../shared/schema";
 import type { IScoringState } from "./schema";
 import { scoringPrompt } from "@/libs/prompt";
 import type { CVScoringResult } from "@/interfaces/ai";
+import { verifyCsrfToken } from "@/libs/csrf";
 
 export async function generateCvScoringAction(
   prevState: IScoringState & { parsed: boolean },
   formData: FormData
 ) {
+  const csrf = formData.get("csrf") as string;
+  if (!csrf || !verifyCsrfToken(csrf))
+    return {
+      ...prevState,
+      error: "missing or invalid csrf token",
+      errors: {},
+    };
+
   const { success, data, error } = await SCHEMA_CV_SCORING.safeParseAsync({
     cv: formData.get("cv") as string,
     jobDesc: formData.get("jobDesc") as string,

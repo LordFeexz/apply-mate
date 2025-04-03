@@ -19,11 +19,11 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { DOMAIN } = process.env;
   const { lang } = await params;
-  const title = lang === LANG.ID ? "Fitur" : "Features";
+  const title = lang === LANG.ID ? "Fitur Kami" : "Our Features";
   const description =
     lang === LANG.ID
-      ? "Optimalkan pencarian pekerjaan Anda dengan AI"
-      : "Optimize your job applications with our AI-powered tool";
+      ? "Fitur Kami yang dapat membantu Anda mencari pekerjaan lebih cepat dan efektif"
+      : "Our Features that help you find jobs faster and more effectively";
 
   return {
     title,
@@ -66,6 +66,23 @@ export async function generateMetadata({
       "Job Application Tool Optimization Feature",
       "Job Application Tool Optimization Tool",
     ],
+    applicationName: "Apply Mate",
+    alternates: {
+      canonical: `${DOMAIN}/${lang}/feature`,
+      languages: {
+        "en-US": `${DOMAIN}/en/feature`,
+        "id-ID": `${DOMAIN}/id/feature`,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
   };
 }
 

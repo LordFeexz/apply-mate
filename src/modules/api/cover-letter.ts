@@ -4,6 +4,12 @@ import { NextResponse, type NextRequest } from "next/server";
 import { SCHEMA_COVER_LETTER } from "../shared/schema";
 import { COVER_LETTER_MODEL } from "@/libs/gemini";
 import { coverLetterPrompt } from "@/libs/prompt";
+import { getServerSideSession } from "@/libs/session";
+import { redirect } from "next/navigation";
+import { LANG, PAYG_PAYMENT } from "@/enums/global";
+import { getPAYGPrice } from "@/libs/utils";
+import { GenerateProfile } from "@/models";
+import { verifyCsrfToken } from "@/libs/csrf";
 
 export async function POST(req: NextRequest) {
   if (!req.headers.get("content-type")?.includes("multipart/form-data"))
@@ -18,10 +24,53 @@ export async function POST(req: NextRequest) {
     );
 
   const formData = await req.formData();
+  const lang = formData.get("lang") ?? LANG.EN;
+  const csrf = formData.get("csrf") as string;
+  if (!csrf || !verifyCsrfToken(csrf))
+    return NextResponse.json(
+      {
+        message: "missing or invalid csrf token",
+        code: 403,
+        data: null,
+        errors: null,
+      },
+      { status: 403 }
+    );
+
+  const session = await getServerSideSession();
+  if (!session || !session?.user?.id) redirect(`/${lang}/sign-in`);
+
+  const price = getPAYGPrice(PAYG_PAYMENT.COVER_LETTER_GENERATE);
+  const generateProfile = await GenerateProfile.findOne({
+    where: { user_id: session.user.id },
+    raw: true,
+    benchmark: true,
+  });
+  if (!generateProfile) redirect(`/${lang}/sign-in`);
+
+  if (
+    !generateProfile ||
+    (!generateProfile?.premium_start_date &&
+      !generateProfile?.premium_end_date &&
+      +generateProfile?.points < price &&
+      !generateProfile?.pay_as_you_go_payments?.some(
+        (el) => el === PAYG_PAYMENT.COVER_LETTER_GENERATE
+      ))
+  )
+    return NextResponse.json(
+      {
+        code: 400,
+        message: "Unsufficient points",
+        data: null,
+        errors: null,
+      },
+      { status: 400 }
+    );
+
   const { success, data, error } = await SCHEMA_COVER_LETTER.safeParseAsync({
     cv: formData.get("cv") as string,
     jobDesc: formData.get("jobDesc") as string,
-    lang: formData.get("lang"),
+    lang,
     role: formData.get("role") as string,
     company: formData.get("company") as string,
   });
@@ -41,6 +90,26 @@ export async function POST(req: NextRequest) {
     const { stream } = await COVER_LETTER_MODEL.generateContentStream(
       coverLetterPrompt(data)
     );
+
+    if (
+      !generateProfile.premium_start_date ||
+      !generateProfile.premium_end_date
+    )
+      await GenerateProfile.update(
+        generateProfile?.pay_as_you_go_payments?.some(
+          (el) => el === PAYG_PAYMENT.COVER_LETTER_GENERATE
+        )
+          ? {
+              pay_as_you_go_payments:
+                generateProfile.pay_as_you_go_payments?.filter(
+                  (el) => el !== PAYG_PAYMENT.COVER_LETTER_GENERATE
+                ),
+            }
+          : {
+              points: +generateProfile.points - price,
+            },
+        { where: { user_id: session.user.id } }
+      );
 
     const encoder = new TextEncoder();
     const readableStream = new ReadableStream({

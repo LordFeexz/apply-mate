@@ -10,8 +10,13 @@ import { DB, GenerateProfile, Transaction, User } from "@/models";
 import { NextResponse, type NextRequest } from "next/server";
 import { addMonths } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
-import { SSE_SUBSCRIBE_PAYMENT_TYPE } from "../shared/constant";
+import {
+  SSE_PAYG_PAYMENT_TYPE,
+  SSE_SUBSCRIBE_PAYMENT_TYPE,
+} from "../shared/constant";
 import { generateSignature } from "@/libs/midtrans";
+import type { UserAttributes } from "@/models/user";
+import type { GenerateProfileAttributes } from "@/models/generate_profile";
 
 export async function POST(req: NextRequest) {
   if (!req.headers.get("content-type")?.includes("application/json"))
@@ -96,12 +101,22 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       );
 
-    const user = await User.findOne({
+    const user = (await User.findOne({
       where: { id: data.user_id },
       transaction,
       lock: transaction.LOCK.UPDATE,
       raw: true,
-    });
+      nest: true,
+      include: [
+        {
+          model: GenerateProfile,
+          as: "generate_profile",
+          required: true,
+        },
+      ],
+    })) as
+      | (UserAttributes & { generate_profile: GenerateProfileAttributes })
+      | null;
 
     if (!user)
       return NextResponse.json(
@@ -139,7 +154,7 @@ export async function POST(req: NextRequest) {
                 addMonths(now, 1),
                 "Asia/Jakarta"
               );
-              console.log({ premium_end_date, premium_start_date });
+
               tasks.push(
                 GenerateProfile.update(
                   {
@@ -150,26 +165,52 @@ export async function POST(req: NextRequest) {
                 )
               );
 
-              if (globalThis?.subscribePaymentEvents?.[user.id]) {
-                globalThis.subscribePaymentEvents[user.id].write(
+              if (globalThis?.paymentEvents?.[user.id])
+                globalThis.paymentEvents[user.id].write(
                   JSON.stringify({
                     premium_start_date,
                     premium_end_date,
                     type: SSE_SUBSCRIBE_PAYMENT_TYPE,
                   })
                 );
-              }
             }
-          await Promise.all(tasks);
+        }
+        break;
+      case "py":
+        {
+          if (transaction_status === "settlement")
+            if (data.detail?.item === ITEM.PAYG) {
+              const newData = [
+                ...user?.generate_profile?.pay_as_you_go_payments,
+                data?.detail?.feature,
+              ];
+              tasks.push(
+                GenerateProfile.update(
+                  {
+                    pay_as_you_go_payments: newData,
+                  },
+                  { transaction, where: { user_id: user.id } }
+                )
+              );
+
+              if (globalThis?.paymentEvents?.[user.id])
+                globalThis.paymentEvents[user.id].write(
+                  JSON.stringify({
+                    pay_as_you_go_payments: newData,
+                    type: SSE_PAYG_PAYMENT_TYPE,
+                  })
+                );
+            }
         }
         break;
       default:
-        console.log({ orderType });
         return NextResponse.json(
           { code: 400, message: "invalid order type", error: null, data: null },
           { status: 400 }
         );
     }
+
+    await Promise.all(tasks);
     await transaction.commit();
     return NextResponse.json({
       code: 200,
@@ -178,7 +219,6 @@ export async function POST(req: NextRequest) {
       data: null,
     });
   } catch (err) {
-    console.log(err);
     await transaction.rollback();
     return NextResponse.json(
       { code: 500, message: "Unexpected Error", error: err, data: null },

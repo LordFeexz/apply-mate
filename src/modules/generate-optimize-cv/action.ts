@@ -5,11 +5,52 @@ import { SCHEMA_CV_GENERATE } from "../shared/schema";
 import type { IGenerateCvState } from "./schema";
 import { generateCvPrompt } from "@/libs/prompt";
 import type { CVGeneratingResult } from "@/interfaces/ai";
+import { getServerSideSession } from "@/libs/session";
+import { redirect } from "next/navigation";
+import { LANG, PAYG_PAYMENT } from "@/enums/global";
+import { GenerateProfile } from "@/models";
+import { getPAYGPrice } from "@/libs/utils";
+import { verifyCsrfToken } from "@/libs/csrf";
 
 export async function generateOptimizeCvAction(
   prevState: IGenerateCvState,
   formData: FormData
-) {
+): Promise<IGenerateCvState> {
+  const lang = formData.get("lang") ?? LANG.EN;
+  const csrf = formData.get("csrf") as string;
+  if (!csrf || !verifyCsrfToken(csrf))
+    return {
+      ...prevState,
+      error: "missing or invalid csrf token",
+      errors: {},
+    };
+
+  const session = await getServerSideSession();
+  if (!session || !session?.user?.id) redirect(`/${lang}/sign-in`);
+
+  const generateProfile = await GenerateProfile.findOne({
+    where: { user_id: session.user.id },
+    raw: true,
+    benchmark: true,
+  });
+  if (!generateProfile) redirect(`/${lang}/sign-in`);
+
+  const price = getPAYGPrice(PAYG_PAYMENT.CV_GENERATE);
+  if (
+    !generateProfile ||
+    (!generateProfile?.premium_start_date &&
+      !generateProfile?.premium_end_date &&
+      +generateProfile?.points < price &&
+      !generateProfile?.pay_as_you_go_payments?.some(
+        (el) => el === PAYG_PAYMENT.CV_GENERATE
+      ))
+  )
+    return {
+      ...prevState,
+      errors: {},
+      error: "unsufficient points",
+    };
+
   const { success, data, error } = await SCHEMA_CV_GENERATE.safeParseAsync({
     cv: formData.get("cv") as string,
     jobDesc: formData.get("jobDesc") as string,
@@ -28,6 +69,26 @@ export async function generateOptimizeCvAction(
     );
 
     const parsed: CVGeneratingResult = JSON.parse(response.text());
+    if (
+      !generateProfile.premium_start_date ||
+      !generateProfile.premium_end_date
+    )
+      GenerateProfile.update(
+        generateProfile?.pay_as_you_go_payments?.some(
+          (el) => el === PAYG_PAYMENT.CV_GENERATE
+        )
+          ? {
+              pay_as_you_go_payments:
+                generateProfile.pay_as_you_go_payments?.filter(
+                  (el) => el !== PAYG_PAYMENT.CV_GENERATE
+                ),
+            }
+          : {
+              points: +generateProfile.points - price,
+            },
+        { where: { user_id: session.user.id } }
+      );
+
     return {
       ...prevState,
       ...data,

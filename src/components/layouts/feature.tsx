@@ -13,7 +13,7 @@ function FeatureLayout({ children, lang, feature }: FeatureLayoutProps) {
   return (
     <section className="container mx-auto max-w-7xl px-4 mt-8" id="app-feature">
       <hgroup className="mb-12 text-center max-w-2xl mx-auto">
-        <h1 className="text-4xl font-bold tracking-tight mb-4">Apply Mate</h1>
+        <h2 className="text-4xl font-bold tracking-tight mb-4">Apply Mate</h2>
         <p className="text-xl text-muted-foreground">{desc}</p>
       </hgroup>
 

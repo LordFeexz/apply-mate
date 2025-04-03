@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   },
   env: {
     GOOGLE_OAUTH_CLIENTID: process.env.GOOGLE_OAUTH_CLIENTID,
+    DOMAIN: process.env.DOMAIN,
   },
   serverExternalPackages: ["sequelize", "sequelize-typescript"],
   images: {

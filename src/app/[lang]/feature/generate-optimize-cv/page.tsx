@@ -29,23 +29,36 @@ export async function generateMetadata({
   const { lang } = await params;
 
   const title =
-    lang === LANG.ID ? "Buat CV yang teroptimalkan" : "Generate Optimize CV";
+    lang === LANG.ID
+      ? "Buat dan Optimasi CV mu"
+      : "Generate & Optimize Your CV";
   const description =
     lang === LANG.ID
-      ? "Buat CV yang di personalisasikan untuk lowongan pekerjaan yang spesifik"
-      : "Generate personalized CV for specific job applications";
+      ? "Buat CV pribadi yang disesuaikan untuk lamaran pekerjaan tertentu. Optimalkan resume Anda untuk meningkatkan peluang mendapatkan pekerjaan impian"
+      : "Create a personalized CV tailored for specific job applications. Optimize your resume to increase your chances of landing your dream job";
 
   return {
     title,
     description,
     keywords: [
-      "cv",
-      "create cv",
-      "generate cv",
-      "buat cv",
-      "buat cv dengan AI",
-      "generate cv dengan AI",
-      "generate cv dengan AI gratis",
+      "Generate CV",
+      "Buat CV Online",
+      "Optimasi CV",
+      "Generator CV Pribadi",
+      "CV untuk Lamaran Kerja",
+      "Buat CV Sesuai Pekerjaan",
+      "Optimalkan Resume",
+      "CV untuk Pekerjaan Impian",
+      "Buat CV Profesional",
+      "Create Personalized CV",
+      "Resume Generator Tool",
+      "Tailored CV for Jobs",
+      "CV Optimizer",
+      "Job Application Resume",
+      "Custom CV Generator",
+      "Create Resume for Job Applications",
+      "CV Tailored for Specific Jobs",
+      "Job-Specific Resume Builder",
     ],
     openGraph: {
       title,
@@ -60,6 +73,23 @@ export async function generateMetadata({
         url: `${DOMAIN}/og/generate-optimize-cv-${lang}.png`,
         type: "image/png",
         alt: "Apply Mate Generate Optimize CV",
+      },
+    },
+    applicationName: "Apply Mate",
+    alternates: {
+      canonical: `${DOMAIN}/${lang}/feature/generate-optimize-cv`,
+      languages: {
+        "en-US": `${DOMAIN}/en/feature/generate-optimize-cv`,
+        "id-ID": `${DOMAIN}/id/feature/generate-optimize-cv`,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: true,
+      googleBot: {
+        index: true,
+        follow: true,
       },
     },
   };
