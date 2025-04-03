@@ -7,6 +7,7 @@ import LangToggle from "../common/lang-toggle";
 import HeaderSheet from "../mobiles/header-sheet";
 import { getHeaderDictionary } from "./i18n";
 import HeaderNavigation from "./header-navigation";
+import LogoutBtn from "../common/logout-btn";
 
 export interface AppHeaderProps extends LangProps {}
 
@@ -38,6 +39,7 @@ function AppHeader({ lang }: AppHeaderProps) {
           <HeaderNavigation lang={lang} />
           <LangToggle />
           <ThemeToggle />
+          <LogoutBtn />
         </div>
         <HeaderSheet lang={lang} />
       </div>

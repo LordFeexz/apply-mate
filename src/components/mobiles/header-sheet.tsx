@@ -9,6 +9,7 @@ import Link from "next/link";
 import LangToggle from "../common/lang-toggle";
 import ThemeToggle from "../common/theme-toggle";
 import dynamic from "next/dynamic";
+import LogoutBtn from "../common/logout-btn";
 const HeaderNavigation = dynamic(() => import("../layouts/header-navigation"));
 
 export interface HeaderSheetProps extends LangProps {}
@@ -43,11 +44,16 @@ function HeaderSheet({ lang }: HeaderSheetProps) {
                   Apply
                 </span>
               </div>
-              <span className="text-xl font-bold hidden sm:inline">Mate</span>
-              <span className="text-xl font-bold sm:hidden">Apply Mate</span>
+              <span className="sm:text-xl text-sm font-bold hidden sm:inline">
+                Mate
+              </span>
+              <span className="sm:text-xl text-sm font-bold sm:hidden">
+                Apply Mate
+              </span>
             </Link>
             <LangToggle />
             <ThemeToggle />
+            <LogoutBtn />
           </div>
 
           <HeaderNavigation lang={lang} />
