@@ -12,9 +12,16 @@ import { toast } from "sonner";
 import type { LangProps } from "@/interfaces/component";
 import { getGoogleLoginBtnDictionary } from "../i18n";
 
-export interface GoggleLoginBtnProps extends LangProps {}
+export interface GoggleLoginBtnProps extends LangProps {
+  refresh?: boolean;
+  onSuccess?: () => void;
+}
 
-function GoggleLoginBtn({ lang }: GoggleLoginBtnProps) {
+function GoggleLoginBtn({
+  lang,
+  refresh = false,
+  onSuccess,
+}: GoggleLoginBtnProps) {
   const { somethingWentWrong, loginFailed, loginSuccess } =
     getGoogleLoginBtnDictionary(lang);
   const { theme } = useTheme();
@@ -35,7 +42,8 @@ function GoggleLoginBtn({ lang }: GoggleLoginBtnProps) {
         });
         if (resp && resp?.ok) {
           toast.success(loginSuccess, { duration: 5000 });
-          router.replace(`/${lang}/feature`);
+          typeof onSuccess === "function" && onSuccess();
+          refresh ? router.refresh() : router.replace(`/${lang}/feature`);
           return;
         }
 

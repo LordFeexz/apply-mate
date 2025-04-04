@@ -70,6 +70,10 @@ const CURRENT_PLAN_DICTIONARY: Record<LANG, CurrentPlanDictionary> = {
   },
 };
 
+const SIGNIN_SECTION_DICTIONARY: Record<LANG, EWalletFormDictionary> = {
+  [LANG.EN]: { title: "Sign in to see your plan" },
+  [LANG.ID]: { title: "Masuk untuk melihat paket Anda" },
+};
 const SCORING_JOB_DESC_DICTIONARY: Record<LANG, ContainerInputDictionary> = {
   [LANG.EN]: {
     title: "Job Description",
@@ -213,3 +217,6 @@ export const getEwalletInstructionDictionary = (lang: LANG) =>
 
 export const getPointSectionDictionary = (lang: LANG) =>
   POINT_SECTION_DICTIONARY[lang] ?? POINT_SECTION_DICTIONARY[LANG.EN];
+
+export const getSigninSectionDictionary = (lang: LANG) =>
+  SIGNIN_SECTION_DICTIONARY[lang] ?? SIGNIN_SECTION_DICTIONARY[LANG.EN];

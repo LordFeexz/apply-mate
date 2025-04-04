@@ -5,21 +5,31 @@ import { Button } from "../ui/button";
 import { memo, useCallback, useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { toast } from "sonner";
+import useSharedStore from "@/modules/shared/store";
+import { useRouter } from "next/navigation";
 
 function LogoutBtn() {
-  const { status } = useSession();
+  const { status, data } = useSession();
+  const { setData, data: profile } = useSharedStore();
+  const router = useRouter();
   const onClickHandler = useCallback(async () => {
     if (status !== "authenticated") return;
 
     await signOut();
+    setData(null);
     toast.success("Logout successfully");
-  }, [signOut, status]);
+    router.refresh();
+  }, [signOut, status, setData, router]);
 
   useEffect(() => {
-    if (status === "unauthenticated") signOut();
-  }, [status, signOut]);
+    if (status === "unauthenticated" && data) {
+      signOut();
+      setData(null);
+      router.refresh();
+    }
+  }, [status, signOut, setData, data, router]);
 
-  if (status !== "authenticated") return null;
+  if (!profile) return null;
 
   return (
     <Button
@@ -29,6 +39,10 @@ function LogoutBtn() {
       onClick={onClickHandler}
       aria-label="Logout"
       id="logout-btn"
+      aria-describedby="logout"
+      title="Logout"
+      disabled={!profile}
+      aria-disabled={!profile}
     >
       <LogOut className="w-5 h-5" />
       <span className="sr-only" id="logout">
