@@ -20,7 +20,7 @@ import { PAYG_PAYMENT } from "@/enums/global";
 import { getPAYGPrice } from "./utils";
 
 const coreApi = new midtrans.CoreApi({
-  isProduction: process.env.NODE_ENV === "production",
+  isProduction: false,
   serverKey: process.env.MIDTRANS_SERVER_KEY,
   clientKey: process.env.MIDTRANS_CLIENT_KEY,
 });

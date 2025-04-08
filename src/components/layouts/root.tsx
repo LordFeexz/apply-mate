@@ -18,7 +18,12 @@ export default function RootLayout({
 }: RootLayoutProps) {
   // todo add gtm and umami
   return (
-    <html lang={lang} suppressContentEditableWarning suppressHydrationWarning>
+    <html
+      translate="no"
+      lang={lang}
+      suppressContentEditableWarning
+      suppressHydrationWarning
+    >
       <body
         className={cn(
           "text-neutral-900 dark:text-neutral-300 antialiased",

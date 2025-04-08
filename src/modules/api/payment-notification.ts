@@ -39,18 +39,6 @@ export async function POST(req: NextRequest) {
     ...t
   } = (await req.json()) as Record<string, string>;
 
-  console.dir(
-    {
-      signature_key,
-      transaction_status,
-      status_code,
-      gross_amount,
-      order_id,
-      ...t,
-    },
-    { depth: null }
-  );
-
   if (!signature_key || typeof signature_key !== "string")
     return NextResponse.json(
       {
@@ -204,6 +192,7 @@ export async function POST(req: NextRequest) {
         }
         break;
       default:
+        await transaction.rollback();
         return NextResponse.json(
           { code: 400, message: "invalid order type", error: null, data: null },
           { status: 400 }
