@@ -5,9 +5,16 @@ import { Building, BriefcaseBusiness } from "lucide-react";
 import { memo } from "react";
 import { getCompanyDetailFormDictionary } from "../i18n";
 
-export interface CompanyDetailFormProps extends LangProps {}
+export interface CompanyDetailFormProps extends LangProps {
+  role?: string;
+  company?: string;
+}
 
-function CompanyDetailForm({ lang }: CompanyDetailFormProps) {
+function CompanyDetailForm({
+  lang,
+  role: roleValue,
+  company: companyValue,
+}: CompanyDetailFormProps) {
   const { company, role, detail } = getCompanyDetailFormDictionary(lang);
   return (
     <Card className="overflow-hidden space-y-2 border-2 card-hover hover:scale-102 shadow hover:shadow-lg transition-all duration-300">
@@ -31,9 +38,11 @@ function CompanyDetailForm({ lang }: CompanyDetailFormProps) {
           name="company"
           placeholder="e.g., Acme Corporation"
           required
+          defaultValue={companyValue}
         />
 
         <LabelledInput
+          defaultValue={roleValue}
           id="role-name"
           label={
             <>
