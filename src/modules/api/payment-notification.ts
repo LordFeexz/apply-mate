@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
   const transaction = await DB.transaction();
   try {
     const data = await Transaction.findOne({
-      where: { signature: signature_key },
+      where: { order_id },
       lock: transaction.LOCK.UPDATE,
       transaction,
       raw: true,
@@ -87,6 +87,20 @@ export async function POST(req: NextRequest) {
           data: null,
         },
         { status: 404 }
+      );
+
+    if (
+      generateSignature(data.order_id, status_code, gross_amount) !==
+      signature_key
+    )
+      return NextResponse.json(
+        {
+          code: 401,
+          message: "invalid signature",
+          error: null,
+          data: null,
+        },
+        { status: 401 }
       );
 
     const user = (await User.findOne({
@@ -121,11 +135,6 @@ export async function POST(req: NextRequest) {
           status: TRANSACTION_STATUS.includes(transaction_status as any)
             ? (transaction_status as TransactionStatus)
             : "failed",
-          signature: generateSignature(
-            data?.detail?.order_id,
-            "200",
-            gross_amount
-          ),
         },
         { where: { id: data.id }, transaction }
       ),
@@ -134,12 +143,12 @@ export async function POST(req: NextRequest) {
     switch (orderType) {
       case "tp":
         {
-          if (transaction_status === "settlement")
+          if (transaction_status === "settlement") {
             if (data.detail?.item === ITEM.SUBSCRIPTION) {
               const now = new Date();
               const premium_start_date = toZonedTime(now, "Asia/Jakarta");
               const premium_end_date = toZonedTime(
-                addMonths(now, 1),
+                addMonths(premium_start_date, 1),
                 "Asia/Jakarta"
               );
 
@@ -162,11 +171,12 @@ export async function POST(req: NextRequest) {
                   })
                 );
             }
+          }
         }
         break;
       case "py":
         {
-          if (transaction_status === "settlement")
+          if (transaction_status === "settlement") {
             if (data.detail?.item === ITEM.PAYG) {
               const newData = [
                 ...user?.generate_profile?.pay_as_you_go_payments,
@@ -189,9 +199,11 @@ export async function POST(req: NextRequest) {
                   })
                 );
             }
+          }
         }
         break;
       default:
+        console.log(orderType);
         await transaction.rollback();
         return NextResponse.json(
           { code: 400, message: "invalid order type", error: null, data: null },
@@ -208,6 +220,7 @@ export async function POST(req: NextRequest) {
       data: null,
     });
   } catch (err) {
+    console.log(err, "di catch");
     await transaction.rollback();
     return NextResponse.json(
       { code: 500, message: "Unexpected Error", error: err, data: null },

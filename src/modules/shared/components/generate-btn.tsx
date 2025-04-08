@@ -1,7 +1,14 @@
 "use client";
 
 import SubmitBtn, { type SubmitBtnProps } from "@/components/common/submit-btn";
-import { memo, useCallback, useState, type MouseEventHandler } from "react";
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEventHandler,
+} from "react";
 import useSharedStore from "../store";
 import { PAYG_PAYMENT } from "@/enums/global";
 import {
@@ -17,6 +24,7 @@ import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { getPAYGPrice } from "@/libs/utils";
+import { isRemainingPremium } from "@/libs/model-helper";
 const PaymentModal = dynamic(() => import("./payment-modal"), { ssr: false });
 
 export interface GenerateBtnProps
@@ -32,6 +40,14 @@ function GenerateBtn({ disabled, lang, feature, ...rest }: GenerateBtnProps) {
   const [open, setOpen] = useState<boolean>(false);
   const { status } = useSession();
   const router = useRouter();
+  const ref = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (open && data?.pay_as_you_go_payments?.some((el) => el === feature)) {
+      ref.current?.click();
+      setOpen(false);
+    }
+  }, [open, data?.pay_as_you_go_payments, feature]);
 
   const onClickHandler: MouseEventHandler = useCallback(
     (e) => {
@@ -39,6 +55,8 @@ function GenerateBtn({ disabled, lang, feature, ...rest }: GenerateBtnProps) {
 
       if (
         !data ||
+        (data?.premium_end_date &&
+          !isRemainingPremium(data.premium_end_date)) ||
         (!data?.premium_start_date &&
           !data?.premium_end_date &&
           data?.points < getPAYGPrice(feature) &&
@@ -55,6 +73,7 @@ function GenerateBtn({ disabled, lang, feature, ...rest }: GenerateBtnProps) {
     <>
       <SubmitBtn
         {...rest}
+        ref={ref}
         onClick={onClickHandler}
         disabled={disabled || status !== "authenticated"}
       />

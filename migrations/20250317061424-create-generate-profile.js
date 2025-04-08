@@ -50,12 +50,6 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
-        validate: {
-          isAfter: {
-            args: ["premium_start_date"],
-            msg: "premium_end_date must be after premium_start_date",
-          },
-        },
       },
       pay_as_you_go_payments: {
         // kalau feature nya ada di dalam array nya maka valid

@@ -51,7 +51,6 @@ export interface SubscriptionTransactionDetail {
   va_number: string[];
   actions: EWalletActionResp[];
   item: ITEM.SUBSCRIPTION;
-  order_id: string;
 }
 
 export type TransactionDetail = Record<string, any> &
@@ -68,7 +67,7 @@ export interface TransactionAttributes {
   status: TransactionStatus;
   description?: string;
   detail?: Record<string, any>;
-  signature: string;
+  order_id: string;
   fee: number;
   tax: number;
   created_at: Date;
@@ -87,7 +86,7 @@ export class Transaction
   declare status: TransactionStatus;
   declare description?: string;
   declare detail?: Record<string, any>;
-  declare signature: string;
+  declare order_id: string;
   declare fee: number;
   declare tax: number;
   declare created_at: Date;
@@ -222,15 +221,15 @@ export class Transaction
           allowNull: true,
           defaultValue: null,
         },
-        signature: {
+        order_id: {
           type: DataTypes.STRING,
           allowNull: false,
           validate: {
             notNull: {
-              msg: "signature is required",
+              msg: "order_id string; is required",
             },
             notEmpty: {
-              msg: "signature is required",
+              msg: "order_id string; is required",
             },
           },
         },

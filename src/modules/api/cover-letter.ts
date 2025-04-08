@@ -10,6 +10,7 @@ import { LANG, PAYG_PAYMENT } from "@/enums/global";
 import { getPAYGPrice } from "@/libs/utils";
 import { GenerateProfile } from "@/models";
 import { verifyCsrfToken } from "@/libs/csrf";
+import { isRemainingPremium } from "@/libs/model-helper";
 
 export async function POST(req: NextRequest) {
   if (!req.headers.get("content-type")?.includes("multipart/form-data"))
@@ -50,6 +51,8 @@ export async function POST(req: NextRequest) {
 
   if (
     !generateProfile ||
+    (generateProfile?.premium_end_date &&
+      !isRemainingPremium(generateProfile.premium_end_date)) ||
     (!generateProfile?.premium_start_date &&
       !generateProfile?.premium_end_date &&
       +generateProfile?.points < price &&

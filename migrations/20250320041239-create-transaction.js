@@ -129,15 +129,15 @@ module.exports = {
         allowNull: true,
         defaultValue: null,
       },
-      signature: {
+      order_id: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "signature is required",
+            msg: "order_id is required",
           },
           notEmpty: {
-            msg: "signature is required",
+            msg: "order_id is required",
           },
         },
       },

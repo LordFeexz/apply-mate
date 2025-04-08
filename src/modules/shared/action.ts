@@ -20,7 +20,6 @@ import {
   chargePAYGViaEWallet,
   chargeSubscriptionViaEWallet,
   chargeTopupViaBankTransfer,
-  generateSignature,
 } from "@/libs/midtrans";
 import { getCsrfToken } from "@/libs/csrf";
 import type { SubscriptionTransactionDetail } from "@/models/transaction";
@@ -133,13 +132,8 @@ export async function subscribedAction(
           : (charge?.va_numbers ?? []).map((el) => el.va_number),
       actions: charge?.actions ?? [],
       item: ITEM.SUBSCRIPTION,
-      order_id: charge.order_id,
     } as SubscriptionTransactionDetail,
-    signature: generateSignature(
-      charge.order_id,
-      charge.status_code,
-      charge.gross_amount
-    ),
+    order_id: charge.order_id,
     fee:
       data.type === "e-wallet"
         ? PRICING.SUBSCRIPTION * (0.7 / 100)
@@ -274,13 +268,8 @@ export async function paygAction(
           : (charge?.va_numbers ?? []).map((el) => el.va_number),
       actions: charge?.actions ?? [],
       item: ITEM.PAYG,
-      order_id: charge.order_id,
     },
-    signature: generateSignature(
-      charge.order_id,
-      charge.status_code,
-      charge.gross_amount
-    ),
+    order_id: charge.order_id,
     fee:
       data.type === "e-wallet"
         ? price * (0.7 / 100)
