@@ -54,7 +54,7 @@ function ScoringForm({ lang }: ScoringFormProps) {
 
   return (
     <>
-      <form ref={ref} className="space-y-8" action={formAction}>
+      <form ref={ref} className="space-y-8" method="POST" action={formAction}>
         <CsrfInput />
         <div className="grid gap-8 md:grid-cols-2">
           <CardInputContainer

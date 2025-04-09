@@ -11,6 +11,7 @@ import { LANG, PAYG_PAYMENT } from "@/enums/global";
 import { GenerateProfile } from "@/models";
 import { getPAYGPrice } from "@/libs/utils";
 import { verifyCsrfToken } from "@/libs/csrf";
+import { canGenerate } from "@/libs/business";
 
 export async function generateOptimizeCvAction(
   prevState: IGenerateCvState,
@@ -35,16 +36,7 @@ export async function generateOptimizeCvAction(
   });
   if (!generateProfile) redirect(`/${lang}/sign-in`);
 
-  const price = getPAYGPrice(PAYG_PAYMENT.CV_GENERATE);
-  if (
-    !generateProfile ||
-    (!generateProfile?.premium_start_date &&
-      !generateProfile?.premium_end_date &&
-      +generateProfile?.points < price &&
-      !generateProfile?.pay_as_you_go_payments?.some(
-        (el) => el === PAYG_PAYMENT.CV_GENERATE
-      ))
-  )
+  if (!canGenerate(generateProfile, PAYG_PAYMENT.CV_GENERATE))
     return {
       ...prevState,
       errors: {},
@@ -72,7 +64,8 @@ export async function generateOptimizeCvAction(
     if (
       !generateProfile.premium_start_date ||
       !generateProfile.premium_end_date
-    )
+    ) {
+      const price = getPAYGPrice(PAYG_PAYMENT.CV_GENERATE);
       GenerateProfile.update(
         generateProfile?.pay_as_you_go_payments?.some(
           (el) => el === PAYG_PAYMENT.CV_GENERATE
@@ -88,6 +81,7 @@ export async function generateOptimizeCvAction(
             },
         { where: { user_id: session.user.id } }
       );
+    }
 
     return {
       ...prevState,

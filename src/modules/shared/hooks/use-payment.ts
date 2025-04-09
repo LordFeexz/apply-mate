@@ -1,6 +1,6 @@
 import type { CustomSession } from "@/interfaces/global";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useSharedStore from "../store";
 import { isValid } from "date-fns";
 import { SSE_PAYG_PAYMENT_TYPE, SSE_SUBSCRIBE_PAYMENT_TYPE } from "../constant";
@@ -8,12 +8,14 @@ import { SSE_PAYG_PAYMENT_TYPE, SSE_SUBSCRIBE_PAYMENT_TYPE } from "../constant";
 export default function usePayment() {
   const { status, data: session } = useSession();
   const { data, setData } = useSharedStore();
+  const eventSourceRef = useRef<EventSource | null>(null);
 
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status === "authenticated" && !eventSourceRef.current) {
       const eventSource = new EventSource(
         `/api/payment-listener?user_id=${(session as CustomSession)?.user?.id}`
       );
+      eventSourceRef.current = eventSource;
 
       eventSource.onmessage = (e) => {
         e.preventDefault();
@@ -52,6 +54,13 @@ export default function usePayment() {
 
       return () => {
         if (eventSource.readyState !== eventSource.CLOSED) eventSource.close();
+        if (eventSourceRef.current) {
+          if (
+            eventSourceRef.current.readyState !== eventSourceRef.current.CLOSED
+          )
+            eventSourceRef.current.close();
+          eventSourceRef.current = null;
+        }
       };
     }
   }, [status, session, data, setData]);

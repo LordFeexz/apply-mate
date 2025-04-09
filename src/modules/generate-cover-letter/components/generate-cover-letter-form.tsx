@@ -42,7 +42,7 @@ function GenerateCoverLetterForm({ lang }: GenerateCoverLetterFormProps) {
 
   return (
     <>
-      <form id="generate-cover-letter-form" action={formAction}>
+      <form id="generate-cover-letter-form" action={formAction} method="POST">
         <CsrfInput />
         <div className="grid gap-8 md:grid-cols-2">
           <div className="space-y-8">

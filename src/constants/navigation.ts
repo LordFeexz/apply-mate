@@ -50,7 +50,7 @@ export const ORGANIZATION_NAVIGATION_EN: Navigation[] = [
   },
   {
     label: "Our Organization",
-    href: "/en/organization",
+    href: "/en/our-organization",
   },
 ];
 
@@ -65,7 +65,7 @@ export const ORGANIZATION_NAVIGATION_ID: Navigation[] = [
   },
   {
     label: "Organisasi Kami",
-    href: "/id/organization",
+    href: "/id/our-organization",
   },
 ];
 

@@ -23,6 +23,7 @@ export default function RootLayout({
       lang={lang}
       suppressContentEditableWarning
       suppressHydrationWarning
+      className="notranslate scroll-smooth"
     >
       <body
         className={cn(

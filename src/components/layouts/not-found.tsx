@@ -18,7 +18,7 @@ export default function NotFoundPage() {
         <div className="space-y-4">
           <BackBtn />
           <Button asChild variant="outline" className="w-full">
-            <Link href="/about">Learn About Us</Link>
+            <Link href="/en/about">Learn About Us</Link>
           </Button>
         </div>
       </div>

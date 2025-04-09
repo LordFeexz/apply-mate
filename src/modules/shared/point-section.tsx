@@ -38,7 +38,7 @@ function PointSection({ lang, className }: PointSectionProps) {
     if (status === "loading") return;
 
     if (session && status === "authenticated" && !data)
-      getCurrentProfile().then((data) => setData(data));
+      getCurrentProfile().then(setData);
   }, [data, setData, session, status]);
 
   usePayment();

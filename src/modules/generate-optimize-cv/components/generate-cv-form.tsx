@@ -48,7 +48,7 @@ function GenerateCvForm({ lang }: GenerateCvFormProps) {
   }, [generatedCv]);
 
   return (
-    <form ref={ref} action={formAction} className="space-y-8">
+    <form ref={ref} action={formAction} method="POST" className="space-y-8">
       {!!generatedCv ? (
         <ResponseResult
           originalCV={cv}

@@ -36,7 +36,7 @@ export default function useFormState(ref: RefObject<HTMLFormElement | null>) {
           );
         })
         .reduce((acc, [key, value]) => {
-          acc[key] = value as string;
+          if (key !== "csrf") acc[key] = value as string;
           return acc;
         }, {} as Record<string, string>);
 

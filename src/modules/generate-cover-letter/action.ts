@@ -3,7 +3,6 @@
 import { LANG, PAYG_PAYMENT } from "@/enums/global";
 import { SCHEMA_COVER_LETTER } from "../shared/schema";
 import type { IGenerateCoverLetterState } from "./schema";
-import { isRemainingPremium } from "@/libs/model-helper";
 import { redirect } from "next/navigation";
 import { getPAYGPrice, sanitizeString } from "@/libs/utils";
 import { getServerSideSession } from "@/libs/session";
@@ -11,6 +10,7 @@ import { GenerateProfile } from "@/models";
 import { verifyCsrfToken } from "@/libs/csrf";
 import { COVER_LETTER_MODEL } from "@/libs/gemini";
 import { coverLetterPrompt } from "@/libs/prompt";
+import { canGenerate } from "@/libs/business";
 
 export async function generateCoverLetterAction(
   prevState: IGenerateCoverLetterState,
@@ -27,7 +27,6 @@ export async function generateCoverLetterAction(
   const session = await getServerSideSession();
   if (!session || !session?.user?.id) redirect(`/${lang}/sign-in`);
 
-  const price = getPAYGPrice(PAYG_PAYMENT.COVER_LETTER_GENERATE);
   const generateProfile = await GenerateProfile.findOne({
     where: { user_id: session.user.id },
     raw: true,
@@ -35,17 +34,7 @@ export async function generateCoverLetterAction(
   });
   if (!generateProfile) redirect(`/${lang}/sign-in`);
 
-  if (
-    !generateProfile ||
-    (generateProfile?.premium_end_date &&
-      !isRemainingPremium(generateProfile.premium_end_date)) ||
-    (!generateProfile?.premium_start_date &&
-      !generateProfile?.premium_end_date &&
-      +generateProfile?.points < price &&
-      !generateProfile?.pay_as_you_go_payments?.some(
-        (el) => el === PAYG_PAYMENT.COVER_LETTER_GENERATE
-      ))
-  )
+  if (!canGenerate(generateProfile, PAYG_PAYMENT.COVER_LETTER_GENERATE))
     return {
       ...prevState,
       error: "Unsufficient points",
@@ -74,8 +63,9 @@ export async function generateCoverLetterAction(
     if (
       !generateProfile.premium_start_date ||
       !generateProfile.premium_end_date
-    )
-      await GenerateProfile.update(
+    ) {
+      const price = getPAYGPrice(PAYG_PAYMENT.COVER_LETTER_GENERATE);
+      GenerateProfile.update(
         generateProfile?.pay_as_you_go_payments?.some(
           (el) => el === PAYG_PAYMENT.COVER_LETTER_GENERATE
         )
@@ -90,6 +80,7 @@ export async function generateCoverLetterAction(
             },
         { where: { user_id: session.user.id } }
       );
+    }
 
     return {
       ...prevState,
