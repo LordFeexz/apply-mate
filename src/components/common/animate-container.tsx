@@ -1,12 +1,15 @@
 "use client";
 
 import type { ChildrenProps } from "@/interfaces/component";
-import { memo, type ComponentProps } from "react";
-import { motion } from "framer-motion";
+import { memo } from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
 
 export interface AnimateContainerProps
   extends ChildrenProps,
-    Omit<ComponentProps<"div">, "children"> {}
+    Omit<
+      HTMLMotionProps<"div">,
+      "children" | "initial" | "animate" | "transition"
+    > {}
 
 function AnimateContainer({
   className,
@@ -15,6 +18,7 @@ function AnimateContainer({
 }: AnimateContainerProps) {
   return (
     <motion.div
+      {...rest}
       className={className}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

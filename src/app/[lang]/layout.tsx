@@ -6,7 +6,9 @@ import AppHeader from "@/components/layouts/header";
 import Footer from "@/components/layouts/footer";
 import type { ChildrenProps } from "@/interfaces/component";
 
-export interface RootLayoutProps extends ChildrenProps, PageProps {}
+export interface RootLayoutProps
+  extends ChildrenProps,
+    Omit<PageProps, "searchParams"> {}
 
 export async function generateMetadata({
   params,

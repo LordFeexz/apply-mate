@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { memo, useCallback } from "react";
 import { googleLoginAction } from "../action";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
 import type { LangProps } from "@/interfaces/component";
 import { getGoogleLoginBtnDictionary } from "../i18n";
@@ -25,6 +25,7 @@ function GoggleLoginBtn({
   const { somethingWentWrong, loginFailed, loginSuccess } =
     getGoogleLoginBtnDictionary(lang);
   const { theme } = useTheme();
+  const { update } = useSession();
   const mount = useMount();
   const router = useRouter();
   const onSuccessHandler = useCallback(
@@ -43,6 +44,7 @@ function GoggleLoginBtn({
         if (resp && resp?.ok) {
           toast.success(loginSuccess, { duration: 5000 });
           typeof onSuccess === "function" && onSuccess();
+          await update();
           refresh ? router.refresh() : router.replace(`/${lang}/feature`);
           return;
         }
@@ -50,7 +52,7 @@ function GoggleLoginBtn({
         toast.error(message ?? loginFailed, { duration: 5000 });
       }
     },
-    [router]
+    [router, update]
   );
 
   if (!mount) return null;

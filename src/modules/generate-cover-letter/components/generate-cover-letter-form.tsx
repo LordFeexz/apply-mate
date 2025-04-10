@@ -16,7 +16,11 @@ import { PAYG_PAYMENT } from "@/enums/global";
 import CsrfInput from "@/components/common/csrf-input";
 import type { IGenerateCoverLetterState } from "../schema";
 import { generateCoverLetterAction } from "../action";
-const ResponseCard = dynamic(() => import("./response-card"), { ssr: false });
+import ResponseCardLoader from "./response-card-loader";
+const ResponseCard = dynamic(() => import("./response-card"), {
+  ssr: false,
+  loading: () => <ResponseCardLoader />,
+});
 
 export interface GenerateCoverLetterFormProps extends LangProps {}
 
@@ -72,7 +76,7 @@ function GenerateCoverLetterForm({ lang }: GenerateCoverLetterFormProps) {
         </div>
         <div className="flex justify-center mt-4">
           <GenerateBtn
-            disabled={pending}
+            disabled={pending || !!response}
             size="lg"
             lang={lang}
             feature={PAYG_PAYMENT.COVER_LETTER_GENERATE}

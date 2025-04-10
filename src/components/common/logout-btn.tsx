@@ -9,7 +9,7 @@ import useSharedStore from "@/modules/shared/store";
 import { useRouter } from "next/navigation";
 
 function LogoutBtn() {
-  const { status, data } = useSession();
+  const { status, data, update } = useSession();
   const { setData, data: profile } = useSharedStore();
   const router = useRouter();
   const onClickHandler = useCallback(async () => {
@@ -18,6 +18,7 @@ function LogoutBtn() {
     await signOut();
     setData(null);
     toast.success("Logout successfully");
+    await update();
     router.refresh();
   }, [signOut, status, setData, router]);
 

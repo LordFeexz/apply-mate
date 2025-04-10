@@ -4,7 +4,7 @@ import SchemaMarkup from "@/modules/generate-cover-letter/components/schema-mark
 
 export interface GenerateCoverLetterLayoutProps
   extends ChildrenProps,
-    PageProps {}
+    Omit<PageProps, "searchParams"> {}
 
 export default async function GenerateCoverLetterLayout({
   children,

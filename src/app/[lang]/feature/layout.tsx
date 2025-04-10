@@ -1,7 +1,9 @@
 import type { ChildrenProps } from "@/interfaces/component";
 import type { PageProps } from "@/interfaces/global";
 
-export interface FeatureLayoutProps extends ChildrenProps, PageProps {}
+export interface FeatureLayoutProps
+  extends ChildrenProps,
+    Omit<PageProps, "searchParams"> {}
 
 export default async function FeatureLayout({ children }: FeatureLayoutProps) {
   return (

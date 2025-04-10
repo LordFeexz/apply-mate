@@ -7,14 +7,17 @@ import CvForm from "@/modules/shared/components/cv-form";
 import DefaultLoader from "@/components/common/default-loader";
 import CardInputContainer from "@/modules/shared/components/card-input-container";
 import JobDescForm from "@/modules/shared/components/job-desc-form";
-import SubmitBtn from "@/components/common/submit-btn";
 import dynamic from "next/dynamic";
 import InputLangBtn from "@/components/common/input-lang-btn";
 import type { IScoringState } from "../schema";
 import { generateCvScoringAction } from "../action";
 import CsrfInput from "@/components/common/csrf-input";
+import GenerateBtn from "@/modules/shared/components/generate-btn";
+import { PAYG_PAYMENT } from "@/enums/global";
+import ScoreResponseLoader from "./score-response-loader";
 const ScoringResponse = dynamic(() => import("./score-response"), {
   ssr: false,
+  loading: () => <ScoreResponseLoader />,
 });
 
 export interface ScoringFormProps extends LangProps {}
@@ -84,13 +87,15 @@ function ScoringForm({ lang }: ScoringFormProps) {
           </div>
         </div>
         <div className="flex justify-center">
-          <SubmitBtn
-            disabled={loading}
+          <GenerateBtn
+            disabled={loading || parsed}
             size="lg"
             className="rounded-full px-8 gap-2 w-1/2"
+            lang={lang}
+            feature={PAYG_PAYMENT.CV_SCORING}
           >
             Submit
-          </SubmitBtn>
+          </GenerateBtn>
         </div>
         {error && (
           <div className="flex justify-center items-center">

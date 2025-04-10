@@ -35,6 +35,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.5,
     });
+
+    routes.push({
+      url: `${DOMAIN}/${lang}/our-organization`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    });
+
+    routes.push({
+      url: `${DOMAIN}/${lang}/about-us`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    });
   }
   return routes;
 }
