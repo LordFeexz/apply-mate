@@ -10,6 +10,7 @@ export declare global {
       MIDTRANS_SERVER_KEY: string;
       MIDTRANS_CLIENT_KEY: string;
       MIDTRANS_CORE_API: string;
+      CRON_SECRET: string;
     }
   }
 }
