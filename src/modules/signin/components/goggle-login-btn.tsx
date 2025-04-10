@@ -4,13 +4,15 @@ import GoogleOauth from "@/components/providers/goggle-oauth";
 import useMount from "@/hooks/use-mount";
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import { useTheme } from "next-themes";
-import { memo, useCallback } from "react";
+import { memo, useCallback, useTransition } from "react";
 import { googleLoginAction } from "../action";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
 import type { LangProps } from "@/interfaces/component";
 import { getGoogleLoginBtnDictionary } from "../i18n";
+import { cn } from "@/libs/utils";
+import { Loader2 } from "lucide-react";
 
 export interface GoggleLoginBtnProps extends LangProps {
   refresh?: boolean;
@@ -28,29 +30,32 @@ function GoggleLoginBtn({
   const { update } = useSession();
   const mount = useMount();
   const router = useRouter();
+  const [pending, startTransition] = useTransition();
   const onSuccessHandler = useCallback(
-    async ({ credential }: CredentialResponse) => {
-      if (!credential) {
-        toast.error(somethingWentWrong, { duration: 5000 });
-        return;
-      }
-
-      const { data, message, code } = await googleLoginAction(credential);
-      if (code === 200 && data) {
-        const resp = await signIn("credentials", {
-          access_token: data,
-          redirect: false,
-        });
-        if (resp && resp?.ok) {
-          toast.success(loginSuccess, { duration: 5000 });
-          typeof onSuccess === "function" && onSuccess();
-          await update();
-          refresh ? router.refresh() : router.replace(`/${lang}/feature`);
+    ({ credential }: CredentialResponse) => {
+      startTransition(async () => {
+        if (!credential) {
+          toast.error(somethingWentWrong, { duration: 5000 });
           return;
         }
 
-        toast.error(message ?? loginFailed, { duration: 5000 });
-      }
+        const { data, message, code } = await googleLoginAction(credential);
+        if (code === 200 && data) {
+          const resp = await signIn("credentials", {
+            access_token: data,
+            redirect: false,
+          });
+          if (resp && resp?.ok) {
+            toast.success(loginSuccess, { duration: 5000 });
+            typeof onSuccess === "function" && onSuccess();
+            await update();
+            refresh ? router.refresh() : router.replace(`/${lang}/feature`);
+            return;
+          }
+
+          toast.error(message ?? loginFailed, { duration: 5000 });
+        }
+      });
     },
     [router, update]
   );
@@ -62,8 +67,10 @@ function GoggleLoginBtn({
       <div className="flex flex-wrap bg-background flex-col p-0 space-y-2 justify-center items-center">
         <GoogleLogin
           containerProps={{
-            className:
+            className: cn(
               "bg-background flex justify-center p-0 dark:rounded-md border-none overflow-hidden",
+              pending && "hidden"
+            ),
           }}
           onSuccess={onSuccessHandler}
           useOneTap
@@ -75,6 +82,7 @@ function GoggleLoginBtn({
           context="signin"
           type="standard"
         />
+        <Loader2 className={cn("w-4 h-4 animate-spin", !pending && "hidden")} />
       </div>
     </GoogleOauth>
   );

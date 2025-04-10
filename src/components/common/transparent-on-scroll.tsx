@@ -33,7 +33,7 @@ function TransarentOnScroll({
           ? "bg-background/80 backdrop-blur-md shadow-xs"
           : "bg-transparent"
       )}
-    ></Tag>
+    />
   );
 }
 
