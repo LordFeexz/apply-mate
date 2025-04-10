@@ -1,7 +1,6 @@
 import { LANG } from "@/enums/global";
 import { PRICING } from "@/enums/plan";
 import type { LangProps } from "@/interfaces/component";
-import Script from "next/script";
 import { memo } from "react";
 import type { Service, WithContext } from "schema-dts";
 
@@ -42,7 +41,7 @@ function SchemaMarkup({ lang }: SchemaMarkupProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema, null, 2) }}
     />
   );
 }
