@@ -82,7 +82,7 @@ function HeaderNavigation({ lang }: HeaderNavigationProps) {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href={`/${lang}/about`} legacyBehavior passHref prefetch>
+          <Link href={`/${lang}/about-us`} legacyBehavior passHref prefetch>
             <NavigationMenuLink className={baseClassName}>
               {about}
             </NavigationMenuLink>
