@@ -15,6 +15,9 @@ function CSRFInput() {
       value={csrf}
       aria-hidden
       aria-label="csrf"
+      autoComplete="off"
+      tabIndex={-1}
+      className="sr-only"
     />
   );
 }

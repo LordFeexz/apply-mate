@@ -11,6 +11,13 @@ export enum PRICING {
   SCORING_CV = 0,
 }
 
+export enum PRICING_DISCOUNT {
+  SUBSCRIPTION = 0,
+  GENERATE_CV = 1500,
+  COVER_LETTER = 500,
+  SCORING_CV = 0,
+}
+
 export enum ITEM {
   SUBSCRIPTION = "SUBSCRIPTION",
   PAYG = "PAY AS YOU GO",
