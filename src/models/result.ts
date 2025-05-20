@@ -6,6 +6,7 @@ export interface ResultAttributes {
   user_id: string;
   feature: FEATURE;
   data: Record<string, any>;
+  user_input: Record<string, any>;
   created_at: Date | string;
   updated_at: Date | string;
 }
@@ -18,6 +19,7 @@ export class Result
   declare user_id: string;
   declare feature: FEATURE;
   declare data: Record<string, any>;
+  declare user_input: Record<string, any>;
   declare created_at: string;
   declare updated_at: string;
 
@@ -70,6 +72,10 @@ export class Result
           },
         },
         data: {
+          type: DataTypes.JSONB,
+          defaultValue: "{}",
+        },
+        user_input: {
           type: DataTypes.JSONB,
           defaultValue: "{}",
         },
