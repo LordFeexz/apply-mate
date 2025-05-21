@@ -7,11 +7,12 @@ import { generateCvPrompt } from "@/libs/prompt";
 import type { CVGeneratingResult } from "@/interfaces/ai";
 import { getServerSideSession } from "@/libs/session";
 import { redirect } from "next/navigation";
-import { LANG, PAYG_PAYMENT } from "@/enums/global";
-import { GenerateProfile } from "@/models";
+import { FEATURE, LANG, PAYG_PAYMENT } from "@/enums/global";
+import { GenerateProfile, Result } from "@/models";
 import { getPAYGPrice } from "@/libs/utils";
 import { verifyCsrfToken } from "@/libs/csrf";
 import { canGenerate } from "@/libs/business";
+import { v4 } from "uuid";
 
 export async function generateOptimizeCvAction(
   prevState: IGenerateCvState,
@@ -82,6 +83,14 @@ export async function generateOptimizeCvAction(
         { where: { user_id: session.user.id } }
       );
     }
+
+    await Result.create({
+      id: v4(),
+      feature: FEATURE.SCORING_CV,
+      data: parsed,
+      user_input: data,
+      user_id: session.user.id,
+    });
 
     return {
       ...prevState,

@@ -1,16 +1,17 @@
 "use server";
 
-import { LANG, PAYG_PAYMENT } from "@/enums/global";
+import { FEATURE, LANG, PAYG_PAYMENT } from "@/enums/global";
 import { SCHEMA_COVER_LETTER } from "../shared/schema";
 import type { IGenerateCoverLetterState } from "./schema";
 import { redirect } from "next/navigation";
 import { getPAYGPrice, sanitizeString } from "@/libs/utils";
 import { getServerSideSession } from "@/libs/session";
-import { GenerateProfile } from "@/models";
+import { GenerateProfile, Result } from "@/models";
 import { verifyCsrfToken } from "@/libs/csrf";
 import { COVER_LETTER_MODEL } from "@/libs/gemini";
 import { coverLetterPrompt } from "@/libs/prompt";
 import { canGenerate } from "@/libs/business";
+import { v4 } from "uuid";
 
 export async function generateCoverLetterAction(
   prevState: IGenerateCoverLetterState,
@@ -82,10 +83,19 @@ export async function generateCoverLetterAction(
       );
     }
 
+    const generated = sanitizeString(response.text());
+
+    await Result.create({
+      id: v4(),
+      feature: FEATURE.SCORING_CV,
+      data: { generated },
+      user_input: data,
+      user_id: session.user.id,
+    });
     return {
       ...prevState,
       ...data,
-      response: sanitizeString(response.text()),
+      response: generated,
     };
   } catch (err) {
     return {

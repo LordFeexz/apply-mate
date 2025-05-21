@@ -6,6 +6,11 @@ import type { IScoringState } from "./schema";
 import { scoringPrompt } from "@/libs/prompt";
 import type { CVScoringResult } from "@/interfaces/ai";
 import { verifyCsrfToken } from "@/libs/csrf";
+import { Result } from "@/models";
+import { v4 } from "uuid";
+import { FEATURE, LANG } from "@/enums/global";
+import { getServerSideSession } from "@/libs/session";
+import { redirect } from "next/navigation";
 
 export async function generateCvScoringAction(
   prevState: IScoringState & { parsed: boolean },
@@ -18,6 +23,10 @@ export async function generateCvScoringAction(
       error: "missing or invalid csrf token",
       errors: {},
     };
+
+  const session = await getServerSideSession();
+  if (!session || !session?.user?.id)
+    redirect(`/${formData.get("lang") ?? LANG.EN}/sign-in`);
 
   const { success, data, error } = await SCHEMA_CV_SCORING.safeParseAsync({
     cv: formData.get("cv") as string,
@@ -38,6 +47,14 @@ export async function generateCvScoringAction(
     );
 
     const parsed: CVScoringResult = JSON.parse(response.text());
+
+    await Result.create({
+      id: v4(),
+      feature: FEATURE.SCORING_CV,
+      data: parsed,
+      user_input: data,
+      user_id: (await getServerSideSession())?.user?.id ?? null,
+    });
 
     return {
       ...prevState,

@@ -60,31 +60,45 @@ function GoggleLoginBtn({
     [router, update]
   );
 
-  if (!mount) return null;
-
   return (
-    <GoogleOauth>
-      <div className="flex flex-wrap bg-background flex-col p-0 space-y-2 justify-center items-center">
-        <GoogleLogin
-          containerProps={{
-            className: cn(
-              "bg-background flex justify-center p-0 dark:rounded-md border-none overflow-hidden",
-              pending && "hidden"
-            ),
-          }}
-          onSuccess={onSuccessHandler}
-          useOneTap
-          cancel_on_tap_outside
-          theme={theme === "dark" ? "filled_black" : "outline"}
-          text="signin_with"
-          shape="square"
-          size="large"
-          context="signin"
-          type="standard"
-        />
-        <Loader2 className={cn("w-4 h-4 animate-spin", !pending && "hidden")} />
-      </div>
-    </GoogleOauth>
+    <section
+      id="google-login"
+      tabIndex={mount ? 0 : -1}
+      aria-label="signin with google"
+      aria-hidden={!mount}
+      aria-busy={pending}
+      aria-disabled={pending}
+      aria-live="polite"
+      aria-current="page"
+      data-slot="google-login-btn"
+    >
+      {mount && (
+        <GoogleOauth>
+          <div className="flex flex-wrap bg-background flex-col p-0 space-y-2 justify-center items-center">
+            <GoogleLogin
+              containerProps={{
+                className: cn(
+                  "bg-background flex justify-center p-0 dark:rounded-md border-none overflow-hidden",
+                  pending && "hidden"
+                ),
+              }}
+              onSuccess={onSuccessHandler}
+              useOneTap
+              cancel_on_tap_outside
+              theme={theme === "dark" ? "filled_black" : "outline"}
+              text="signin_with"
+              shape="square"
+              size="large"
+              context="signin"
+              type="standard"
+            />
+            <Loader2
+              className={cn("w-4 h-4 animate-spin", !pending && "hidden")}
+            />
+          </div>
+        </GoogleOauth>
+      )}
+    </section>
   );
 }
 

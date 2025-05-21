@@ -3,7 +3,7 @@ import { DataTypes, Model, Sequelize } from "sequelize";
 
 export interface ResultAttributes {
   id: string;
-  user_id: string;
+  user_id: string | null;
   feature: FEATURE;
   data: Record<string, any>;
   user_input: Record<string, any>;
@@ -12,11 +12,11 @@ export interface ResultAttributes {
 }
 
 export class Result
-  extends Model<ResultAttributes, ResultAttributes>
+  extends Model<ResultAttributes, Partial<ResultAttributes>>
   implements ResultAttributes
 {
   declare id: string;
-  declare user_id: string;
+  declare user_id: string | null;
   declare feature: FEATURE;
   declare data: Record<string, any>;
   declare user_input: Record<string, any>;
