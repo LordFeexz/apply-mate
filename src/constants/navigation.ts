@@ -107,6 +107,11 @@ export const ACCOUNT_HEADER_NAVIGATION_EN: (Navigation & { desc: string })[] = [
     href: "/en/account/transaction",
     desc: "View your transaction history",
   },
+  {
+    label: "History",
+    href: "/en/account/history",
+    desc: "View your generated history",
+  },
 ];
 
 export const ACCOUNT_HEADER_NAVIGATION_ID: (Navigation & { desc: string })[] = [
@@ -124,5 +129,10 @@ export const ACCOUNT_HEADER_NAVIGATION_ID: (Navigation & { desc: string })[] = [
     label: "Transaksi",
     href: "/id/account/transaction",
     desc: "Lihat transaksi lalu Anda",
+  },
+  {
+    label: "Riwayat",
+    href: "/id/account/history",
+    desc: "Lihat riwayat yang Anda buat",
   },
 ];

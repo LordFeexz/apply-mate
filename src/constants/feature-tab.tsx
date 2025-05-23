@@ -7,6 +7,7 @@ import {
   Receipt,
   CreditCard,
   User2,
+  History,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -67,6 +68,11 @@ export const ACCOUNT_TABS_EN: AccountTab[] = [
     label: "Billing",
     icon: <CreditCard className="w-4 h-4" />,
   },
+  {
+    url: ACCOUNT_TAB.HISTORY,
+    label: "History",
+    icon: <History className="w-4 h-4" />,
+  },
 ];
 
 export const ACCOUNT_TABS_ID: AccountTab[] = [
@@ -84,6 +90,11 @@ export const ACCOUNT_TABS_ID: AccountTab[] = [
     url: ACCOUNT_TAB.BILLING,
     label: "Pembayaran",
     icon: <CreditCard className="w-4 h-4" />,
+  },
+  {
+    url: ACCOUNT_TAB.HISTORY,
+    label: "Riwayat",
+    icon: <History className="w-4 h-4" />,
   },
 ];
 

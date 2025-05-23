@@ -1,3 +1,4 @@
+import "server-only";
 import type { FEATURE } from "@/enums/global";
 import { DataTypes, Model, Sequelize } from "sequelize";
 

@@ -5,7 +5,7 @@ import { BASE_PAGINATION_SCHEMA } from "@/modules/shared/schema";
 import { redirect } from "next/navigation";
 import TransactionPage from "@/modules/transaction";
 import Account from "@/components/layouts/account";
-import { ACCOUNT_TAB } from "@/enums/global";
+import { ACCOUNT_TAB, LANG } from "@/enums/global";
 import { cache } from "react";
 import type { Metadata } from "next";
 
@@ -30,9 +30,8 @@ export default async function Page({
   searchParams: rawSearchParams,
 }: PageProps) {
   const [{ lang }, searchParams] = await Promise.all([params, rawSearchParams]);
-  const { success, data } = await BASE_PAGINATION_SCHEMA.safeParseAsync(
-    searchParams
-  );
+  const { success, data } =
+    await BASE_PAGINATION_SCHEMA.safeParseAsync(searchParams);
   if (!success || !data.page || !data.limit)
     redirect(
       `/${lang}/account/transaction?${new URLSearchParams({
@@ -61,12 +60,18 @@ export async function generateMetadata({
   const { lang } = await params;
   const { DOMAIN } = process.env;
 
+  const title = lang === LANG.ID ? "Transaksi Anda" : " Your Transaction";
+  const description =
+    lang === LANG.ID
+      ? "Daftar transaksi Anda di Apply Mate"
+      : "Your transaction list on Apply Mate";
+
   return {
-    title: "Transaction",
-    description: "Transaction List",
+    title,
+    description,
     openGraph: {
-      title: "Transaction",
-      description: "Transaction List",
+      title,
+      description,
       url: `${DOMAIN}/${lang}/account/transaction`,
       type: "website",
       siteName: "Apply Mate",

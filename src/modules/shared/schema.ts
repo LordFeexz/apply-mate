@@ -1,4 +1,4 @@
-import { PAYG_PAYMENT } from "@/enums/global";
+import { FEATURE, PAYG_PAYMENT } from "@/enums/global";
 import { z } from "zod";
 
 export const SCHEMA_FILE = z
@@ -134,6 +134,20 @@ export const SUBSCRIBE_BY_EWALLET_SCHEMA = z.object({
 export const BASE_PAGINATION_SCHEMA = z.object({
   page: z.coerce.number().min(0).default(0),
   limit: z.coerce.number().min(0).max(100).default(10),
+});
+
+export const HISTORY_PAGINATION_SCHEMA = z.object({
+  page: z.coerce.number().min(0).default(0),
+  limit: z.coerce.number().min(0).max(100).default(10),
+  type: z
+    .enum([
+      FEATURE.GENERATE_COVER_LETTER,
+      FEATURE.GENERATE_OPTIMIZE_CV,
+      FEATURE.SCORING_CV,
+    ])
+    .optional(),
+  sort: z.enum(["ASC", "DESC"]).default("DESC").optional(),
+  q: z.string().optional(),
 });
 
 export type IFile = z.infer<typeof SCHEMA_FILE>;
