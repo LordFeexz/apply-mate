@@ -6,10 +6,10 @@ import dynamic from "next/dynamic";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Init from "./Init";
-import FilterType from "./components/FilterType";
-import FilterSort from "./components/FilterSort";
-const HistoryCard = dynamic(() => import("./components/HistoryCard"));
-const NoData = dynamic(() => import("./components/NoData"));
+import FilterType from "./components/filter-type";
+import FilterSort from "./components/filter-sort";
+const HistoryCard = dynamic(() => import("./components/history-card"));
+const NoData = dynamic(() => import("./components/no-data"));
 
 export interface HistoryPageProps extends LangProps {
   histories: Promise<{

@@ -1,13 +1,12 @@
 "use client";
 
-import Markdown from "@/components/common/markdown";
-import { cn, markdownToText } from "@/libs/utils";
+import { cn } from "@/libs/utils";
 import { Loader2 } from "lucide-react";
 import { memo, useEffect, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
-import CopyBtn from "@/components/common/copy-btn";
 import type { LangProps } from "@/interfaces/component";
 import { getResponseCardDictionary } from "../i18n";
+import ResponseMd from "./response-md";
 
 export interface ResponseCardProps extends LangProps {
   loading: boolean;
@@ -48,17 +47,7 @@ function ResponseCard({ loading, responses, lang }: ResponseCardProps) {
         </div>
       )}
 
-      <div className={cn("space-x-4", loading && "opacity-50")}>
-        <div className="flex justify-end items-center">
-          <CopyBtn
-            textToCopy={markdownToText(response)}
-            lang={lang}
-            disabled={loading}
-            className="min-w-48"
-          />
-        </div>
-        <Markdown content={response} />
-      </div>
+      <ResponseMd response={response} loading={loading} lang={lang} />
     </motion.div>
   );
 }

@@ -4,7 +4,7 @@ import DownloadResultBtn from "./download-result-btn";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { FileText } from "lucide-react";
 import dynamic from "next/dynamic";
-const CVRichEditor = dynamic(() => import("./cv-rich-editor"));
+const CVRichEditor = dynamic(() => import("./cv-rich-editor"), { ssr: false });
 import type { LangProps } from "@/interfaces/component";
 import type { CVGeneratingResult } from "@/interfaces/ai";
 import HyperlinkCard from "./hyperlink-card";
@@ -12,9 +12,7 @@ import MatchKeywordCard from "@/modules/shared/components/match-keyword-card";
 import EditingTipsCard from "./editing-tips-card";
 const ImprovedCard = dynamic(() => import("./improved-card"));
 
-export interface ResponseResultProps extends LangProps, CVGeneratingResult {
-  originalCV: string;
-}
+export interface ResponseResultProps extends LangProps, CVGeneratingResult {}
 
 function ResponseResult({
   generatedCv,

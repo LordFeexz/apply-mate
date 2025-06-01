@@ -53,7 +53,6 @@ function GenerateCvForm({ lang }: GenerateCvFormProps) {
     <form ref={ref} action={formAction} method="POST" className="space-y-8">
       {!!generatedCv ? (
         <ResponseResult
-          originalCV={cv}
           improvements={improvements}
           lang={lang}
           generatedCv={content}

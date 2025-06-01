@@ -6,8 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import ItemIcon from "./ItemIcon";
-import ItemBadge from "./ItemBadge";
+import ItemIcon from "./item-icon";
+import ItemBadge from "./item-badge";
 import { Button } from "@/components/ui/button";
 import { memo } from "react";
 import { Calendar, Clock, Eye } from "lucide-react";
@@ -33,9 +33,10 @@ function HistoryCard({ data, lang }: HistoryCardProps) {
             <ItemIcon feature={data.feature} />
             <ItemBadge feature={data.feature} />
           </div>
-          <Button>DOWNLOAD</Button>
         </div>
-        <CardTitle className="text-lg mt-2">{data.feature}</CardTitle>
+        <CardTitle as="h3" className="text-lg mt-2 capitalize">
+          {data.feature.replaceAll("-", " ")}
+        </CardTitle>
       </CardHeader>
       <CardContent className="pb-3">
         <div className="text-sm text-muted-foreground mb-2">

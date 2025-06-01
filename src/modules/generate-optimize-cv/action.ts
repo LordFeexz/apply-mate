@@ -86,10 +86,12 @@ export async function generateOptimizeCvAction(
 
     await Result.create({
       id: v4(),
-      feature: FEATURE.SCORING_CV,
+      feature: FEATURE.GENERATE_OPTIMIZE_CV,
       data: parsed,
       user_input: data,
       user_id: session.user.id,
+      created_at: new Date(),
+      updated_at: new Date(),
     });
 
     return {

@@ -146,7 +146,10 @@ export const HISTORY_PAGINATION_SCHEMA = z.object({
       FEATURE.SCORING_CV,
     ])
     .optional(),
-  sort: z.enum(["ASC", "DESC"]).default("DESC").optional(),
+  sort: z.preprocess(
+    (val) => (val === "asc" ? "ASC" : "DESC"),
+    z.enum(["ASC", "DESC"]).default("DESC").optional()
+  ),
   q: z.string().optional(),
 });
 

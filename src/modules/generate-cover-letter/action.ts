@@ -87,10 +87,12 @@ export async function generateCoverLetterAction(
 
     await Result.create({
       id: v4(),
-      feature: FEATURE.SCORING_CV,
+      feature: FEATURE.GENERATE_COVER_LETTER,
       data: { generated },
       user_input: data,
       user_id: session.user.id,
+      created_at: new Date(),
+      updated_at: new Date(),
     });
     return {
       ...prevState,

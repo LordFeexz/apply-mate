@@ -8,9 +8,11 @@ export const GEMINI_2_FLASH_MODEL_NAME = "gemini-2.0-flash";
 
 export const GEMINI_PRO_MODEL_NAME = "gemini-1.5-pro";
 
+export const GEMINI_2_5_FLASH_MODEL_NAME = "gemini-2.5-flash-preview-05-20";
+
 export const CV_SCORING_MODEL = model.getGenerativeModel(
   {
-    model: GEMINI_2_FLASH_MODEL_NAME,
+    model: GEMINI_2_5_FLASH_MODEL_NAME,
     generationConfig: {
       temperature: 0.3,
       responseMimeType: "application/json",
@@ -93,10 +95,9 @@ export const CV_SCORING_MODEL = model.getGenerativeModel(
 
 export const COVER_LETTER_MODEL = model.getGenerativeModel(
   {
-    model: GEMINI_2_FLASH_MODEL_NAME,
+    model: GEMINI_2_5_FLASH_MODEL_NAME,
     generationConfig: {
-      temperature: 0.4,
-      maxOutputTokens: 600,
+      temperature: 0.3,
     },
     systemInstruction: {
       role: "system",
@@ -137,7 +138,7 @@ export const COVER_LETTER_MODEL = model.getGenerativeModel(
 );
 
 export const CV_GENERATING_MODEL = model.getGenerativeModel({
-  model: GEMINI_2_FLASH_MODEL_NAME,
+  model: GEMINI_2_5_FLASH_MODEL_NAME,
   generationConfig: {
     temperature: 0.3,
     responseMimeType: "application/json",
@@ -252,7 +253,7 @@ export const CV_GENERATING_MODEL = model.getGenerativeModel({
 
 export const CV_GENERATING_SPESIFIC_MODEL = model.getGenerativeModel(
   {
-    model: GEMINI_2_FLASH_MODEL_NAME,
+    model: GEMINI_2_5_FLASH_MODEL_NAME,
     generationConfig: {
       temperature: 0.3,
       responseMimeType: "application/json",

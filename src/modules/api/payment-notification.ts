@@ -203,7 +203,6 @@ export async function POST(req: NextRequest) {
         }
         break;
       default:
-        console.log(orderType);
         await transaction.rollback();
         return NextResponse.json(
           { code: 400, message: "invalid order type", error: null, data: null },
@@ -220,7 +219,6 @@ export async function POST(req: NextRequest) {
       data: null,
     });
   } catch (err) {
-    console.log(err, "di catch");
     await transaction.rollback();
     return NextResponse.json(
       { code: 500, message: "Unexpected Error", error: err, data: null },

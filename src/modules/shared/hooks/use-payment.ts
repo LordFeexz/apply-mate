@@ -48,7 +48,6 @@ export default function usePayment() {
       };
 
       eventSource.onerror = (err) => {
-        console.error(err);
         if (eventSource.readyState !== eventSource.CLOSED) eventSource.close();
       };
 

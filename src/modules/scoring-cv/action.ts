@@ -54,6 +54,8 @@ export async function generateCvScoringAction(
       data: parsed,
       user_input: data,
       user_id: (await getServerSideSession())?.user?.id ?? null,
+      created_at: new Date(),
+      updated_at: new Date(),
     });
 
     return {

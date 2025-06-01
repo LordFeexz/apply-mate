@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import HistoryCardLoader from "./components/HistoryCardLoader";
+import HistoryCardLoader from "./components/history-card-loader";
 
 export default function HistoryLoading() {
   return (

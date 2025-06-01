@@ -16,7 +16,6 @@ function HistoryCardLoader() {
           <Skeleton className="h-6 w-20" />
           <Skeleton className="h-8 w-8 rounded-full" />
         </div>
-        <Skeleton className="h-6 w-full mt-2" />
       </CardHeader>
       <CardContent className="pb-3">
         <div className="space-y-2">
