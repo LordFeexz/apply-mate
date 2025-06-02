@@ -10,7 +10,9 @@ import ItemBadge from "../history/components/item-badge";
 import { format } from "date-fns";
 import { Calendar, Clock } from "lucide-react";
 import DetailTab from "./components/detail-tab";
-import ResultTab from "./components/result-tab";
+import dynamic from "next/dynamic";
+const ResultTab = dynamic(() => import("./components/result-tab"));
+const InputTab = dynamic(() => import("./components/input-tab"));
 
 export interface HistoryDetailPageProps extends LangProps {
   result: Promise<ResultAttributes | null>;
@@ -57,7 +59,7 @@ function HistoryDetailPage({ result, session, lang }: HistoryDetailPageProps) {
           <div className="space-y-6">
             <DetailTab
               lang={lang}
-              inputTab={null}
+              inputTab={<InputTab data={data.user_input} />}
               resultTab={
                 <ResultTab
                   data={data.data}

@@ -12,7 +12,7 @@ function GeneratedCvResultWrapper({
   generatedCv,
   ...rest
 }: GeneratedCvResultWrapperProps) {
-  const { setContent, content } = useGeneratedCV();
+  const { setContent } = useGeneratedCV();
   useEffect(() => {
     if (generatedCv) setContent(generatedCv);
   }, [generatedCv]);

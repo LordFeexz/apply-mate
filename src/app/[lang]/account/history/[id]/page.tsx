@@ -8,6 +8,7 @@ import Account from "@/components/layouts/account";
 import { ACCOUNT_TAB, LANG } from "@/enums/global";
 import type { Metadata } from "next";
 import HistoryDetail from "@/modules/history-detail";
+import { format } from "date-fns";
 
 const fetcher = cache(async (id: string) => {
   const result = await Result.findByPk(id, { raw: true });
@@ -48,8 +49,8 @@ export async function generateMetadata({
 
   const title =
     lang === LANG.ID
-      ? `Detail Riwayat ${result.id}`
-      : `Result ${result.id} Detail`;
+      ? `Detail Riwayat ${result.feature.replaceAll("-", " ")} di buat pada ${format(new Date(result.created_at), "dd/MM/yyyy")} - ${format(new Date(result.created_at), "HH:mm")}`
+      : `Result ${result.feature.replaceAll("-", " ")} Detail generated at ${format(new Date(result.created_at), "dd/MM/yyyy")} - ${format(new Date(result.created_at), "HH:mm")}`;
 
   return {
     title,
@@ -63,4 +64,8 @@ export async function generateMetadata({
       url: `${process.env.DOMAIN}/${lang}/account/history/${id}`,
     },
   };
+}
+
+export async function generateStaticParams() {
+  return [];
 }
