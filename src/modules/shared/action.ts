@@ -27,6 +27,7 @@ import type { UserAttributes } from "@/models/user";
 import type { GenerateProfileAttributes } from "@/models/generate_profile";
 import { getPAYGPrice } from "@/libs/utils";
 import { Transaction as SequelizeTransaction } from "sequelize";
+import { isRemainingPremium } from "@/libs/model-helper";
 
 export async function getCurrentProfile() {
   const session = await getServerSideSession();
@@ -38,8 +39,23 @@ export async function getCurrentProfile() {
     benchmark: true,
   });
   if (!data) redirect(`/en/sign-in`);
+  let returnValue = data;
 
-  return data;
+  if (data.premium_end_date && !isRemainingPremium(data.premium_end_date))
+    returnValue = (
+      await GenerateProfile.update(
+        {
+          premium_start_date: null,
+          premium_end_date: null,
+        },
+        {
+          where: { user_id: session.user.id },
+          returning: true,
+        }
+      )
+    )?.[1]?.[0];
+
+  return returnValue;
 }
 
 export async function subscribedAction(
@@ -70,9 +86,8 @@ export async function subscribedAction(
     };
 
   const type = formData.get("type") ?? "e-wallet";
-  const { data, error, success } = await (type === "va"
-    ? SUBSCRIBE_BY_BANK_SCHEMA
-    : SUBSCRIBE_BY_EWALLET_SCHEMA
+  const { data, error, success } = await (
+    type === "va" ? SUBSCRIBE_BY_BANK_SCHEMA : SUBSCRIBE_BY_EWALLET_SCHEMA
   ).safeParseAsync({
     type,
     feature: formData.get("feature"),
@@ -195,9 +210,8 @@ export async function paygAction(
     };
 
   const type = formData.get("type") ?? "e-wallet";
-  const { data, error, success } = await (type === "va"
-    ? SUBSCRIBE_BY_BANK_SCHEMA
-    : SUBSCRIBE_BY_EWALLET_SCHEMA
+  const { data, error, success } = await (
+    type === "va" ? SUBSCRIBE_BY_BANK_SCHEMA : SUBSCRIBE_BY_EWALLET_SCHEMA
   ).safeParseAsync({
     type,
     feature: formData.get("feature"),
