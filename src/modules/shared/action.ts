@@ -39,23 +39,21 @@ export async function getCurrentProfile() {
     benchmark: true,
   });
   if (!data) redirect(`/en/sign-in`);
-  let returnValue = data;
 
-  if (data.premium_end_date && !isRemainingPremium(data.premium_end_date))
-    returnValue = (
-      await GenerateProfile.update(
-        {
-          premium_start_date: null,
-          premium_end_date: null,
-        },
-        {
-          where: { user_id: session.user.id },
-          returning: true,
-        }
-      )
-    )?.[1]?.[0];
-
-  return returnValue;
+  return data.premium_end_date && !isRemainingPremium(data.premium_end_date)
+    ? (
+        await GenerateProfile.update(
+          {
+            premium_start_date: null,
+            premium_end_date: null,
+          },
+          {
+            where: { user_id: session.user.id },
+            returning: true,
+          }
+        )
+      )?.[1]?.[0]
+    : data;
 }
 
 export async function subscribedAction(
