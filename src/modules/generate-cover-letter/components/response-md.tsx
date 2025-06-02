@@ -1,7 +1,8 @@
 import CopyBtn from "@/components/common/copy-btn";
 import Markdown from "@/components/common/markdown";
 import type { LangProps } from "@/interfaces/component";
-import { cn, markdownToText } from "@/libs/utils";
+import { markdownToText } from "@/libs/utils";
+import { cn } from "@/libs/utils";
 import { memo } from "react";
 
 export interface ResponseMdProps extends LangProps {

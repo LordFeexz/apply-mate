@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     );
 
   return new NextResponse(
-    new Blob([await mdToPdf(data)], { type: "application/pdf" }),
+    new Blob([(await mdToPdf(data)) as BlobPart], { type: "application/pdf" }),
     {
       headers: {
         "Content-Type": "application/pdf",

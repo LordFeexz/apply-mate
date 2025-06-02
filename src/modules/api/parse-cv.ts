@@ -1,6 +1,6 @@
 "use server";
 
-import { parseCV } from "@/libs/utils";
+import { parseCV } from "@/libs/converter";
 import { SCHEMA_FILE } from "../shared/schema";
 
 export async function cvToString(cv: File) {
