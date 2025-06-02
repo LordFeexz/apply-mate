@@ -3,7 +3,7 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { memo } from "react";
-import { sanitizeString } from "@/libs/utils";
+import { sanitizeString } from "@/libs/sanitize";
 import type { ChildrenProps } from "@/interfaces/component";
 import Link from "next/link";
 

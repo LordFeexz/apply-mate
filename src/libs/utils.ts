@@ -1,9 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import "pdfjs-dist/build/pdf.worker.min.mjs";
 import { LANG, LANGS, PAYG_PAYMENT } from "@/enums/global";
 import { PRICING, PRICING_DISCOUNT } from "@/enums/plan";
-import sanitize from "sanitize-html";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -11,87 +9,6 @@ export function cn(...inputs: ClassValue[]) {
 
 export function getValidLang(raw: string) {
   return LANGS.includes(raw as LANG) ? (raw as LANG) : LANG.EN;
-}
-
-export function sanitizeString(str: string) {
-  return sanitize(str, {
-    allowedTags: [
-      "img",
-      "address",
-      "article",
-      "aside",
-      "footer",
-      "header",
-      "h1",
-      "h2",
-      "h3",
-      "h4",
-      "h5",
-      "h6",
-      "hgroup",
-      "main",
-      "nav",
-      "section",
-      // Text content
-      "blockquote",
-      "dd",
-      "div",
-      "dl",
-      "dt",
-      "figcaption",
-      "figure",
-      "hr",
-      "li",
-      "main",
-      "ol",
-      "p",
-      "pre",
-      "ul",
-      // Inline text semantics
-      "a",
-      "abbr",
-      "b",
-      "bdi",
-      "bdo",
-      "br",
-      "cite",
-      "code",
-      "data",
-      "dfn",
-      "em",
-      "i",
-      "kbd",
-      "mark",
-      "q",
-      "rb",
-      "rp",
-      "rt",
-      "rtc",
-      "ruby",
-      "s",
-      "samp",
-      "small",
-      "span",
-      "strong",
-      "sub",
-      "sup",
-      "time",
-      "u",
-      "var",
-      "wbr",
-      // Table content
-      "caption",
-      "col",
-      "colgroup",
-      "table",
-      "tbody",
-      "td",
-      "tfoot",
-      "th",
-      "thead",
-      "tr",
-    ],
-  });
 }
 
 export function getPAYGPrice(feature: PAYG_PAYMENT) {

@@ -12,14 +12,11 @@ import { memo, useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/libs/utils";
 import PointSectionLoader from "@/modules/shared/point-section-loader";
-import importDynamic from "next/dynamic";
-const PointSection = importDynamic(
-  () => import("@/modules/shared/point-section"),
-  {
-    loading: () => <PointSectionLoader />,
-    ssr: false,
-  }
-);
+import dynamic from "next/dynamic";
+const PointSection = dynamic(() => import("@/modules/shared/point-section"), {
+  loading: () => <PointSectionLoader />,
+  ssr: false,
+});
 
 export interface FeatureTabProps extends ChildrenProps, LangProps {
   feature: FEATURE | "";
