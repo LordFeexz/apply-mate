@@ -32,14 +32,13 @@ export interface PointSectionProps extends LangProps {
 function PointSection({ lang, className }: PointSectionProps) {
   const { title, desc } = getPointSectionDictionary(lang);
   const { setData, data } = useSharedStore();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
     if (status === "loading") return;
 
-    if (session && status === "authenticated" && !data)
-      getCurrentProfile().then(setData);
-  }, [data, setData, session, status]);
+    if (status === "authenticated") getCurrentProfile().then(setData);
+  }, [setData, status]);
 
   usePayment();
 
