@@ -9,9 +9,16 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { Moon, Sun } from "lucide-react";
-import { THEMES } from "@/enums/global";
-import { memo, type ButtonHTMLAttributes } from "react";
+import { THEME, THEMES } from "@/enums/global";
+import {
+  memo,
+  useCallback,
+  type ButtonHTMLAttributes,
+  type MouseEventHandler,
+} from "react";
 import { cn } from "@/libs/utils";
+import { submitEvent } from "@/helpers/event";
+import { EVENT_NAME } from "@/constants/event";
 
 export interface ThemeToogleProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -19,7 +26,16 @@ export interface ThemeToogleProps
 }
 
 function ThemeToogle({ itemClassName, className, ...rest }: ThemeToogleProps) {
-  const { setTheme } = useTheme();
+  const { setTheme, theme: currentTheme } = useTheme();
+  const onClickHandler = useCallback(
+    (theme: THEME): MouseEventHandler =>
+      (e) => {
+        e.preventDefault();
+        setTheme(theme);
+        submitEvent(EVENT_NAME.CHANGE_THEME, { theme, currentTheme });
+      },
+    [currentTheme, setTheme]
+  );
 
   return (
     <DropdownMenu>
@@ -43,7 +59,7 @@ function ThemeToogle({ itemClassName, className, ...rest }: ThemeToogleProps) {
             aria-describedby="toggle-theme"
             key={theme}
             className={cn("capitalize", itemClassName)}
-            onClick={() => setTheme(theme)}
+            onClick={onClickHandler(theme)}
           >
             {theme}
           </DropdownMenuItem>

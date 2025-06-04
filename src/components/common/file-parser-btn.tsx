@@ -10,11 +10,13 @@ import {
   type ComponentProps,
   type MouseEventHandler,
 } from "react";
-import { Button, type buttonVariants } from "../ui/button";
+import { type buttonVariants } from "../ui/button";
 import { cn, formatText } from "@/libs/utils";
 import { Input } from "../ui/input";
 import { Loader2, Upload } from "lucide-react";
 import { cvToString } from "@/modules/api/parse-cv";
+import EventButton from "./event-button";
+import { EVENT_NAME } from "@/constants/event";
 
 export type OnSuccessHandler = (parsed: string) => void;
 
@@ -80,7 +82,9 @@ function FileParserBtn({
 
   return (
     <>
-      <Button
+      <EventButton
+        eventName={EVENT_NAME.FILE_PARSER_CLICK}
+        args={{}}
         {...rest}
         variant={variant}
         type="button"
@@ -101,7 +105,7 @@ function FileParserBtn({
             {text}
           </>
         )}
-      </Button>
+      </EventButton>
       <Input
         {...inputProps}
         ref={inputRef}

@@ -17,6 +17,9 @@ import { cn } from "@/libs/utils";
 import { Languages } from "lucide-react";
 import { LANG, LANGS } from "@/enums/global";
 import { usePathname, useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+const EventButton = dynamic(() => import("./event-button"), { ssr: false });
+import { EVENT_NAME } from "@/constants/event";
 
 export interface LangToggleProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -56,10 +59,19 @@ function LangToggle({ itemClassName, className, ...rest }: LangToggleProps) {
           <DropdownMenuItem
             aria-describedby="toggle-language"
             key={lang}
-            className={cn("capitalize", itemClassName)}
+            className={cn(
+              "capitalize cursor-pointer hover:opacity-90",
+              itemClassName
+            )}
             onClick={clickHandler(lang)}
           >
-            {lang === LANG.ID ? "Bahasa Indonesia" : "English"}
+            <EventButton
+              className="bg-transparent text-neutral-900 dark:text-neutral-300 hover:bg-accent"
+              eventName={EVENT_NAME.CHANGE_LANGUAGE}
+              args={{ lang }}
+            >
+              {lang === LANG.ID ? "Bahasa Indonesia" : "English"}
+            </EventButton>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

@@ -12,6 +12,8 @@ import {
 } from "@/constants/feature-tab";
 import { cn } from "@/libs/utils";
 import { motion } from "framer-motion";
+import { submitEvent } from "@/helpers/event";
+import { EVENT_NAME } from "@/constants/event";
 
 export interface AccountTabProps extends LangProps, ChildrenProps {
   tab: ACCOUNT_TAB;
@@ -26,11 +28,17 @@ function AccountTab({ tab, lang, children }: AccountTabProps) {
   const router = useRouter();
   const onValueChangeHandler = useCallback(
     (url: string) => {
-      setActiveTab(
+      const targetTab =
         (lang === LANG.ID ? ACCOUNT_TABS_ID : ACCOUNT_TABS_EN).find(
           (tab) => tab.url === url
-        ) || (lang === LANG.ID ? ACCOUNT_TABS_ID : ACCOUNT_TABS_EN)[0]
-      );
+        ) || (lang === LANG.ID ? ACCOUNT_TABS_ID : ACCOUNT_TABS_EN)[0];
+
+      submitEvent(EVENT_NAME.CHANGE_ACCOUNT_TAB, {
+        url: targetTab.url,
+        label: targetTab.label,
+        currentUrl: activeTab.url,
+      });
+      setActiveTab(targetTab);
       router.push(`/${lang}/account/${url}`);
     },
     [router, lang]

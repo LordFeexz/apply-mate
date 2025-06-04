@@ -1,12 +1,13 @@
 "use client";
 
 import { LogOut } from "lucide-react";
-import { Button } from "../ui/button";
 import { memo, useCallback, useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { toast } from "sonner";
 import useSharedStore from "@/modules/shared/store";
 import { useRouter } from "next/navigation";
+import EventButton from "./event-button";
+import { EVENT_NAME } from "@/constants/event";
 
 function LogoutBtn() {
   const { status, data, update } = useSession();
@@ -33,7 +34,9 @@ function LogoutBtn() {
   if (!profile) return null;
 
   return (
-    <Button
+    <EventButton
+      eventName={EVENT_NAME.LOGOUT}
+      args={{}}
       variant="outline"
       size="icon"
       className="rounded-full cursor-pointer"
@@ -49,7 +52,7 @@ function LogoutBtn() {
       <span className="sr-only" id="logout">
         Logout Button
       </span>
-    </Button>
+    </EventButton>
   );
 }
 

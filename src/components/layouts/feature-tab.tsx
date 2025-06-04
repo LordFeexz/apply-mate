@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/libs/utils";
 import PointSectionLoader from "@/modules/shared/point-section-loader";
 import dynamic from "next/dynamic";
+import { submitEvent } from "@/helpers/event";
+import { EVENT_NAME } from "@/constants/event";
 const PointSection = dynamic(() => import("@/modules/shared/point-section"), {
   loading: () => <PointSectionLoader />,
   ssr: false,
@@ -29,7 +31,15 @@ function FeatureTab({ children, lang, feature }: FeatureTabProps) {
   const router = useRouter();
   const onValueChangeHandler = useCallback(
     (url: string) => {
-      setTab(FEATURE_TABS.find((tab) => tab.url === url) || FEATURE_TABS[0]);
+      const targetTab =
+        FEATURE_TABS.find((tab) => tab.url === url) || FEATURE_TABS[0];
+      submitEvent(EVENT_NAME.CHANGE_FEATURE_TAB, {
+        url: targetTab.url,
+        label: targetTab.label,
+        currentUrl: tab.url,
+      });
+      setTab(targetTab);
+
       router.push(`/${lang}/feature/${url}`);
     },
     [router, lang]

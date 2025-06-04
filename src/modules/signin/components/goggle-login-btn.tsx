@@ -13,6 +13,8 @@ import type { LangProps } from "@/interfaces/component";
 import { getGoogleLoginBtnDictionary } from "../i18n";
 import { cn } from "@/libs/utils";
 import { Loader2 } from "lucide-react";
+import { submitEvent } from "@/helpers/event";
+import { EVENT_NAME } from "@/constants/event";
 
 export interface GoggleLoginBtnProps extends LangProps {
   refresh?: boolean;
@@ -34,6 +36,10 @@ function GoggleLoginBtn({
   const onSuccessHandler = useCallback(
     ({ credential }: CredentialResponse) => {
       startTransition(async () => {
+        submitEvent(EVENT_NAME.SIGN_IN, {
+          method: "google",
+          timestamp: new Date().toISOString(),
+        });
         if (!credential) {
           toast.error(somethingWentWrong, { duration: 5000 });
           return;

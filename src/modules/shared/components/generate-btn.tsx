@@ -25,6 +25,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { getPAYGPrice } from "@/libs/utils";
 import { isRemainingPremium } from "@/libs/model-helper";
+import { submitEvent } from "@/helpers/event";
+import { EVENT_NAME } from "@/constants/event";
 const PaymentModal = dynamic(() => import("./payment-modal"), { ssr: false });
 
 export interface GenerateBtnProps
@@ -51,6 +53,12 @@ function GenerateBtn({ disabled, lang, feature, ...rest }: GenerateBtnProps) {
 
   const onClickHandler: MouseEventHandler = useCallback(
     (e) => {
+      submitEvent(EVENT_NAME.GENERATE_BTN_CLICK, {
+        feature,
+        status,
+        data,
+        timestamp: new Date().toISOString(),
+      });
       if (status === "unauthenticated") router.push(`/${lang}/sign-in`);
 
       if (

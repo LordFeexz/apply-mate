@@ -7,12 +7,14 @@ import {
   type ComponentProps,
   type MouseEventHandler,
 } from "react";
-import { Button, buttonVariants } from "../ui/button";
+import { type buttonVariants } from "../ui/button";
 import type { VariantProps } from "class-variance-authority";
 import { cn } from "@/libs/utils";
 import { toast } from "sonner";
 import { LANG } from "@/enums/global";
 import { Copy, CopyCheck } from "lucide-react";
+import EventButton from "./event-button";
+import { EVENT_NAME } from "@/constants/event";
 
 export interface CopyBtnProps
   extends ComponentProps<"button">,
@@ -44,8 +46,10 @@ function CopyBtn({
   );
 
   return (
-    <Button
+    <EventButton
       {...props}
+      eventName={EVENT_NAME.COPY_BTN_CLICK}
+      args={{ textToCopy }}
       className={cn(
         "hover:scale-[98.5%] hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow",
         className,
@@ -67,7 +71,7 @@ function CopyBtn({
           <span>{lang === LANG.ID ? "Salin" : "Copy"}</span>
         </>
       )}
-    </Button>
+    </EventButton>
   );
 }
 

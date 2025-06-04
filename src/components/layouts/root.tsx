@@ -6,6 +6,9 @@ import AppThemeProvider from "../providers/theme";
 import "@/styles/globals.css";
 import { Toaster } from "../ui/sonner";
 import { SessionProvider } from "../providers/session";
+import GtmHead from "../scripts/gtm-head";
+import UmamiHead from "../scripts/umami-head";
+import Init from "./init";
 
 export interface RootLayoutProps extends ChildrenProps, LangProps {
   className?: string;
@@ -16,7 +19,6 @@ export default function RootLayout({
   lang,
   className,
 }: RootLayoutProps) {
-  // todo add gtm and umami
   return (
     <html
       translate="no"
@@ -25,6 +27,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className="notranslate scroll-smooth"
     >
+      <head>
+        <GtmHead />
+        <UmamiHead />
+      </head>
       <body
         className={cn(
           "text-neutral-900 dark:text-neutral-300 antialiased",
@@ -35,6 +41,15 @@ export default function RootLayout({
           className
         )}
       >
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5WFP3BNX"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+        <Init />
         <Loader
           color="#05b6d3"
           initialPosition={0.08}

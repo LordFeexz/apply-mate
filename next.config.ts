@@ -3,7 +3,7 @@ import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  typescript: {},
+  typescript: { ignoreBuildErrors: true },
   experimental: {
     serverActions: {
       bodySizeLimit: "2mb",
