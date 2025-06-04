@@ -39,8 +39,8 @@ function CurrentPlan({ lang, plan, point = 0, endDate }: CurrentPlanProps) {
             plan === PRICING_PLAN.PAY_AS_YOU_GO
               ? "secondary"
               : plan === PRICING_PLAN.FREE
-              ? "outline"
-              : "default"
+                ? "outline"
+                : "default"
           }
         >
           {plan === PRICING_PLAN.SUBSCRIPTION ? (

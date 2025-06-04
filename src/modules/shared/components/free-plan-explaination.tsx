@@ -1,6 +1,6 @@
 import type { LangProps } from "@/interfaces/component";
 import { RefreshCw } from "lucide-react";
-import RefreshCountdown from "./refresh-countdown";
+// import RefreshCountdown from "./refresh-countdown";
 import { LANG } from "@/enums/global";
 import { memo } from "react";
 import SubscribeBtn from "./subscribe-btn";
@@ -10,7 +10,10 @@ export interface FreePlanExplainationProps extends LangProps {
   credit?: number;
 }
 
-function FreePlanExplaination({ lang, credit = 0 }: FreePlanExplainationProps) {
+function FreePlanExplaination({
+  lang,
+  // credit = 0
+}: FreePlanExplainationProps) {
   return (
     <div className="space-y-2 p-2 container mr-12 sm:mr-0">
       <div className="flex flex-col sm:flex-row sm:justify-between items-center flex-wrap sm:flex-nowrap space-y-4 sm:space-y-0">
@@ -19,11 +22,16 @@ function FreePlanExplaination({ lang, credit = 0 }: FreePlanExplainationProps) {
           <span className="text-xs sm:text-sm">
             {lang === LANG.ID ? "Kredit Gratis" : "Free Credits"}
           </span>
-          <span className="font-semibold">{credit}</span>
+          <span className="font-semibold">&infin;</span>
         </div>
         <SubscribeBtn lang={lang} feature={PAYG_PAYMENT.NONE} />
       </div>
-      <RefreshCountdown lang={lang} />
+      {/* <RefreshCountdown lang={lang} /> */}
+      <p className="text-xs text-muted-foreground">
+        {lang === LANG.ID
+          ? "Gratis selama masa uji coba"
+          : "Free for trial period"}
+      </p>
     </div>
   );
 }
